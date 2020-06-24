@@ -19,32 +19,26 @@ public class MstUserController {
   private MstUserService mstUserService;
 
   /**
-   * to 検索機能　社員一覧画面
-   */
-//  @GetMapping("/list")
-//  public String search() {
-//    return "/list";
-//  }
-  @RequestMapping(value = "/mst_user/list", method = POST)
-  public String displayList(Model model
-    , @RequestParam(name = "id", required = false) Long id
-    , @RequestParam(name = "userName", required = false) String userName
-    , @RequestParam(name = "branchCode", required = false) Integer branchCode
-  ) {
-    List<MstUser> userList = mstUserService.findUsers(id, userName, branchCode);
-    model.addAttribute("mstUserlist", userList);
-    model.addAttribute("mstUserlistSize", userList.size());
-    return "mst_user/list";
-  }
-
-
-  /**
    * to 社員 一覧画面表示
    */
   @GetMapping(value = "/list")
   public String displayList(Model model) {
     List<MstUser> userList = mstUserService.findAll();
-    model.addAttribute("mstUserlist", userList);
+    model.addAttribute("userList", userList);
+    return "mst_user/list";
+  }
+
+  /**
+   * to 検索機能　社員一覧画面
+   */
+  @RequestMapping(value = "/mst_user/list", method = POST)
+  public String search(Model model
+    , @RequestParam(name = "id", required = false) Long id
+    , @RequestParam(name = "userName", required = false) String userName
+  ) {
+    List<MstUser> result = mstUserService.findUsers(id, userName);
+    model.addAttribute("userList", result);
+    model.addAttribute("userListSize", result.size());
     return "mst_user/list";
   }
 
@@ -57,7 +51,6 @@ public class MstUserController {
     model.addAttribute("mstUser", new MstUser());
     return "mst_user/add";
   }
-
 
   /**
    * to 社員 詳細画面表示
