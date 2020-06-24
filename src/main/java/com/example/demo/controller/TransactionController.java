@@ -38,12 +38,10 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
-    private static final int DEFAULT_PAGEABLE_SIZE = 5;
-
     @GetMapping(value = "/list")
     /** to 取引履歴機能 一覧画面表示*/
     /** to 取引履歴機能 ページネーション*/
-    public String displayList(@PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Model model, Pageable pageable) {
+    public String displayList(Model model, Pageable pageable) {
         Page<Transaction> transactionlist = transactionService.getAll(pageable);
         model.addAttribute("page", transactionlist);
         model.addAttribute("transactionlist", transactionlist.getContent());
