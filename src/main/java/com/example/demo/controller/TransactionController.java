@@ -5,7 +5,6 @@ import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-import javax.validation.Valid;
 import org.springframework.validation.BindingResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,12 +37,10 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
-    private static final int DEFAULT_PAGEABLE_SIZE = 5;
-
     @GetMapping(value = "/list")
     /** to 取引履歴機能 一覧画面表示*/
     /** to 取引履歴機能 ページネーション*/
-    public String displayList(@PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Model model, Pageable pageable) {
+    public String displayList(Model model, Pageable pageable) {
         Page<Transaction> transactionlist = transactionService.getAll(pageable);
         model.addAttribute("page", transactionlist);
         model.addAttribute("transactionlist", transactionlist.getContent());
