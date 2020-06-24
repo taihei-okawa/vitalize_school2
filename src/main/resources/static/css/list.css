@@ -105,6 +105,14 @@
 		font-family: 'Varela Round', sans-serif;
 		font-size: 13px;
 	}
+
+	.table {
+    width: 100%;
+    table-layout: fixed;
+    word-break: break-all;
+    word-wrap: break-all;
+    }
+
 	.table-wrapper {
         background: #fff;
         padding: 20px 25px;

@@ -27,18 +27,22 @@
       <div class="mx-auto">
         <div class="row">
           <form th:action="@{/client/edit/{id}(id=${id})}" th:method="post" th:object="${client}">
-            <div th:replace="~{client/parts/client :: InputField}"></div></br>
+            <div th:replace="~{client/parts/client :: InputField}"></div>
+            </br>
             <div class="form-group col-sm-8">
               <button class="btn btn-primary btn-block" type="submit">更新</button>
             </div>
           </form>
         </div>
       </div>
-      <div class="btn">
-        <a class="btn btn-info" href="/client/list">一覧画面</a>
+      <div class="row">
+        <div class="btn">
+          <a class="btn btn-info" href="/client/list">一覧画面</a>
+        </div>
       </div>
     </div>
   </div>
+</div>
 </div>
 </body>
 </html>
