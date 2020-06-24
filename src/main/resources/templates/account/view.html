@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VitalizeBank</title>
+  <div id="header">
+    <div th:replace="commons/header2 :: header"></div>
+  </div>
+  <link rel="stylesheet" href="/css/bootstrap.css"/>
+  <link rel="stylesheet" href="/css/list.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <div id="content">
+    <div class="table-wrapper">
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-4">
+            <h2>口座 詳細</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col text-center">
+        <div class="row">
+          <div th:object="${account}">
+            <input type="hidden" th:value="*{id}">
+            <div>
+              <label>口座番号</label>
+              <p th:text="*{accountNumber}"></p>
+            </div>
+            <div>
+              <label>顧客ID</label>
+              <p th:text="*{id}"></p>
+            </div>
+            <div>
+              <label>支店コード</label>
+              <p th:text="*{branchCode}"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <a class="btn btn-info" href="/account/list">一覧画面へ</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

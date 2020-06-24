@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+  <title>VitalizeBank</title>
+  <div th:replace="commons/header2 :: header"></div>
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/css/list.css"/>
+</head>
+<body>
+<div class="container">
+  <div id="content">
+    <div class="table-wrapper">
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-4">
+            <h2>口座 登録</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col text-center">
+        <div class="row">
+          <form th:action="@{/account/add}" th:method="post">
+            <div th:replace="~{account/parts/account :: InputField}"></div>
+            <div class="form-group">
+              <button class="btn btn-success btn-lg btn-block" type="submit">作成</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="btn">
+      <a class="btn btn-info" href="/account/list">一覧画面へ</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

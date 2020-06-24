@@ -1,0 +1,288 @@
+	.container {
+	  margin-top: 15px;
+	}
+	.tab-group,
+	.tab-group-vertical {
+	   position: relative;
+	   display: inline-block;
+	   vertical-align: middle;
+	   zoom: 1; /* Fix for IE7 */
+	   *display: inline; /* Fix for IE7 */
+	}
+
+	.tab-group > li,
+	.tab-group-vertical > li {
+	    border: 1px solid #428bca;
+	    border-radius: 4px;
+	    position: relative;
+	    float: left;
+	}
+	.tab-group > li.active > a,
+	.tab-group > li.active > a:hover,
+	.tab-group > li.active > a:focus,
+	.tab-group-vertical > li.active > a,
+	.tab-group-vertical > li.active > a:hover,
+	.tab-group-vertical > li.active > a:focus {
+	    background-color: #428bca;
+	    color: #fff;
+	}
+	.tab-group > li > a,
+	.tab-group-vertical > li > a {
+	    border-radius: 0;
+	}
+	.tab-group > li > a:hover,
+	.tab-group-vertical > li > a:hover {
+	    border-radius: 4px;
+	}
+
+	.tab-group li + li {
+	    margin-left: -1px;
+	}
+
+	.tab-group > li:not(:first-child):not(:last-child),
+	.tab-group > li:not(:first-child):not(:last-child) > a:hover {
+	  border-radius: 0;
+	}
+	.tab-group > li:first-child,
+	.tab-group > li:first-child > a:hover {
+	    margin-left: 0;
+	}
+	.tab-group > li:first-child:not(:last-child),
+	.tab-group > li:first-child:not(:last-child) > a:hover {
+	  border-top-right-radius: 0;
+	  border-bottom-right-radius: 0;
+	}
+	.tab-group > li:last-child:not(:first-child),
+	.tab-group > li:last-child:not(:first-child) > a:hover {
+	  border-top-left-radius: 0;
+	  border-bottom-left-radius: 0;
+	}
+
+	.tab-group-vertical > li {
+	    display: block;
+	    float: none;
+	    width: 100%;
+	    max-width: 100%;
+	    text-align:center;
+	}
+	.tab-group-vertical > li + li {
+	    margin-top: -1px;
+	    margin-left: 0px;
+	}
+
+	.tab-group-vertical > li:not(:first-child):not(:last-child),
+	.tab-group-vertical > li:not(:first-child):not(:last-child) > a:hover {
+	  border-radius: 0;
+	}
+	.tab-group-vertical > li:first-child:not(:last-child),
+	.tab-group-vertical > li:first-child:not(:last-child) > a:hover {
+	  border-top-right-radius: 4px;
+	  border-bottom-right-radius: 0;
+	  border-bottom-left-radius: 0;
+	}
+	.tab-group-vertical > li:last-child:not(:first-child),
+	.tab-group-vertical > li:last-child:not(:first-child) > a:hover {
+	  border-top-left-radius: 0;
+	  border-top-right-radius: 0;
+	  border-bottom-left-radius: 4px;
+	}
+
+
+	.nav-tabs.centered > li, .nav-pills.centered > li {
+	    float:none;
+	    display:inline-block;
+	    *display:inline; /* ie7 fix */
+	     zoom:1; /* hasLayout ie7 trigger */
+	}
+
+	.nav-tabs.centered, .nav-pills.centered {
+	    text-align:center;
+	}
+
+    body {
+        color: #566787;
+		background: #f5f5f5;
+		font-family: 'Varela Round', sans-serif;
+		font-size: 13px;
+	}
+	.table-wrapper {
+        background: #fff;
+        padding: 20px 25px;
+        margin: 30px auto;
+		border-radius: 3px;
+        box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    }
+	.table-title .btn i {
+		float: left;
+		font-size: 21px;
+		margin-right: 5px;
+	}
+	.table-title .btn span {
+		float: left;
+		margin-top: 2px;
+	}
+	.table-title {
+		color: #fff;
+		background: #101010;
+		padding: 16px 25px;
+		margin: -20px -25px 10px;
+		border-radius: 3px 3px 0 0;
+    }
+    .table-title h2 {
+		margin: 5px 0 0;
+		font-size: 24px;
+	}
+	.show-entries select.form-control {
+        width: 60px;
+		margin: 0 5px;
+	}
+	.table-filter .filter-group {
+        float: right;
+		margin-left: 15px;
+    }
+	.table-filter input, .table-filter select {
+		height: 34px;
+		border-radius: 3px;
+		border-color: #ddd;
+        box-shadow: none;
+	}
+	.table-filter {
+		padding: 5px 0 15px;
+		border-bottom: 1px solid #e9e9e9;
+		margin-bottom: 5px;
+	}
+	.table-filter .btn {
+		height: 34px;
+	}
+	.table-filter label {
+		font-weight: normal;
+		margin-left: 10px;
+	}
+	.table-filter select, .table-filter input {
+		display: inline-block;
+		margin-left: 5px;
+	}
+	.table-filter input {
+		width: 200px;
+		display: inline-block;
+	}
+	.filter-group select.form-control {
+		width: 110px;
+	}
+	.filter-icon {
+		float: right;
+		margin-top: 7px;
+	}
+	.filter-icon i {
+		font-size: 18px;
+		opacity: 0.7;
+	}
+    table.table tr th, table.table tr td {
+        border-color: #e9e9e9;
+		padding: 12px 15px;
+		vertical-align: middle;
+    }
+	table.table tr th:first-child {
+		width: 60px;
+	}
+	table.table tr th:last-child {
+		width: 80px;
+	}
+    table.table-striped tbody tr:nth-of-type(odd) {
+    	background-color: #fcfcfc;
+	}
+	table.table-striped.table-hover tbody tr:hover {
+		background: #f5f5f5;
+	}
+    table.table th i {
+        font-size: 13px;
+        margin: 0 5px;
+        cursor: pointer;
+    }
+	table.table td a {
+		font-weight: bold;
+		color: #566787;
+		display: inline-block;
+		text-decoration: none;
+	}
+	table.table td a:hover {
+		color: #2196F3;
+	}
+	table.table td a.view {
+		width: 30px;
+		height: 30px;
+		color: #2196F3;
+		border: 2px solid;
+		border-radius: 30px;
+		text-align: center;
+    }
+    table.table td a.view i {
+        font-size: 22px;
+		margin: 2px 0 0 1px;
+    }
+	table.table .avatar {
+		border-radius: 50%;
+		vertical-align: middle;
+		margin-right: 10px;
+	}
+	.status {
+		font-size: 30px;
+		margin: 2px 2px 0 0;
+		display: inline-block;
+		vertical-align: middle;
+		line-height: 10px;
+	}
+    .text-success {
+        color: #10c469;
+    }
+    .text-info {
+        color: #62c9e8;
+    }
+    .text-warning {
+        color: #FFC107;
+    }
+    .text-danger {
+        color: #ff5b5b;
+    }
+    .pagination {
+        float: right;
+        margin: 0 0 5px;
+    }
+    .pagination li a {
+        border: none;
+        font-size: 13px;
+        min-width: 30px;
+        min-height: 30px;
+        color: #999;
+        margin: 0 2px;
+        line-height: 30px;
+        border-radius: 2px !important;
+        text-align: center;
+        padding: 0 6px;
+    }
+    .pagination li a:hover {
+        color: #666;
+    }
+    .pagination li.active a {
+        background: #03A9F4;
+    }
+    .pagination li.active a:hover {
+        background: #0397d6;
+    }
+	.pagination li.disabled i {
+        color: #ccc;
+    }
+    .pagination li i {
+        font-size: 16px;
+        padding-top: 6px
+    }
+    .hint-text {
+        float: left;
+        margin-top: 10px;
+        font-size: 13px;
+    }
+    #content{
+		float: right;
+		width:90%;
+		margin:0 30px 0 0;
+	}

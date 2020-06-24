@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <div th:fragment="InputField" th:remove="tag">
+      <input type="hidden" value="1" name="type" />
+      <div class="form-group">
+        <label class="col-form-label col-form-label-sm">入金先口座番号</label>
+        <input class="form-control" type="number" placeholder="口座番号" name="payAccountNumber" />
+      </div>
+      <div class="form-group">
+        <label class="col-form-label col-form-label-sm">入金額</label>
+        <input class="form-control" type="number" placeholder="入金" name="amount" />
+      </div>
+    </div>
+  </body>
+</html>

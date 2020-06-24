@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VitalizeBank</title>
+  <div id="header">
+    <div th:replace="commons/header2 :: header"></div>
+  </div>
+  <link rel="stylesheet" href="/css/bootstrap.css"/>
+  <link rel="stylesheet" href="/css/list.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head><body>
+<div class="container">
+  <div id="content">
+    <div class="table-wrapper">
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-4">
+            <h2>顧客 詳細</h2>
+          </div>
+        </div>
+      </div>
+      <div class="col text-center">
+        <div class="row">
+          <div th:object="${client}">
+            <input type="hidden" th:value="*{id}">
+            <div>
+              <label>顧客名</label>
+              <p th:text="*{clientName}"></p>
+            </div>
+            <div>
+              <label>顧客名フリガナ</label>
+              <p th:text="*{clientNameKana}"></p>
+            </div>
+            <div>
+              <label>電話番号</label>
+              <p th:text="*{tell}"></p>
+            </div>
+            <div>
+              <label>メールアドレス</label>
+              <p th:text="*{mailAddress}"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="btn">
+          <a class="btn btn-info" href="/client/list">一覧画面</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

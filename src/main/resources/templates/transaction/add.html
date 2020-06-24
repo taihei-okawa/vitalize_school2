@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+	<title>VitalizeBank</title>
+	<div th:replace="commons/header2 :: header"></div>
+	<link rel="stylesheet" href="/css/bootstrap.css" />
+	<link rel="stylesheet" href="/css/list.css"/>
+	<link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+	<div id="content">
+		<div class="table-wrapper">
+			<div class="table-title">
+				<div class="row">
+					<div class="col-sm-4">
+						<h2>振込　登録</h2>
+					</div>
+				</div>
+			</div>
+			<div class="col text-center">
+				<div class="row">
+					<form th:action="@{/transaction/add}" th:method="post">
+						<div class="tab-content">
+							<main class="p-3">
+								<!-- タブ -->
+								<ul class="nav nav-tabs centered">
+									<li class="nav-item active">
+										<a href="#photo1" class="nav-link" data-toggle="tab">お預入れ</a>
+									</li>
+									<li class="nav-item">
+										<a href="#photo2" class="nav-link" data-toggle="tab">お引出し</a>
+									</li>
+									<li class="nav-item">
+										<a href="#photo3" class="nav-link" data-toggle="tab">ご送金</a>
+									</li>
+								</ul>
+								<!-- タブ -->
+								<div class="tab-content">
+									<div id="photo1" class="tab-pane active">
+										<div th:replace="~{transaction/parts/transactionDeposit :: InputField}"></div>
+									</div>
+									<div id="photo2" class="tab-pane">
+										<div th:replace="~{transaction/parts/transactionWithdrawal :: InputField}"></div>
+									</div>
+									<div id="photo3" class="tab-pane">
+										<div th:replace="~{transaction/parts/transactionRemittance :: InputField}"></div>
+									</div>
+								</div>
+
+								<div class="tabbable">
+									<ul class="nav tab-group">
+										<li class="active">
+											<a href="#photo4" data-toggle="tab">最短日数</a>
+									   	</li>
+										<li>
+											<a href="#photo5" class="nav-link" data-toggle="tab">日付を指定する</a>
+									   </li>
+									</ul>
+								</div>
+								<!-- タブ -->
+								<div class="tab-content">
+									<div id="photo4" class="tab-pane active">
+										<div th:replace="~{transaction/parts/tradingCalendarNodate :: InputField}"></div>
+									</div>
+									<div id="photo5" class="tab-pane">
+										<div th:replace="~{transaction/parts/tradingCalendar :: InputField}"></div>
+									</div>
+								</div>
+							</main>
+								<div class="form-group">
+									<button class="btn btn-primary btn-lg btn-block" type="submit">作成</button>
+								</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="btn">
+			<a class="btn btn-info" href="/transaction/list">一覧画面へ</a>
+		</div>
+	</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
+<script>
+    flatpickr.localize(flatpickr.l10ns.ja);
+    flatpickr('#tradingCalendar', {
+        enableTime: true,
+        allowInput: true
+
+    });
+</script>
+</body>
+</html>

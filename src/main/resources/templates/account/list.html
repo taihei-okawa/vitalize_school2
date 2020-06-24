@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VitalizeBank</title>
+  <div id="header">
+    <div th:replace="commons/header2 :: header"></div>
+  </div>
+  <link rel="stylesheet" href="/css/bootstrap.css"/>
+  <link rel="stylesheet" href="/css/list.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="table-wrapper">
+    <div class="table-title">
+      <div class="row">
+        <div class="col-sm-4">
+          <h2>口座機能 一覧</h2>
+        </div>
+        <!--				<div class="col-sm-8">-->
+        <!--					<a href="/account/add" class="btn btn-primary"><i class="material-icons">&#xE147;</i> <span>口座登録</span></a>-->
+        <!--				</div>-->
+      </div>
+    </div>
+    <div class="table-filter">
+      <form th:action="@{/account/search}" accept-charset="UTF-8" th:method="post">
+        <div class="mb-3">
+          <div class="row">
+            <div class="form-group col-2">
+              <label class="col-form-label col-form-label-sm">口座番号</label>
+              <input type="text" class="form-control" id="account_number" name="accountNumber" placeholder="テキスト入力欄"
+                     th:value="${accountNumber}"/>
+              <label class="col-form-label col-form-label-sm">顧客ID</label>
+              <input type="text" class="form-control" id="id" name="clientId" placeholder="テキスト入力欄"
+                     th:value="${id}"/>
+              <label class="col-form-label col-form-label-sm">支店コード</label>
+              <input type="text" class="form-control" id="branch_code" name="branchCode" placeholder="テキスト入力欄"
+                     th:value="${branchCode}"/>
+            </div>
+            <br/>
+          </div>
+          <div class="row">
+            <div class="col text-center">
+              <button type="submit" class="btn btn-primary" style="float:none;"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="clearfix">
+      <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+      <ul class="pagination">
+        <li class="page-item disabled"><a href="#">Previous</a></li>
+        <li class="page-item"><a href="#" class="page-link">1</a></li>
+        <li class="page-item"><a href="#" class="page-link">2</a></li>
+        <li class="page-item"><a href="#" class="page-link">3</a></li>
+        <li class="page-item active"><a href="#" class="page-link">4</a></li>
+        <li class="page-item"><a href="#" class="page-link">5</a></li>
+        <li class="page-item"><a href="#" class="page-link">6</a></li>
+        <li class="page-item"><a href="#" class="page-link">7</a></li>
+        <li class="page-item"><a href="#" class="page-link">Next</a></li>
+      </ul>
+    </div>
+    <table class="table table-bordered">
+      <thead>
+      <tr class="heading-td">
+        <td>詳細</td>
+        <td>口座ID</td>
+        <td>口座番号</td>
+        <td>支店コード</td>
+        <td>口座開設日時</td>
+        <td></td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="accountlists:${accountlist}" th:object="${accountlists}">
+        <td><a class="view" th:href="@{/account/{id}(id=*{id})}" title="View" data-toggle="tooltip"><i
+          class="material-icons">&#xE417;</i></a></td>
+        <td th:text="*{id}"></td>
+        <td th:text="*{accountNumber}"></td>
+        <td th:text="*{branchCode}"></td>
+        <td th:text="*{insertDate}"></td>
+        <td>
+          <form th:action="@{/account/{id}(id=*{id})}" th:method="delete">
+            <input class="btn btn-danger btn-xs" type="submit" value="削除"/>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VitalizeBank</title>
+  <div id="header">
+    <div th:replace="commons/header2 :: header"></div>
+  </div>
+  <link rel="stylesheet" href="/css/bootstrap.css"/>
+  <link rel="stylesheet" href="/css/list.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="table-wrapper">
+    <div class="table-title">
+      <div class="row">
+        <div class="col-sm-4">
+          <h2>権限 一覧</h2>
+        </div>
+      </div>
+    </div>
+    <div class="table-filter">
+      <div class="mb-3">
+        <div class="row">
+          <div class="form-group col-2">
+            <label class="col-form-label col-form-label-sm">権限ID</label>
+            <input type="text" class="form-control" id="id" name="id" placeholder="テキスト入力欄" th:value="${id}"/>
+            <label class="col-form-label col-form-label-sm">ステータス</label>
+            <input type="text" class="form-control" id="status" name="status" placeholder="テキスト入力欄"
+                   th:value="${status}"/>
+          </div>
+          <br/>
+        </div>
+        <div class="row">
+          <div class="col text-center">
+            <button type="submit" class="btn btn-primary" style="float:none;"><i class="fa fa-search"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="clearfix">
+      <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+      <ul class="pagination">
+        <li class="page-item disabled"><a href="#">Previous</a></li>
+        <li class="page-item"><a href="#" class="page-link">1</a></li>
+        <li class="page-item"><a href="#" class="page-link">2</a></li>
+        <li class="page-item"><a href="#" class="page-link">3</a></li>
+        <li class="page-item active"><a href="#" class="page-link">4</a></li>
+        <li class="page-item"><a href="#" class="page-link">5</a></li>
+        <li class="page-item"><a href="#" class="page-link">6</a></li>
+        <li class="page-item"><a href="#" class="page-link">7</a></li>
+        <li class="page-item"><a href="#" class="page-link">Next</a></li>
+      </ul>
+    </div>
+    <table class="table table-bordered">
+      <thead>
+      <tr class="heading-td">
+        <td></td>
+        <td>権限ID</td>
+        <td>管理権限ステータス</td>
+        <td>管理権限名</td>
+        <td>機能ステータス</td>
+        <td>作成日</td>
+        <td>更新日</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="mstAuth : ${mstAuthlist}" th:object="${mstAuth}">
+        <td><a class="view" th:href="@{/mst_auth/{id}(id=*{id})}" title="View" data-toggle="tooltip"><i
+          class="material-icons">&#xE417;</i></a></td>
+        <td class="center" th:text="*{id}"></td>
+        <td class="center" th:text="*{status}"></td>
+        <td class="center" th:text="*{statusName}"></td>
+        <td class="center" th:text="*{functionStatus}"></td>
+        <td class="center" th:text="${#dates.format(mstAuth.insertDate, 'yyyy/MM/dd')}"></td>
+        <td class="center" th:text="${#dates.format(mstAuth.updateDate, 'yyyy/MM/dd')}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

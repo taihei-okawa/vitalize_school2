@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VitalizeBank</title>
+  <div id="header">
+    <div th:replace="commons/header2 :: header"></div>
+  </div>
+  <link rel="stylesheet" href="/css/bootstrap.css"/>
+  <link rel="stylesheet" href="/css/list.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <div class="table-wrapper">
+    <div class="table-title">
+      <div class="row">
+        <div class="col-sm-4">
+          <h2>取引履歴 一覧</h2>
+        </div>
+      </div>
+    </div>
+    <div class="table-filter">
+      <div class="mb-3">
+        <div class="row">
+          <div class="form-group col-2">
+            <label class="col-form-label col-form-label-sm">取引履歴ID</label>
+            <input type="text" class="form-control" id="id" name="id" placeholder="テキスト入力欄" th:value="${id}"/>
+            <label class="col-form-label col-form-label-sm">口座番号</label>
+            <input type="text" class="form-control" id="accountNumber" name="accountNumber" placeholder="テキスト入力欄"
+                   th:value="${accountNumber}"/>
+          </div>
+          <br/>
+        </div>
+        <div class="row">
+          <div class="col text-center">
+            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <table class="table table-bordered">
+      <thead>
+      <tr class="heading-td">
+        <td>取引履歴ID</td>
+        <td>口座番号</td>
+        <td>振込先口座番号</td>
+        <td>種別</td>
+        <td>保留フラグ</td>
+        <td>取引金額</td>
+        <td>手数料ID</td>
+        <td>取引後残高</td>
+        <td>作成者</td>
+        <td>作成日</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="transaction : ${transactionlist}" th:object="${transaction}">
+        <td class="center" th:text="*{id}"></td>
+        <td class="center" th:text="*{accountNumber}"></td>
+        <td class="center" th:text="*{payAccountNumber}"></td>
+        <td class="center" th:text="*{type}"></td>
+        <td class="center" th:text="*{poolFlag}"></td>
+        <td class="center" th:text="*{amount}"></td>
+        <td class="center" th:text="*{feeId}"></td>
+        <td class="center" th:text="*{balance}"></td>
+        <td th:text="*{insertUserId}"></td>
+        <td class="center" th:text="${#dates.format(transaction.insertDate, 'yyyy/MM/dd')}"></td>
+      </tr>
+      </tbody>
+    </table>
+    <div th:fragment='paginationbar'>
+      <ul>
+        <li th:class="${page.first} ? 'disabled':''" style="display:inline">
+          <span th:if="${page.first}">←先頭</span>
+          <a th:if="${not page.first}" th:href="@{${url}(page=0)}">←先頭</a>
+        </li>
+        <li th:each='i : ${#numbers.sequence(0, page.totalPages-1)}' th:class="(${i}==${page.number})? 'active' : ''" style="display:inline">
+          <span th:if='${i}==${page.number}' th:text='${i+1}'>1</span>
+          <a th:if='${i}!=${page.number}' th:href="@{${url}(page=${i})}">
+            <span th:text='${i+1}'>1</span>
+          </a>
+        </li>
+        <li th:class="${page.last} ? 'disabled':''" style="display:inline">
+          <span th:if="${page.last}">末尾➝</span>
+          <a th:if="${not page.last}" th:href="@{${url}(page=(${page.totalPages}-1))}">末尾➝</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+</body>
+</html>

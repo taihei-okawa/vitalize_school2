@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <div th:fragment="InputField" th:remove="tag">
+      <div class="form-group">
+        <input class="form-control" type="number" placeholder="社員ID" required="required" name="userCode" />
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="password" placeholder="パスワード" required="required" name="password" />
+      </div>
+      <div class="form-group">
+        <input class="form-control" type="text" placeholder="名前" required="required" name="userName" />
+      </div>
+    </div>
+  </body>
+</html>
