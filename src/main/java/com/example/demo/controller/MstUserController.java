@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
 import static org.springframework.web.bind.annotation.RequestMethod.*;
+
 import java.util.List;
 
 @Controller
@@ -25,9 +27,9 @@ public class MstUserController {
 //  }
   @RequestMapping(value = "/mst_user/list", method = POST)
   public String displayList(Model model
-          , @RequestParam(name = "id", required = false) Long id
-          , @RequestParam(name = "userName", required = false) String userName
-          , @RequestParam(name = "branchCode", required = false) Integer branchCode
+    , @RequestParam(name = "id", required = false) Long id
+    , @RequestParam(name = "userName", required = false) String userName
+    , @RequestParam(name = "branchCode", required = false) Integer branchCode
   ) {
     List<MstUser> userList = mstUserService.findUsers(id, userName, branchCode);
     model.addAttribute("mstUserlist", userList);
@@ -51,8 +53,11 @@ public class MstUserController {
    */
   @GetMapping(value = "/add")
   public String add(Model model) {
+    //空のオブジェクトを渡す。th:object="${mstUser}"
+    model.addAttribute("mstUser", new MstUser());
     return "mst_user/add";
   }
+
 
   /**
    * to 社員 詳細画面表示
@@ -73,7 +78,8 @@ public class MstUserController {
     mstUser.setUpdateUserId(9001);
     mstUser.setStatus(1);
     mstUserService.save(mstUser);
-    return "redirect:/mst_user/list";
+    Long newId = mstUser.getId();
+    return "redirect:/mst_user/" + newId;
   }
 
   /**
@@ -83,7 +89,7 @@ public class MstUserController {
   public String edit(@PathVariable Long id, Model model) {
     MstUser mstUser = mstUserService.findOne(id);
     model.addAttribute("mstUser", mstUser);
-    model.addAttribute("id", id);
+    //model.addAttribute("id", id);
     return "mst_user/edit";
   }
 

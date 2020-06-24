@@ -6,13 +6,13 @@
   <body>
     <div th:fragment="InputField" th:remove="tag">
       <div class="form-group">
-        <input class="form-control" type="number" placeholder="社員ID" required="required" name="userCode" />
+        <input class="form-control" type="number" placeholder="社員ID" required="required" name="userCode" th:field="*{userCode}"/>
       </div>
       <div class="form-group">
-        <input class="form-control" type="password" placeholder="パスワード" required="required" name="password" />
+        <input class="form-control" type="password" placeholder="パスワード" required="required" name="password" th:field="*{password}"/>
       </div>
       <div class="form-group">
-        <input class="form-control" type="text" placeholder="名前" required="required" name="userName" />
+        <input class="form-control" type="text" placeholder="名前" required="required" name="userName" th:field="*{userName}"/>
       </div>
     </div>
   </body>
