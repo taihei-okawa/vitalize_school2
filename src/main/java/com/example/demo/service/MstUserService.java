@@ -17,11 +17,10 @@ public class MstUserService {
   @Autowired
   private MstUserRepository mstUserRepository;
 
-  public List<MstUser> findUsers(Long id, String userName, Integer branchCode) {
+  public List<MstUser> findUsers(Long id, String userName) {
     return mstUserRepository.findAll(Specification
             .where(MstUserSpecifications.userIdContains(id))
             .and(MstUserSpecifications.nameContains(userName))
-            .and(MstUserSpecifications.branchCodeContains(branchCode))
     );
   }
 
