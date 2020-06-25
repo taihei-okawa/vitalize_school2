@@ -16,7 +16,6 @@ import java.util.List;
 
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Long>, JpaSpecificationExecutor<Task> {
-//    public List<Task> findAccountNumber(Integer accountNumber);
-//    public List<Task> findByPayAccountNumber(Integer payAccountNumber);
-    public Task findByAccountNumber(Integer accountNumber);
+    public List<Task> findByAccountNumber(Integer accountNumber);
+    public List<Task> findByPayAccountNumber(Integer payAccountNumber);
 }
