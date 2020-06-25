@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
 import java.util.List;
+
+import com.example.demo.entity.Task;
 import lombok.RequiredArgsConstructor;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +30,6 @@ private TransactionRepository transactionRepository;
     public List<Transaction> searchAll() {
         return transactionRepository.findAll();
     }
-//    public Transaction findOne(Long id) {
-//        return transactionRepository.findById(id);
-//    }
     // 取引履歴機能の内容とページネーションを全検索
     public Page<Transaction> getAll(Pageable pageable) {
         return transactionRepository.findAll(pageable);

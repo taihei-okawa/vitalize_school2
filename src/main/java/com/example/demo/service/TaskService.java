@@ -23,18 +23,20 @@ public class TaskService {
 */
 @Autowired
 private TaskRepository taskRepository;
-    // 取引履歴の内容を全検索
+
+    /** to 取引履歴の内容を全検索 */
     public List<Task> searchAll() {
-        return taskRepository.findAll();
-    }
-    // 取引履歴 登録
+        return taskRepository.findAll(); }
+    /** to 取引履歴 登録 */
     public Task create(Task task) {
-        return taskRepository.save(task);
-    }
-
-    // 取引履歴の内容を口座で検索
+        return taskRepository.save(task); }
+//    /** to 振込 処理 自分の口座　最新レコード取得*/
+//    public List<Task> findNumber(Integer accountNumber) {
+//        return taskRepository.findAccountNumber(accountNumber); }
+//    /** to 振込 処理 相手の口座　最新レコード取得*/
+//    public List<Task> findPayNumber(Integer payAccountNumber) {
+//        return taskRepository.findByPayAccountNumber(payAccountNumber); }
+    /** to 取引履歴の口座で検索 */
     public Task findOne(Integer accountNumber) {
-        return taskRepository.findByAccountNumber(accountNumber);
-    }
-
+        return taskRepository.findByAccountNumber(accountNumber); }
 }
