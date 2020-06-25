@@ -1,15 +1,18 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.MstUser;
-import com.example.demo.repository.MstUserRepository;
+import java.util.List;
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import javax.transaction.Transactional;
-import java.util.List;
+
+import com.example.demo.repository.MstUserRepository;
+import com.example.demo.entity.MstUser;
+import com.example.demo.searchform.MstUserSearchForm;
 
 @Service
 @Transactional(rollbackOn = Exception.class)
@@ -18,16 +21,12 @@ public class MstUserService {
   @Autowired
   private MstUserRepository mstUserRepository;
 
-  public List<MstUser> findUsers(Long id, String userName) {
-    return mstUserRepository.findAll(Specification
-      .where(MstUserSpecifications.userIdContains(id))
-      .and(MstUserSpecifications.nameContains(userName))
-    );
-  }
-
   // 社員の内容とページネーションを全検索
-  public Page<MstUser> getAll(Pageable pageable) {
-    return mstUserRepository.findAll(pageable);
+  public Page<MstUser> getAll(Pageable pageable, MstUserSearchForm searchForm) {
+    Specification<MstUser> spec = Specification
+            .where(userIdEqual(searchForm.getId()))
+            .and(nameContains(searchForm.getUserName()));
+    return mstUserRepository.findAll(spec, pageable);
   }
 
   public List<MstUser> findAll() {
@@ -44,5 +43,26 @@ public class MstUserService {
 
   public void delete(Long id) {
     mstUserRepository.deleteById(id);
+  }
+
+
+  /**
+   *  ID検索
+   */
+  private static Specification<MstUser> userIdEqual(String id) {
+    // ラムダ式で記述すると、引数のデータ型の指定が省略できる
+    return id == "" || Objects.isNull(id) ? null : (root, query, cb) -> {
+      return cb.equal(root.get("id"),  id);
+    };
+  }
+
+  /**
+   *  ユーザー名検索
+   */
+  private static Specification<MstUser> nameContains(String userName) {
+    // ラムダ式で記述すると、引数のデータ型の指定が省略できる
+    return userName == "" || Objects.isNull(userName) ? null : (root, query, cb) -> {
+      return cb.like(root.get("userName"), "%" + userName + "%");
+    };
   }
 }

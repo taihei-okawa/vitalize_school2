@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.MstUser;
+import com.example.demo.searchform.MstUserSearchForm;
 import com.example.demo.service.MstUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -9,10 +10,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 @RequestMapping("/mst_user")
@@ -26,27 +23,13 @@ public class MstUserController {
    * to 社員 一覧画面表示
    */
   @GetMapping(value = "/list")
-  public String displayList(Model model, @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Pageable pageable) {
-    Page<MstUser> mstUserList = mstUserService.getAll(pageable);
+  public String displayList(Model model, @ModelAttribute MstUserSearchForm searchForm,
+                            @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Pageable pageable) {
+    Page<MstUser> mstUserList = mstUserService.getAll(pageable, searchForm);
     model.addAttribute("page", mstUserList);
     model.addAttribute("userList", mstUserList.getContent());
     model.addAttribute("url", "list");
-    return "mst_user/list";
-  }
-
-  /**
-   * to 検索機能　社員一覧画面
-   */
-  @RequestMapping("/search")
-  public String search(Model model
-    , @RequestParam(name = "id", required = false) Long id
-    , @RequestParam(name = "userName", required = false) String userName
-  ) {
-    model.addAttribute("id", id);
-    model.addAttribute("userName", userName);
-    List<MstUser> result = mstUserService.findUsers(id, userName);
-    model.addAttribute("userList", result);
-    model.addAttribute("userListSize", result.size());
+    model.addAttribute("searchForm", searchForm);
     return "mst_user/list";
   }
 
@@ -63,7 +46,7 @@ public class MstUserController {
   /**
    * to 社員 詳細画面表示
    */
-  @GetMapping(value = "{id}")
+  @GetMapping(value = "/{id}")
   public String view(@PathVariable Long id, Model model) {
     MstUser mstUser = mstUserService.findOne(id);
     model.addAttribute("mstUser", mstUser);

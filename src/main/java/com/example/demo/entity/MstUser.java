@@ -11,6 +11,7 @@ import java.util.Date;
  */
 @Entity
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "mst_user")
@@ -21,7 +22,7 @@ public class MstUser implements Serializable {
   @Id
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long Id;
+  private Long id;
 
   /**
    * 社員名
