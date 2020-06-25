@@ -4,6 +4,8 @@ import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import javax.validation.Valid;
+
+import com.example.demo.entity.Task;
 import org.springframework.validation.BindingResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,14 +25,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.web.PageableDefault;
 import com.example.demo.entity.Transaction;
 import com.example.demo.service.TransactionService;
+import com.example.demo.service.TaskService;
+import com.example.demo.entity.Transaction;
+import com.example.demo.entity.Task;
+
 @Controller
 @RequestMapping("/transaction")
 public class TransactionController {
+
+    @Autowired
+    private TaskService taskService;
     /**
      * 取引履歴機能情報 Service
      */
     @Autowired
     private TransactionService transactionService;
+
     private static final int DEFAULT_PAGEABLE_SIZE = 15;
     @GetMapping(value = "/list")
     /** to 取引履歴機能 一覧画面表示*/
@@ -67,7 +77,22 @@ public class TransactionController {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        transactionService.save(transaction);
+
+        Task createTask = Task.builder()
+            .id(transaction.getId())
+            .accountNumber(transaction.getAccountNumber())
+            .payAccountNumber(transaction.getPayAccountNumber())
+            .type(transaction.getType())
+            .poolFlag(transaction.getPoolFlag())
+            .feeId(transaction.getFeeId())
+            .balance(transaction.getBalance())
+            .tradingDate(transaction.getTradingDate())
+            .insertUserId(transaction.getInsertUserId())
+            .updateUserId(transaction.getUpdateUserId())
+            .insertDate(transaction.getInsertDate())
+            .updateDate(transaction.getUpdateDate())
+            .build();
+        taskService.create(createTask);
         return "redirect:/transaction/list";
     }
 }
