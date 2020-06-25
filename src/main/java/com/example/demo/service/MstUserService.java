@@ -21,6 +21,7 @@ public class MstUserService {
     return mstUserRepository.findAll(Specification
             .where(MstUserSpecifications.userIdContains(id))
             .and(MstUserSpecifications.nameContains(userName))
+//            .and(MstUserSpecifications.branchCodeContains(branchCode))
     );
   }
 
