@@ -3,13 +3,16 @@ package com.example.demo.controller;
 import com.example.demo.entity.MstUser;
 import com.example.demo.service.MstUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-
 import java.util.List;
+
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 @RequestMapping("/mst_user")
@@ -17,14 +20,17 @@ public class MstUserController {
 
   @Autowired
   private MstUserService mstUserService;
+  private static final int DEFAULT_PAGEABLE_SIZE = 15;
 
   /**
    * to 社員 一覧画面表示
    */
   @GetMapping(value = "/list")
-  public String displayList(Model model) {
-    List<MstUser> userList = mstUserService.findAll();
-    model.addAttribute("userList", userList);
+  public String displayList(Model model, @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Pageable pageable) {
+    Page<MstUser> mstUserList = mstUserService.getAll(pageable);
+    model.addAttribute("page", mstUserList);
+    model.addAttribute("userList", mstUserList.getContent());
+    model.addAttribute("url", "list");
     return "mst_user/list";
   }
 
