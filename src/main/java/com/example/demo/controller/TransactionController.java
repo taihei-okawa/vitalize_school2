@@ -6,6 +6,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import javax.validation.Valid;
+
+import com.example.demo.searchform.TransactionSearchForm;
 import org.springframework.validation.BindingResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -43,11 +45,14 @@ public class TransactionController {
     @GetMapping(value = "/list")
     /** to 取引履歴機能 一覧画面表示*/
     /** to 取引履歴機能 ページネーション*/
-    public String displayList(@PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Model model, Pageable pageable) {
-        Page<Transaction> transactionlist = transactionService.getAll(pageable);
+    public String displayList(Model model, @ModelAttribute TransactionSearchForm searchForm,
+                              @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Pageable pageable) {
+        Page<Transaction> transactionlist = transactionService.getAll(pageable, searchForm);
         model.addAttribute("page", transactionlist);
         model.addAttribute("transactionlist", transactionlist.getContent());
-        model.addAttribute("url", "/list");
+        model.addAttribute("url", "list");
+        model.addAttribute("searchForm", searchForm);
+
         return "transaction/list";
     }
 

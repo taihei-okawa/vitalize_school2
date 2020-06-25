@@ -26,23 +26,25 @@
       </div>
     </div>
     <div class="table-filter">
-      <div class="mb-3">
-        <div class="row">
-          <div class="form-group col-2">
-            <label class="col-form-label col-form-label-sm">取引履歴ID</label>
-            <input type="text" class="form-control" id="id" name="id" placeholder="テキスト入力欄" th:value="${id}"/>
-            <label class="col-form-label col-form-label-sm">口座番号</label>
-            <input type="text" class="form-control" id="accountNumber" name="accountNumber" placeholder="テキスト入力欄"
-                   th:value="${accountNumber}"/>
+      <form action="list" method="get">
+        <div class="mb-3">
+          <div class="row">
+            <div class="form-group col-2">
+              <label class="col-form-label col-form-label-sm">取引履歴ID</label>
+              <input type="text" class="form-control" id="id" name="id" placeholder="テキスト入力欄" th:value="${searchForm.id}"/>
+              <label class="col-form-label col-form-label-sm">口座番号</label>
+              <input type="text" class="form-control" id="accountNumber" name="accountNumber" placeholder="テキスト入力欄"
+                     th:value="${searchForm.accountNumber}"/>
+            </div>
+            <br/>
           </div>
-          <br/>
-        </div>
-        <div class="row">
-          <div class="col text-center">
-            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+          <div class="row">
+            <div class="col text-center">
+              <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+            </div>
           </div>
         </div>
-      </div>
+      </form>
     </div>
     <table class="table table-bordered">
       <thead>
