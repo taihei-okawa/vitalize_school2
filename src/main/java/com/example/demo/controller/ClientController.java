@@ -1,24 +1,13 @@
 package com.example.demo.controller;
 
-import java.util.List;
-import java.util.Date;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.example.demo.entity.Client;
 import com.example.demo.service.ClientService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/client")
@@ -32,13 +21,17 @@ public class ClientController {
     return new Client();
   }
 
+
   /**
    * to 顧客 一覧画面表示
+   * to 顧客 ページネーション
    */
   @GetMapping(value = "/list")
-  public String list(Model model) {
-    List<Client> clientlist = clientService.findAll();
+  public String displayList(Model model, Pageable pageable) {
+    Page<Client> clientlist = clientService.getAll(pageable);
+    model.addAttribute("page", clientlist);
     model.addAttribute("clientlist", clientlist);
+    model.addAttribute("url", "/list");
     return "client/list";
   }
 
