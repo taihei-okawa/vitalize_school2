@@ -1,5 +1,10 @@
 package com.example.demo.controller;
 
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import com.example.demo.searchform.TransactionSearchForm;
 import com.example.demo.entity.Transaction;
 import com.example.demo.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Controller
 @RequestMapping("/transaction")
@@ -30,11 +31,14 @@ public class TransactionController {
   @GetMapping(value = "/list")
   /** to 取引履歴機能 一覧画面表示*/
   /** to 取引履歴機能 ページネーション*/
-  public String displayList(Model model, @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Pageable pageable) {
-    Page<Transaction> transactionlist = transactionService.getAll(pageable);
+  public String displayList(Model model, @ModelAttribute TransactionSearchForm searchForm,
+                            @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Pageable pageable) {
+    Page<Transaction> transactionlist = transactionService.getAll(pageable, searchForm);
     model.addAttribute("page", transactionlist);
     model.addAttribute("transactionlist", transactionlist.getContent());
     model.addAttribute("url", "list");
+    model.addAttribute("searchForm", searchForm);
+
     return "transaction/list";
   }
 
