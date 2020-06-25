@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import com.example.demo.searchform.TransactionSearchForm;
+
+import com.example.demo.entity.Task;
 import com.example.demo.entity.Transaction;
 import com.example.demo.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +19,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.example.demo.service.TaskService;
 
 @Controller
 @RequestMapping("/transaction")
 public class TransactionController {
+
+
+  @Autowired
+  private TaskService taskService;
+
   /**
    * 取引履歴機能情報 Service
    */
   @Autowired
   private TransactionService transactionService;
+
   private static final int DEFAULT_PAGEABLE_SIZE = 15;
 
   @GetMapping(value = "/list")
@@ -74,7 +83,22 @@ public class TransactionController {
     } catch (ParseException e) {
       e.printStackTrace();
     }
-    transactionService.save(transaction);
+
+    Task createTask = Task.builder()
+      .id(transaction.getId())
+      .accountNumber(transaction.getAccountNumber())
+      .payAccountNumber(transaction.getPayAccountNumber())
+      .type(transaction.getType())
+      .poolFlag(transaction.getPoolFlag())
+      .feeId(transaction.getFeeId())
+      .balance(transaction.getBalance())
+      .tradingDate(transaction.getTradingDate())
+      .insertUserId(transaction.getInsertUserId())
+      .updateUserId(transaction.getUpdateUserId())
+      .insertDate(transaction.getInsertDate())
+      .updateDate(transaction.getUpdateDate())
+      .build();
+    taskService.create(createTask);
     return "redirect:/transaction/list";
   }
 }

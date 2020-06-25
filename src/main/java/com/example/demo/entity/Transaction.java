@@ -8,7 +8,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Builder;
 /**
  * 取引履歴情報 Entity
