@@ -26,41 +26,25 @@
       </div>
     </div>
     <div class="table-filter">
-      <div class="mb-3">
-        <div class="row">
-          <div class="form-group col-2">
-            <label class="col-form-label col-form-label-sm">取引履歴ID</label>
-            <input type="text" class="form-control" id="id" name="id" placeholder="テキスト入力欄" th:value="${id}"/>
-            <label class="col-form-label col-form-label-sm">口座番号</label>
-            <input type="text" class="form-control" id="accountNumber" name="accountNumber" placeholder="テキスト入力欄"
-                   th:value="${accountNumber}"/>
+      <form action="list" method="get">
+        <div class="mb-3">
+          <div class="row">
+            <div class="form-group col-2">
+              <label class="col-form-label col-form-label-sm">取引履歴ID</label>
+              <input type="text" class="form-control" id="id" name="id" placeholder="テキスト入力欄" th:value="${searchForm.id}"/>
+              <label class="col-form-label col-form-label-sm">口座番号</label>
+              <input type="text" class="form-control" id="accountNumber" name="accountNumber" placeholder="テキスト入力欄"
+                     th:value="${searchForm.accountNumber}"/>
+            </div>
+            <br/>
           </div>
-          <br/>
-        </div>
-        <div class="row">
-          <div class="col text-center">
-            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i><span>検索</span></button>
+          <div class="row">
+            <div class="col text-center">
+              <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+            </div>
           </div>
         </div>
-      </div>
-      <div th:fragment='paginationbar'>
-        <ul>
-          <li th:class="${page.first} ? 'disabled':''" style="display:inline">
-            <span th:if="${page.first}">←先頭</span>
-            <a th:if="${not page.first}" th:href="@{${url}(page=0)}">←先頭</a>
-          </li>
-          <li th:each='i : ${#numbers.sequence(0, page.totalPages-1)}' th:class="(${i}==${page.number})? 'active' : ''" style="display:inline">
-            <span th:if='${i}==${page.number}' th:text='${i+1}'>1</span>
-            <a th:if='${i}!=${page.number}' th:href="@{${url}(page=${i})}">
-              <span th:text='${i+1}'>1</span>
-            </a>
-          </li>
-          <li th:class="${page.last} ? 'disabled':''" style="display:inline">
-            <span th:if="${page.last}">末尾➝</span>
-            <a th:if="${not page.last}" th:href="@{${url}(page=(${page.totalPages}-1))}">末尾➝</a>
-          </li>
-        </ul>
-      </div>
+      </form>
     </div>
     <div th:fragment='paginationbar'>
       <ul>
