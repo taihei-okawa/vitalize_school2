@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8">
-    <title>Title</title>
   </head>
   <div th:fragment="search" th:remove="tag">
     <div class="table-filter">
       <div class="mb-3">
-        <form th:action="@{/mst_user/list}" th:method="post">
+        <form th:action="@{/search}" th:method="post">
           <div class="row">
             <div class="form-group col-2">
               <label class="col-form-label col-form-label-sm">社員ID</label>
               <input type="text" class="form-control" id="id" name="id" placeholder="テキスト入力欄"
                      th:value="${id}"/>
               <label class="col-form-label col-form-label-sm">社員名</label>
-              <input type="text" class="form-control" id="user_name" name="userName" placeholder="テキスト入力欄"
+              <input type="text" class="form-control" id="userName" name="userName" placeholder="テキスト入力欄"
                      th:value="${userName}"/>
             </div>
           </div>
