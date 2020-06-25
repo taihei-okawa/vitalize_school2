@@ -26,8 +26,6 @@ public class MstUser implements Serializable {
   /**
    * 社員名
    */
-  @Getter
-  @Setter
   @Column(name = "user_name")
   private String userName;
 

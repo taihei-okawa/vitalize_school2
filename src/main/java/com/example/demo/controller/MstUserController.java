@@ -37,11 +37,13 @@ public class MstUserController {
   /**
    * to 検索機能　社員一覧画面
    */
-  @RequestMapping(value = "/mst_user/list", method = POST)
+  @RequestMapping("/search")
   public String search(Model model
     , @RequestParam(name = "id", required = false) Long id
     , @RequestParam(name = "userName", required = false) String userName
   ) {
+    model.addAttribute("id", id);
+    model.addAttribute("userName", userName);
     List<MstUser> result = mstUserService.findUsers(id, userName);
     model.addAttribute("userList", result);
     model.addAttribute("userListSize", result.size());
@@ -55,7 +57,7 @@ public class MstUserController {
   public String add(Model model) {
     //空のオブジェクトを渡す。th:object="${mstUser}"
     model.addAttribute("mstUser", new MstUser());
-    return "mst_user/add";
+    return "/mst_user/add";
   }
 
   /**
