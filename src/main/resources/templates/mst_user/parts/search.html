@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  </head>
+  <div th:fragment="search" th:remove="tag">
+    <div class="table-filter">
+      <div class="mb-3">
+        <form th:action="@{/mst_user/list}" th:method="post">
+          <div class="row">
+            <div class="form-group col-2">
+              <label class="col-form-label col-form-label-sm">社員ID</label>
+              <input type="text" class="form-control" id="id" name="id" placeholder="テキスト入力欄"
+                     th:value="${id}"/>
+              <label class="col-form-label col-form-label-sm">社員名</label>
+              <input type="text" class="form-control" id="user_name" name="userName" placeholder="テキスト入力欄"
+                     th:value="${userName}"/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col text-center">
+              <button type="submit" class="btn btn-primary" style="float:none;"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</html>

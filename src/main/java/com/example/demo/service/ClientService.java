@@ -1,12 +1,13 @@
 package com.example.demo.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.example.demo.entity.Client;
 import com.example.demo.repository.ClientRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ClientService {
@@ -35,4 +36,8 @@ public class ClientService {
     clientRepository.deleteById(id);
   }
 
+  // 取引履歴機能の内容とページネーションを全検索
+  public Page<Client> getAll(Pageable pageable) {
+    return clientRepository.findAll(pageable);
+  }
 }

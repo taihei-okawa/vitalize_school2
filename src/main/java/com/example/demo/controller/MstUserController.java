@@ -3,13 +3,16 @@ package com.example.demo.controller;
 import com.example.demo.entity.MstUser;
 import com.example.demo.service.MstUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import static org.springframework.web.bind.annotation.RequestMethod.*;
-
 import java.util.List;
+
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Controller
 @RequestMapping("/mst_user")
@@ -17,34 +20,31 @@ public class MstUserController {
 
   @Autowired
   private MstUserService mstUserService;
-
-  /**
-   * to 検索機能　社員一覧画面
-   */
-//  @GetMapping("/list")
-//  public String search() {
-//    return "/list";
-//  }
-  @RequestMapping(value = "/mst_user/list", method = POST)
-  public String displayList(Model model
-    , @RequestParam(name = "id", required = false) Long id
-    , @RequestParam(name = "userName", required = false) String userName
-    , @RequestParam(name = "branchCode", required = false) Integer branchCode
-  ) {
-    List<MstUser> userList = mstUserService.findUsers(id, userName, branchCode);
-    model.addAttribute("mstUserlist", userList);
-    model.addAttribute("mstUserlistSize", userList.size());
-    return "mst_user/list";
-  }
-
+  private static final int DEFAULT_PAGEABLE_SIZE = 15;
 
   /**
    * to 社員 一覧画面表示
    */
   @GetMapping(value = "/list")
-  public String displayList(Model model) {
-    List<MstUser> userList = mstUserService.findAll();
-    model.addAttribute("mstUserlist", userList);
+  public String displayList(Model model, @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Pageable pageable) {
+    Page<MstUser> mstUserList = mstUserService.getAll(pageable);
+    model.addAttribute("page", mstUserList);
+    model.addAttribute("userList", mstUserList.getContent());
+    model.addAttribute("url", "list");
+    return "mst_user/list";
+  }
+
+  /**
+   * to 検索機能　社員一覧画面
+   */
+  @RequestMapping(value = "/mst_user/list", method = POST)
+  public String search(Model model
+    , @RequestParam(name = "id", required = false) Long id
+    , @RequestParam(name = "userName", required = false) String userName
+  ) {
+    List<MstUser> result = mstUserService.findUsers(id, userName);
+    model.addAttribute("userList", result);
+    model.addAttribute("userListSize", result.size());
     return "mst_user/list";
   }
 
@@ -57,7 +57,6 @@ public class MstUserController {
     model.addAttribute("mstUser", new MstUser());
     return "mst_user/add";
   }
-
 
   /**
    * to 社員 詳細画面表示
