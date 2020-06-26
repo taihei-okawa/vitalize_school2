@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Client;
-import com.example.demo.entity.MstUser;
 import com.example.demo.repository.ClientRepository;
 import com.example.demo.searchform.ClientSearchForm;
 import org.springframework.beans.factory.annotation.Autowired;
