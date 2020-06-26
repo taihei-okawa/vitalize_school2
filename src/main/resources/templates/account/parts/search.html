@@ -6,7 +6,7 @@
   <div th:fragment="search" th:remove="tag">
     <form action="/account/list" th:method="get" th:object="${searchForm}">
       <div class="table-filter">
-        <form th:action="@{/search}" accept-charset="UTF-8" th:method="get">
+        <form th:action="@{/list}" accept-charset="UTF-8" th:method="get">
           <div class="mb-3">
             <div class="row">
               <div class="form-group col-2">
