@@ -2338,6 +2338,9 @@ table th[class*="col-"] {
 .mx-auto {
   margin-left: 200px;
 }
+.mx-aut {
+  margin-left: 150px;
+}
 .table > thead > tr > td.active,
 .table > tbody > tr > td.active,
 .table > tfoot > tr > td.active,
