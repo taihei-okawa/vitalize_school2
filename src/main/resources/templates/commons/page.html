@@ -4,18 +4,26 @@
     <meta charset="UTF-8">
   </head>
   <div th:fragment="page" th:remove="tag">
-    <div class="clearfix">
-      <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-      <ul class="pagination">
-        <li class="page-item disabled"><a href="#">Previous</a></li>
-        <li class="page-item"><a href="#" class="page-link">1</a></li>
-        <li class="page-item"><a href="#" class="page-link">2</a></li>
-        <li class="page-item"><a href="#" class="page-link">3</a></li>
-        <li class="page-item active"><a href="#" class="page-link">4</a></li>
-        <li class="page-item"><a href="#" class="page-link">5</a></li>
-        <li class="page-item"><a href="#" class="page-link">6</a></li>
-        <li class="page-item"><a href="#" class="page-link">7</a></li>
-        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-      </ul>
+    <div class="col-sm-8">
+      <div th:fragment='paginationbar'>
+        <ul>
+          <li th:class="${page.first} ? 'disabled':''" style="display:inline">
+            <span th:if="${page.first}">←先頭</span>
+            <a th:if="${not page.first}" th:href="@{${url}(page=0)}">←先頭</a>
+          </li>
+          <li th:each='i : ${#numbers.sequence(0, page.totalPages-1)}' th:class="(${i}==${page.number})? 'active' : ''"
+              style="display:inline">
+            <span th:if='${i}==${page.number}' th:text='${i+1}'>1</span>
+            <a th:if='${i}!=${page.number}' th:href="@{${url}(page=${i})}">
+              <span th:text='${i+1}'>1</span>
+            </a>
+          </li>
+          <li th:class="${page.last} ? 'disabled':''" style="display:inline">
+            <span th:if="${page.last}">末尾➝</span>
+            <a th:if="${not page.last}" th:href="@{${url}(page=(${page.totalPages}-1))}">末尾➝</a>
+          </li>
+        </ul>
+      </div>
     </div>
+  </div>
 </html>
