@@ -43,7 +43,7 @@ public class MstAuthController {
   /**
    * to 権限機能 詳細画面表示
    */
-  @GetMapping(value = "/mst_auth/{id}")
+  @GetMapping(value = "{id}")
   public String view(@PathVariable Long id, Model model) {
     MstAuth mstAuth = mstAuthService.findOne(id);
     model.addAttribute("mstAuth", mstAuth);
