@@ -46,7 +46,15 @@
         </div>
       </form>
     </div>
-    <div th:replace="commons/page :: page"></div>
+    <div class="col-sm-10">
+      <div th:replace="commons/page :: page"></div>
+    </div>
+    <div class="col-sm-2">
+      <form id="csvform" method="get" th:action="@{/transaction/download/csv}">
+        <input type="hidden" name="filename"/>
+        <button class="btn btn-success btn-sm" type="submit">ダウンロード</button>
+      </form>
+    </div>
     <table class="table table-bordered">
       <thead>
       <tr class="heading-td">
@@ -66,7 +74,7 @@
       <tr th:each="transaction : ${transactionlist}" th:object="${transaction}">
         <td class="center" th:text="*{id}"></td>
         <td class="center" th:text="*{accountNumber}"></td>
-        <tdg class="center" th:text="*{payAccountNumber}"></tdg>
+        <td class="center" th:text="*{payAccountNumber}"></td>
         <td class="center" th:text="*{type}"></td>
         <td class="center" th:text="*{poolFlag}"></td>
         <td class="center" th:text="*{amount}"></td>
