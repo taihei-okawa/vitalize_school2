@@ -1,10 +1,12 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Client;
+import com.example.demo.searchform.ClientSearchForm;
 import com.example.demo.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,23 +17,20 @@ public class ClientController {
 
   @Autowired
   private ClientService clientService;
-
-  @ModelAttribute
-  Client setUpForm() {
-    return new Client();
-  }
-
+  private static final int DEFAULT_PAGEABLE_SIZE = 15;
 
   /**
    * to 顧客 一覧画面表示
    * to 顧客 ページネーション
    */
   @GetMapping(value = "/list")
-  public String displayList(Model model, Pageable pageable) {
-    Page<Client> clientlist = clientService.getAll(pageable);
-    model.addAttribute("page", clientlist);
-    model.addAttribute("clientlist", clientlist.getContent());
+  public String displayList(Model model, @ModelAttribute ClientSearchForm searchForm,
+                            @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0)Pageable pageable) {
+    Page<Client> clientList = clientService.getAll(pageable, searchForm);
+    model.addAttribute("page", clientList);
+    model.addAttribute("clientList", clientList.getContent());
     model.addAttribute("url", "list");
+    model.addAttribute("searchForm", searchForm);
     return "client/list";
   }
 
