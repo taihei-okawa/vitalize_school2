@@ -30,8 +30,8 @@ public class ClientController {
   public String displayList(Model model, Pageable pageable) {
     Page<Client> clientlist = clientService.getAll(pageable);
     model.addAttribute("page", clientlist);
-    model.addAttribute("clientlist", clientlist);
-    model.addAttribute("url", "/list");
+    model.addAttribute("clientlist", clientlist.getContent());
+    model.addAttribute("url", "list");
     return "client/list";
   }
 
