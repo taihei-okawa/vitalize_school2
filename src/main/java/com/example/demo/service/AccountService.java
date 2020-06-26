@@ -50,7 +50,7 @@ public class AccountService {
   private static Specification<Account> idEqual(String id) {
     // ラムダ式で記述すると、引数のデータ型の指定が省略できる
     return id == "" || Objects.isNull(id) ? null : (root, query, cb) -> {
-      return cb.equal(root.get("clientId"),  id);
+      return cb.equal(root.get("id"),  id);
     };
   }
 
