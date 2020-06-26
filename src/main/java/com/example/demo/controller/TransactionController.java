@@ -20,6 +20,23 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.demo.service.TaskService;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.dataformat.csv.CsvGenerator;
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvSchema;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 
 @Controller
 @RequestMapping("/transaction")
@@ -101,4 +118,24 @@ public class TransactionController {
     taskService.create(createTask);
     return "redirect:/transaction/list";
   }
+  @ResponseBody
+  @RequestMapping(value = "/download/csv", method = RequestMethod.GET)
+  public Object downloadCsv() {
+    CsvMapper csvMapper = new CsvMapper();
+    CsvSchema schema = csvMapper.schemaFor(Transaction.class).withHeader();
+    // ↓DBからデータをセレクト
+    List<Transaction> dataList = transactionService.searchAll();
+    String csv = null;
+    try {
+      csv = csvMapper.writer(schema).writeValueAsString(dataList);
+    } catch (JsonProcessingException e) {
+      e.printStackTrace();
+    }
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("Content-Type", "text/csv;");
+    String  filename = "transaction";
+    headers.setContentDispositionFormData("filename", filename + ".csv");
+    return new ResponseEntity<>(csv.getBytes(), headers, HttpStatus.OK);
+  }
+
 }
