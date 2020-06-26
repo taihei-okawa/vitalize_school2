@@ -26,12 +26,12 @@
           </div>
         </div>
       </div>
-      <div class="col text-center">
+      <div class="mx-auto">
         <div class="row">
           <form th:action="@{/mst_user/add}" th:method="post" th:object="${mstUser}">
             <div th:replace="~{mst_user/parts/mstuser :: InputField}"></div>
-            <div class="form-group">
-              <button class="btn btn-success btn-lg btn-block" type="submit">作成</button>
+            <div class="form-group col-sm-8">
+              <button class="btn btn-primary btn-block" type="submit">作成</button>
             </div>
           </form>
         </div>
