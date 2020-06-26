@@ -38,10 +38,20 @@ public class AccountService {
   // 口座機能の内容とページネーションを全検索
   public Page<Account> getAll(Pageable pageable, AccountSearchForm searchForm) {
     Specification<Account> spec = Specification
-            .where(numberEqual(searchForm.getAccountNumber()))
-            .and(idEqual(searchForm.getClientId()))
+            .where(idEqual(searchForm.getId()))
+            .and(numberEqual(searchForm.getAccountNumber()))
             .and(branchCodeContains(searchForm.getBranchCode()));
     return accountRepository.findAll(spec, pageable);
+  }
+
+  /**
+   *  口座ID検索
+   */
+  private static Specification<Account> idEqual(String id) {
+    // ラムダ式で記述すると、引数のデータ型の指定が省略できる
+    return id == "" || Objects.isNull(id) ? null : (root, query, cb) -> {
+      return cb.equal(root.get("id"),  id);
+    };
   }
 
   /**
@@ -51,16 +61,6 @@ public class AccountService {
     // ラムダ式で記述すると、引数のデータ型の指定が省略できる
     return accountNumber == "" || Objects.isNull(accountNumber) ? null : (root, query, cb) -> {
       return cb.equal(root.get("accountNumber"), accountNumber);
-    };
-  }
-
-  /**
-   *  アカウントID検索
-   */
-  private static Specification<Account> idEqual(String clientId) {
-    // ラムダ式で記述すると、引数のデータ型の指定が省略できる
-    return clientId == "" || Objects.isNull(clientId) ? null : (root, query, cb) -> {
-      return cb.equal(root.get("clientId"),  clientId);
     };
   }
 

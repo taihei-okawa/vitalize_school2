@@ -6,29 +6,27 @@
   <div th:fragment="search" th:remove="tag">
     <form action="/account/list" th:method="get" th:object="${searchForm}">
       <div class="table-filter">
-        <form th:action="@{/list}" accept-charset="UTF-8" th:method="get">
-          <div class="mb-3">
-            <div class="row">
-              <div class="form-group col-2">
-                <label class="col-form-label col-form-label-sm">口座番号</label>
-                <input type="text" class="form-control" id="account_number" name="accountNumber" placeholder="テキスト入力欄"
-                       th:value="${searchForm.accountNumber}"/>
-                <label class="col-form-label col-form-label-sm">顧客ID</label>
-                <input type="text" class="form-control" id="clientId" name="clientId" placeholder="テキスト入力欄"
-                       th:value="${searchForm.clientId}"/>
-                <label class="col-form-label col-form-label-sm">支店コード</label>
-                <input type="text" class="form-control" id="branch_code" name="branchCode" placeholder="テキスト入力欄"
-                       th:value="${searchForm.branchCode}"/>
-              </div>
-              <br/>
+        <div class="mb-3">
+          <div class="row">
+            <div class="form-group col-2">
+              <label class="col-form-label col-form-label-sm">口座ID</label>
+              <input type="text" class="form-control" id="id" name="id" placeholder="テキスト入力欄"
+                     th:value="${searchForm.id}"/>
+              <label class="col-form-label col-form-label-sm">口座番号</label>
+              <input type="text" class="form-control" id="account_number" name="accountNumber" placeholder="テキスト入力欄"
+                     th:value="${searchForm.accountNumber}"/>
+              <label class="col-form-label col-form-label-sm">支店コード</label>
+              <input type="text" class="form-control" id="branch_code" name="branchCode" placeholder="テキスト入力欄"
+                     th:value="${searchForm.branchCode}"/>
             </div>
-            <div class="row">
-              <div class="col text-center">
-                <button type="submit" class="btn btn-primary" style="float:none;"><i class="fa fa-search"></i></button>
-              </div>
+            <br/>
+          </div>
+          <div class="row">
+            <div class="col text-center">
+              <button type="submit" class="btn btn-primary" style="float:none;"><i class="fa fa-search"></i></button>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </form>
   </div>

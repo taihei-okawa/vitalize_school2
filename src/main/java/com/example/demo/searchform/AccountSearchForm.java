@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class AccountSearchForm implements java.io.Serializable{
+    private String id;
     private String accountNumber;
-    private String clientId;
     private String branchCode;
 }
