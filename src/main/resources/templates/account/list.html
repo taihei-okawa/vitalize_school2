@@ -25,31 +25,7 @@
         </div>
       </div>
     </div>
-    <div class="table-filter">
-      <form th:action="@{/account/search}" accept-charset="UTF-8" th:method="post">
-        <div class="mb-3">
-          <div class="row">
-            <div class="form-group col-2">
-              <label class="col-form-label col-form-label-sm">口座番号</label>
-              <input type="text" class="form-control" id="account_number" name="accountNumber" placeholder="テキスト入力欄"
-                     th:value="${accountNumber}"/>
-              <label class="col-form-label col-form-label-sm">顧客ID</label>
-              <input type="text" class="form-control" id="id" name="clientId" placeholder="テキスト入力欄"
-                     th:value="${id}"/>
-              <label class="col-form-label col-form-label-sm">支店コード</label>
-              <input type="text" class="form-control" id="branch_code" name="branchCode" placeholder="テキスト入力欄"
-                     th:value="${branchCode}"/>
-            </div>
-            <br/>
-          </div>
-          <div class="row">
-            <div class="col text-center">
-              <button type="submit" class="btn btn-primary" style="float:none;"><i class="fa fa-search"></i></button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
+    <div th:replace="account/parts/search :: search"></div>
     <div class="col-sm-8">
       <div th:replace="commons/page :: page"></div>
     </div>
@@ -65,7 +41,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="accountlists:${accountlist}" th:object="${accountlists}">
+      <tr th:each="accountLists:${accountList}" th:object="${accountLists}">
         <td><a class="view" th:href="@{/account/{id}(id=*{id})}" title="View" data-toggle="tooltip"><i
           class="material-icons">&#xE417;</i></a></td>
         <td th:text="*{id}"></td>
