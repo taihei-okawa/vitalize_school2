@@ -44,7 +44,7 @@
       <tr th:each="mstUser : ${userList}" th:object="${mstUser}">
         <td><a class="view" th:href="@{/mst_user/{id}(id=*{id})}" title="View" data-toggle="tooltip"><i
           class="material-icons">&#xE417;</i></a></td>
-        <td><a class="settings" th:href="@{/edit/{id}(id=*{id})}" title="Settings" data-toggle="tooltip"><i
+        <td><a class="settings" th:href="@{/mst_user/edit/{id}(id=*{id})}" title="Settings" data-toggle="tooltip"><i
           class="material-icons">&#xE8B8;</i></a></td>
         <td th:text="*{id}"></td>
         <td th:text="*{userName}"></td>
