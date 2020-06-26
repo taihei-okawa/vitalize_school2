@@ -66,7 +66,7 @@
       <tr th:each="transaction : ${transactionlist}" th:object="${transaction}">
         <td class="center" th:text="*{id}"></td>
         <td class="center" th:text="*{accountNumber}"></td>
-        <td class="center" th:text="*{payAccountNumber}"></td>
+        <tdg class="center" th:text="*{payAccountNumber}"></tdg>
         <td class="center" th:text="*{type}"></td>
         <td class="center" th:text="*{poolFlag}"></td>
         <td class="center" th:text="*{amount}"></td>
