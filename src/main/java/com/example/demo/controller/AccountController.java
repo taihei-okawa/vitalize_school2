@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Account;
+import com.example.demo.searchform.AccountSearchForm;
 import com.example.demo.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,11 +27,13 @@ public class AccountController {
   @GetMapping(value = "/list")
   /** to 口座機能 一覧画面表示*/
   /** to 口座機能 ページネーション*/
-  public String displayList(Model model, @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Pageable pageable) {
-    Page<Account> accountlist = accountService.getAll(pageable);
-    model.addAttribute("page", accountlist);
-    model.addAttribute("accountlist", accountlist.getContent());
+  public String displayList(Model model, @ModelAttribute AccountSearchForm searchForm,
+                            @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Pageable pageable) {
+    Page<Account> accountList = accountService.getAll(pageable, searchForm);
+    model.addAttribute("page", accountList);
+    model.addAttribute("accountList", accountList.getContent());
     model.addAttribute("url", "list");
+    model.addAttribute("searchForm", searchForm);
     return "account/list";
   }
 
@@ -60,18 +63,6 @@ public class AccountController {
     Account account = accountService.findOne(id);
     model.addAttribute("account", account);
     return "account/view";
-  }
-
-  @PostMapping(value = "/search")
-  public ModelAndView login(ModelAndView mav
-    , @RequestParam("accountNumber") String accountNumber, @RequestParam("clientId") String clientId
-    , @RequestParam("branchCode") String branchCode) {
-    mav.addObject("accountNumber", accountNumber);
-    mav.addObject("clientId", clientId);
-    mav.addObject("branchCode", branchCode);
-    List<Account> accountlist = accountService.search(accountNumber, clientId, branchCode);
-    mav.addObject("accountlist", accountlist);
-    return mav;
   }
 
   /**
