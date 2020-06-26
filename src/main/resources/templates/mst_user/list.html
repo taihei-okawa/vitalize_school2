@@ -49,10 +49,7 @@
         </form>
       </div>
     </div>
-    <div class="col-sm-8">
-      <a href="/mst_user/add" class="btn btn-success btn-xs"><i class="material-icons">&#xE147;</i><span>登録</span></a>
-    </div>
-    <div class="col-sm-8">
+    <div class="col-sm-11">
       <div th:fragment='paginationbar'>
         <ul>
           <li th:class="${page.first} ? 'disabled':''" style="display:inline">
@@ -72,6 +69,9 @@
           </li>
         </ul>
       </div>
+    </div>
+    <div class="col-sm-1">
+      <a href="/mst_user/add" class="btn btn-success btn-xs"><i class="material-icons">&#xE147;</i><span>登録</span></a>
     </div>
     <table class="table table-bordered">
       <thead>

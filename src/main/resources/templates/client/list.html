@@ -49,10 +49,7 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-8">
-      <a href="/client/add" class="btn btn-success btn-xs"><i class="material-icons">&#xE147;</i><span>登録</span></a>
-    </div>
-    <div class="col-sm-8">
+    <div class="col-sm-11">
       <div th:fragment='paginationbar'>
         <ul>
           <li th:class="${page.first} ? 'disabled':''" style="display:inline">
@@ -72,6 +69,9 @@
           </li>
         </ul>
       </div>
+    </div>
+    <div class="col-sm-1">
+      <a href="/client/add" class="btn btn-success btn-xs"><i class="material-icons">&#xE147;</i><span>登録</span></a>
     </div>
     <table class="table table-bordered">
       <thead>
@@ -94,9 +94,9 @@
       <tbody>
       <tr th:each="client:${clientlist}" th:object="${client}">
         <td><a class="view" th:href="@{/client/{id}(id=*{id})}" title="View" data-toggle="tooltip"><i
-          class="material-icons">&#xE417;</i><span>詳細</span></a></td>
+          class="material-icons">&#xE417;</i></a></td>
         <td><a class="settings" th:href="@{/client/edit/{id}(id=*{id})}" title="Settings" data-toggle="tooltip"><i
-          class="material-icons">&#xE8B8;</i></a><span>編集</span></td>
+          class="material-icons">&#xE8B8;</i></a></td>
         <td th:text="*{id}"></td>
         <td th:text="*{clientName}"></td>
         <td th:text="*{clientNameKana}"></td>
