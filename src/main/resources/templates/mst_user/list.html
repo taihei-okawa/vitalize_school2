@@ -24,52 +24,8 @@
         </div>
       </div>
     </div>
-    <div class="table-filter">
-      <div class="mb-3">
-        <form th:action="@{/mst_user/list}" th:method="post">
-          <div class="row">
-            <div class="form-group col-2">
-              <label class="col-form-label col-form-label-sm">社員ID</label>
-              <input type="text" class="form-control" id="id" name="id" placeholder="テキスト入力欄"
-                     th:value="${id}"/>
-              <label class="col-form-label col-form-label-sm">社員名</label>
-              <input type="text" class="form-control" id="user_name" name="userName" placeholder="テキスト入力欄"
-                     th:value="${userName}"/>
-              <label class="col-form-label col-form-label-sm">支店コード</label>
-              <input type="text" class="form-control" id="branch_code" name="branchCode" placeholder="テキスト入力欄"
-                     th:value="${branchCode}"/>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col text-center">
-              <button type="submit" class="btn btn-primary" style="float:none;"><i
-                class="fa fa-search"></i><span>検索</span></button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-    <div class="col-sm-11">
-      <div th:fragment='paginationbar'>
-        <ul>
-          <li th:class="${page.first} ? 'disabled':''" style="display:inline">
-            <span th:if="${page.first}">←先頭</span>
-            <a th:if="${not page.first}" th:href="@{${url}(page=0)}">←先頭</a>
-          </li>
-          <li th:each='i : ${#numbers.sequence(0, page.totalPages-1)}' th:class="(${i}==${page.number})? 'active' : ''"
-              style="display:inline">
-            <span th:if='${i}==${page.number}' th:text='${i+1}'>1</span>
-            <a th:if='${i}!=${page.number}' th:href="@{${url}(page=${i})}">
-              <span th:text='${i+1}'>1</span>
-            </a>
-          </li>
-          <li th:class="${page.last} ? 'disabled':''" style="display:inline">
-            <span th:if="${page.last}">末尾➝</span>
-            <a th:if="${not page.last}" th:href="@{${url}(page=(${page.totalPages}-1))}">末尾➝</a>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <div th:replace="mst_user/parts/search :: search"></div>
+    <div th:replace="commons/page :: page"></div>
     <div class="col-sm-1">
       <a href="/mst_user/add" class="btn btn-success btn-xs"><i class="material-icons">&#xE147;</i><span>登録</span></a>
     </div>
@@ -86,9 +42,9 @@
       </thead>
       <tbody>
       <tr th:each="mstUser : ${userList}" th:object="${mstUser}">
-        <td><a class="view" th:href="@{/mst_user/{id}(id=*{id})}" title="View" data-toggle="tooltip"><i
+        <td><a class="view" th:href="@{/{id}(id=*{id})}" title="View" data-toggle="tooltip"><i
           class="material-icons">&#xE417;</i></a></td>
-        <td><a class="settings" th:href="@{/mst_user/edit/{id}(id=*{id})}" title="Settings" data-toggle="tooltip"><i
+        <td><a class="settings" th:href="@{/edit/{id}(id=*{id})}" title="Settings" data-toggle="tooltip"><i
           class="material-icons">&#xE8B8;</i></a></td>
         <td th:text="*{id}"></td>
         <td th:text="*{userName}"></td>
@@ -101,27 +57,6 @@
       </tr>
       </tbody>
     </table>
-    <div class="col-sm-8">
-      <div th:fragment='paginationbar'>
-        <ul>
-          <li th:class="${page.first} ? 'disabled':''" style="display:inline">
-            <span th:if="${page.first}">←先頭</span>
-            <a th:if="${not page.first}" th:href="@{${url}(page=0)}">←先頭</a>
-          </li>
-          <li th:each='i : ${#numbers.sequence(0, page.totalPages-1)}' th:class="(${i}==${page.number})? 'active' : ''"
-              style="display:inline">
-            <span th:if='${i}==${page.number}' th:text='${i+1}'>1</span>
-            <a th:if='${i}!=${page.number}' th:href="@{${url}(page=${i})}">
-              <span th:text='${i+1}'>1</span>
-            </a>
-          </li>
-          <li th:class="${page.last} ? 'disabled':''" style="display:inline">
-            <span th:if="${page.last}">末尾➝</span>
-            <a th:if="${not page.last}" th:href="@{${url}(page=(${page.totalPages}-1))}">末尾➝</a>
-          </li>
-        </ul>
-      </div>
-    </div>
   </div>
 </div>
 </html>
