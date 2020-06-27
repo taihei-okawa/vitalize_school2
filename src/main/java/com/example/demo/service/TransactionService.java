@@ -36,7 +36,7 @@ public class TransactionService {
 
   // 取引履歴機能の内容を全検索
   public List<Transaction> searchAll() {
-    return new ArrayList<>();
+    return transactionRepository.findAll();
   }
 
   public Page<Transaction> getAll(Pageable pageable, TransactionSearchForm searchForm) {

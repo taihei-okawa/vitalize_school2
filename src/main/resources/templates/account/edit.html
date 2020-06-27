@@ -14,16 +14,32 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="signup-form">
-  <form th:action="@{/account/add}" th:method="post">
-    <h2>口座 編集</h2>
-    <div th:replace="~{account/parts/account :: InputField}"></div>
-    <div class="form-group">
-      <button class="btn btn-success btn-lg btn-block" type="submit">更新</button>
+<div class="container">
+  <div id="content">
+    <div class="table-wrapper">
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-4">
+            <h2>口座 編集</h2>
+          </div>
+        </div>
+      </div>
+      <div class="mx-auto">
+        <div class="row">
+          <form th:action="@{/client/edit/{id}(id=${id})}" th:method="post" th:object="${account}">
+            <div th:replace="~{client/parts/account :: InputField}"></div>
+            <div class="form-group col-sm-8">
+              <button class="btn btn-warning btn-block" type="submit">更新</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="btn">
+          <a class="btn btn-success" href="/account/list">一覧画面</a>
+        </div>
+      </div>
     </div>
-  </form>
-  <div class="pull-right">
-    <a class="btn btn-info" href="/account/list">一覧画面へ</a>
   </div>
 </div>
 </body>
