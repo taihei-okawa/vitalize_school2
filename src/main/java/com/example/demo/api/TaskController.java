@@ -120,20 +120,20 @@ public class TaskController {
     return taskService.findOne(accountNumber);
   }
 
-  /**
-   * to 振込 処理
-   */
-  @PostMapping
-  @ResponseStatus(HttpStatus.CREATED)
-  Task postTask(@RequestBody Task task) {
-    Integer accountNumber = task.getAccountNumber();
-    return taskService.create(task);
-  }
+//  /**
+//   * to 振込 処理(旧)
+//   */
+//  @PostMapping
+//  @ResponseStatus(HttpStatus.CREATED)
+//  Task postTask(@RequestBody Task task) {
+//    Integer accountNumber = task.getAccountNumber();
+//    return taskService.create(task);
+//  }
 
   /**
    * to 振込 処理
    */
-  @PostMapping(value = "save")
+  @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   Task save(@RequestBody Task task) {
     /** to 自分の口座　出金処理 */
@@ -146,15 +146,15 @@ public class TaskController {
     //値を追加する
     task.setType(2);
     task.setBalance(answer);
-
-    /** to 相手の口座　入金処理 */
-    List<Task> TaskPayList = taskService.findPayNumber(task.getPayAccountNumber());
-    Task MaxTaskPayList = TaskPayList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
-    Integer payBalance = MaxTaskPayList.getBalance();
-    Integer payAnswer;
-    payAnswer = payBalance + amount;
-    task.setType(1);
-    task.setBalance(payAnswer);
     return taskService.create(task);
+//    /** to 相手の口座　入金処理 */
+//    List<Task> TaskPayList = taskService.findPayNumber(task.getPayAccountNumber());
+//    Task MaxTaskPayList = TaskPayList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
+//    Integer payBalance = MaxTaskPayList.getBalance();
+//    Integer payAnswer;
+//    payAnswer = payBalance + amount;
+//    task.setType(1);
+//    task.setBalance(payAnswer);
+//    return taskService.create(task);
   }
 }

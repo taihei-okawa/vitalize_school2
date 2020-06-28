@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Account;
+import com.example.demo.entity.Client;
 import com.example.demo.searchform.AccountSearchForm;
 import com.example.demo.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -25,8 +24,10 @@ public class AccountController {
   private static final int DEFAULT_PAGEABLE_SIZE = 15;
 
   @GetMapping(value = "/list")
-  /** to 口座機能 一覧画面表示*/
-  /** to 口座機能 ページネーション*/
+  /**
+   * to 口座機能 一覧画面表示
+   * to 口座機能 ページネーション
+   * */
   public String displayList(Model model, @ModelAttribute AccountSearchForm searchForm,
                             @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Pageable pageable) {
     Page<Account> accountList = accountService.getAll(pageable, searchForm);
@@ -42,6 +43,7 @@ public class AccountController {
    */
   @GetMapping(value = "/add")
   public String add(Model model) {
+    model.addAttribute("account", new Account());
     return "account/add";
   }
 
@@ -69,8 +71,7 @@ public class AccountController {
    * to 口座機能 process 登録
    */
   @PostMapping(value = "/add")
-  public String create(@Valid @ModelAttribute Account account, BindingResult bindingResult) {
-    if (bindingResult.hasErrors()) return "account/add";
+  public String create(@ModelAttribute Account account) {
     account.setInsertUserId(9001);
     account.setUpdateUserId(9001);
     accountService.save(account);
@@ -84,9 +85,8 @@ public class AccountController {
   public String update(@PathVariable Long id, @ModelAttribute Account account) {
     account.setInsertUserId(9001);
     account.setUpdateUserId(9001);
-    account.setId(id);
     accountService.save(account);
-    return "redirect:/account/list";
+    return "redirect:/account/"+ "{id}";
   }
 
   /**

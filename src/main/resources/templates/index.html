@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" xmlns:th="http://www.thymeleaf.org">
 <div id="header">
-  <div th:replace="commons/header2 :: header"></div>
+  <div th:replace="commons/header :: header"></div>
 </div>
 <link rel="stylesheet" href="/css/bootstrap.css"/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
@@ -13,11 +13,5 @@
 <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
 <link rel="stylesheet" href="/css/list.css"/>
 <body>
-<form id="csvform" method="post" th:action="@{/download/csv}">
-  <input type="hidden" name="filename"/>
-  <button type="submit">送信</button>
-</form>
-<script>
-</script>
 </body>
 </html>

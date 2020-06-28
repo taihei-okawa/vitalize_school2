@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VitalizeBank</title>
   <div id="header">
-    <div th:replace="commons/header2 :: header"></div>
+    <div th:replace="commons/header :: header"></div>
   </div>
   <link rel="stylesheet" href="/css/bootstrap.css"/>
   <link rel="stylesheet" href="/css/list.css"/>
@@ -14,7 +14,6 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <a href="https://icons8.com/icon/118953/削除"></a>
 </head>
 <body>
 <div class="container">
@@ -69,7 +68,6 @@
         <td class="center" th:text="${#dates.format(client.updateDate, 'yyyy/MM/dd')}"></td>
         <td>
           <form th:action="@{/client/{id}(id=*{id})}" th:method="delete">
-            <img src="https://img.icons8.com/cute-clipart/30/000000/delete.png"/>
             <input class="btn btn-danger btn-xs" type="submit" name="delete" value="削除"/>
           </form>
         </td>
