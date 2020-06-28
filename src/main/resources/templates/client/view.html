@@ -61,5 +61,34 @@
     </div>
   </div>
 </div>
+<div class="container">
+  <div class="table-wrapper">
+    <div class="table-title">
+      <div class="row">
+        <div class="col-sm-4">
+          <h2>口座　詳細</h2>
+        </div>
+      </div>
+    </div>
+    <table class="table table-bordered">
+      <thead>
+      <tr class="heading-td">
+        <td>口座ID</td>
+        <td>口座番号</td>
+        <td>支店コード</td>
+        <td>口座開設日時</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="account:${account}" th:object="${account}">
+        <td th:text="*{id}"></td>
+        <td th:text="*{accountNumber}"></td>
+        <td th:text="*{branchCode}"></td>
+        <td th:text="*{insertDate}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
 </body>
 </html>

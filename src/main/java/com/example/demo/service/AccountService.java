@@ -26,6 +26,9 @@ public class AccountService {
   public Account findOne(Long id) {
     return accountRepository.findById(id).orElse(null);
   }
+  public List<Account> findClientId(Integer accountClientId) {
+    return accountRepository.findByClientId(accountClientId);
+  }
 
   public Account save(Account account) {
     return accountRepository.save(account);
