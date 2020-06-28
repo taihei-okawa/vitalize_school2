@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VitalizeBank</title>
+  <div id="header">
+    <div th:replace="commons/header :: header"></div>
+  </div>
+  <link rel="stylesheet" href="/css/bootstrap.css"/>
+  <link rel="stylesheet" href="/css/list.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<div class="container">
+  <div class="table-wrapper">
+    <div class="table-title">
+      <div class="row">
+        <div class="col-sm-4">
+          <h2>手数料 一覧</h2>
+        </div>
+      </div>
+    </div>
+    <div th:replace="mst_fee/parts/search :: search"></div>
+    <div th:replace="commons/page :: page"></div>
+    <div class="col-sm-1">
+      <a href="/mst_fee/add" class="btn btn-success btn-xs"><i class="material-icons">&#xE147;</i><span>登録</span></a>
+    </div>
+    <table class="table table-bordered">
+      <thead>
+      <tr class='heading-td'>
+        <th>詳細</th>
+        <th>編集</th>
+        <th>手数料ID</th>
+        <th>手数料コード</th>
+        <th>手数料額</th>
+        <th>銀行コード</th>
+        <th>登録者</th>
+        <th>更新者</th>
+        <th>登録日</th>
+        <th>更新日</th>
+        <th>削除</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="mstFee : ${mstFeeList}" th:object="${mstFee}">
+        <td><a class="view" th:href="@{/mst_user/{id}(id=*{id})}" title="View" data-toggle="tooltip"><i
+          class="material-icons">&#xE417;</i></a></td>
+        <td><a class="settings" th:href="@{/mst_fee/edit/{id}(id=*{id})}" title="Settings" data-toggle="tooltip"><i
+          class="material-icons">&#xE8B8;</i></a></td>
+        <td th:text="*{id}"></td>
+        <td th:text="*{feeCode}"></td>
+        <td th:text="*{feePrice}"></td>
+        <td th:text="*{bankCode}"></td>
+        <td th:text="*{insertUserId}"></td>
+        <td th:text="*{updateUserId}"></td>
+        <td th:text="${#dates.format(insertDate, 'yyyy/MM/dd')}"></td>
+        <td th:text="${#dates.format(updateDate, 'yyyy/MM/dd')}"></td>
+        <td>
+          <form th:action="@{/mst_fee/{id}(id=*{id})}" th:method="delete">
+            <input class="btn btn-danger btn-xs" type="submit" value="削除"/>
+          </form>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</html>
