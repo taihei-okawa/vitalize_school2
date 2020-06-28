@@ -57,8 +57,8 @@
         <td th:text="*{bankCode}"></td>
         <td th:text="*{insertUserId}"></td>
         <td th:text="*{updateUserId}"></td>
-        <td th:text="${#dates.format(insertDate, 'yyyy/MM/dd')}"></td>
-        <td th:text="${#dates.format(updateDate, 'yyyy/MM/dd')}"></td>
+        <td th:text="${#dates.format(mstFee.insertDate, 'yyyy/MM/dd')}"></td>
+        <td th:text="${#dates.format(mstFee.updateDate, 'yyyy/MM/dd')}"></td>
         <td>
           <form th:action="@{/mst_fee/{id}(id=*{id})}" th:method="delete">
             <input class="btn btn-danger btn-xs" type="submit" value="削除"/>

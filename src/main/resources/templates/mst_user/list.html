@@ -59,8 +59,8 @@
         <td th:text="*{positionCode}"></td>
         <td th:text="*{insertUserId}"></td>
         <td th:text="*{updateUserId}"></td>
-        <td th:text="${#dates.format(insertDate, 'yyyy/MM/dd')}"></td>
-        <td th:text="${#dates.format(updateDate, 'yyyy/MM/dd')}"></td>
+        <td th:text="${#dates.format(mstUser.insertDate, 'yyyy/MM/dd')}"></td>
+        <td th:text="${#dates.format(mstUser.updateDate, 'yyyy/MM/dd')}"></td>
         <td>
           <form th:action="@{/mst_user/{id}(id=*{id})}" th:method="delete">
             <input class="btn btn-danger btn-xs" type="submit" value="削除"/>
