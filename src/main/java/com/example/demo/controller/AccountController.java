@@ -80,10 +80,11 @@ public class AccountController {
    */
   @PostMapping(value = "/add")
   public String create(@ModelAttribute Account account) {
+    Integer client = account.getClientId();
     account.setInsertUserId(9001);
     account.setUpdateUserId(9001);
     accountService.save(account);
-    return "redirect:/client/list";
+    return "redirect:/client/"+ client;
   }
 
   /**
