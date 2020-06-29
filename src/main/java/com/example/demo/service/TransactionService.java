@@ -40,8 +40,8 @@ public class TransactionService {
   }
 
   public Page<Transaction> getAll(Pageable pageable, TransactionSearchForm searchForm) {
-    Specification<Transaction> spec = Specification.where(idEqual(searchForm.getId()))
-      .and(accountNumberLike(searchForm.getAccountNumber()));
+    Specification<Transaction> spec = Specification.where(idEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
+      .and(accountNumberLike(searchForm.getAccountNumber() == null ? searchForm.getAccountNumber() : searchForm.getAccountNumber().replaceAll("　", "").replaceAll(" ", "")));
     return transactionRepository.findAll(spec, pageable);
   }
 
