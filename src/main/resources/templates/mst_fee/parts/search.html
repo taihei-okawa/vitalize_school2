@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+  </head>
+  <div th:fragment="search" th:remove="tag">
+    <form action="/mst_fee/list" th:method="get" th:object="${searchForm}">
+      <div class="table-filter">
+        <div class="mb-3">
+          <div class="row">
+            <div class="form-group col-2">
+              <label class="col-form-label col-form-label-sm">手数料ID</label>
+              <input type="text" class="form-control" id="id" name="id" placeholder="テキスト入力欄"
+                     th:value="${searchForm.id}"/>
+              <label class="col-form-label col-form-label-sm">手数料コード</label>
+              <input type="text" class="form-control" id="feeCode" name="feeCode" placeholder="テキスト入力欄"
+                     th:value="${searchForm.feeCode}"/>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col text-center">
+              <button type="submit" class="btn btn-primary" style="float:none;"><i
+                      class="fa fa-search"></i><span>検索</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</html>

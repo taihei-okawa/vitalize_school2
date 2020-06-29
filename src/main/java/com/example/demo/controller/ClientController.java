@@ -1,8 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Client;
+import com.example.demo.entity.Transaction;
 import com.example.demo.searchform.ClientSearchForm;
-import com.example.demo.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,12 +10,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import com.example.demo.service.ClientService;
+import com.example.demo.entity.Client;
+import com.example.demo.service.AccountService;
+import com.example.demo.entity.Account;
+
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 @RequestMapping("/client")
 public class ClientController {
 
   @Autowired
   private ClientService clientService;
+  @Autowired
+  private AccountService accountService;
   private static final int DEFAULT_PAGEABLE_SIZE = 15;
 
   /**
@@ -59,7 +68,10 @@ public class ClientController {
   @GetMapping(value = "{id}")
   public String view(@PathVariable Long id, Model model) {
     Client client = clientService.findOne(id);
+    Integer accountClientId = Integer.parseInt(String.valueOf(id));
+    List<Account> account = accountService.findClientId(accountClientId);
     model.addAttribute("client", client);
+    model.addAttribute("account", account);
     return "client/view";
   }
 
