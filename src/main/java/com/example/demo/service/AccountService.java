@@ -22,7 +22,6 @@ public class AccountService {
   public List<Account> findAll() {
     return accountRepository.findAll();
   }
-
   public Account findOne(Long id) {
     return accountRepository.findById(id).orElse(null);
   }
