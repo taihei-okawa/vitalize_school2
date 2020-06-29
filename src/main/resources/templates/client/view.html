@@ -55,7 +55,7 @@
           <a class="btn btn-info" href="/client/list">一覧画面</a>
         </div>
         <div class="btn">
-          <a href="http://localhost:8081/account/add" class="btn btn-success btn-sm"><i class="material-icons">&#xE147;</i><span>口座登録</span></a>
+          <a th:href="@{/account/add/{id}(id=*{id})}" class="btn btn-success btn-sm"><i class="material-icons">&#xE147;</i><span>口座登録</span></a>
         </div>
       </div>
     </div>
@@ -84,7 +84,7 @@
         <td th:text="*{id}"></td>
         <td th:text="*{accountNumber}"></td>
         <td th:text="*{branchCode}"></td>
-        <td th:text="*{insertDate}"></td>
+        <td th:text="${#dates.format(account.insertDate, 'yyyy/MM/dd')}"></td>
       </tr>
       </tbody>
     </table>

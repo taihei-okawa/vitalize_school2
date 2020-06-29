@@ -46,7 +46,15 @@ public class AccountController {
     model.addAttribute("account", new Account());
     return "account/add";
   }
-
+  /**
+   * to 顧客詳細　→　口座機能 登録画面表示
+   */
+  @GetMapping(value = "/add/{id}")
+  public String addClient(@PathVariable Integer id,Model model, Account account) {
+    account.setClientId(id);
+    model.addAttribute("account",account);
+    return "account/add";
+  }
   /**
    * to 口座機能 編集画面表示
    */
@@ -75,7 +83,7 @@ public class AccountController {
     account.setInsertUserId(9001);
     account.setUpdateUserId(9001);
     accountService.save(account);
-    return "redirect:/account/list";
+    return "redirect:/client/list";
   }
 
   /**
