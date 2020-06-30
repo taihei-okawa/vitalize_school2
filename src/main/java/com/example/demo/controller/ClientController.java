@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Task;
+import com.example.demo.entity.Transaction;
 import com.example.demo.searchform.ClientSearchForm;
 import com.example.demo.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,20 +73,27 @@ public class ClientController {
   public String view(@PathVariable Long id, Model model) {
     Client client = clientService.findOne(id);
     Integer accountClientId = Integer.parseInt(String.valueOf(id));
-    List<Account> account = accountService.findClientId(accountClientId);
-    Integer accountNumber = account.get(0).getAccountNumber();
-    List<Task> task = taskService.findNumber(accountNumber);
-    model.addAttribute("client", client);
-    model.addAttribute("account", account);
-    model.addAttribute("task", task);
-    return "client/view";
+    List<Account> accountList = accountService.findClientId(accountClientId);
+    if (accountList.isEmpty()) {
+      model.addAttribute("client", client);
+      return "client/view";
+    } else {
+      for (Account account : accountList) {
+        Integer accountNumber = account.getAccountNumber();
+        List<Task> task = taskService.findNumber(accountNumber);
+        model.addAttribute("account", accountList);
+        model.addAttribute("task", task);
+      }
+      model.addAttribute("client", client);
+      return "client/view";
+    }
   }
 
   /**
    * to 顧客 process 登録
    */
   @PostMapping(value = "/add")
-  public String create(@ModelAttribute Client client) {
+  public String create(@ModelAttribute Client client, Model model) {
     client.setInsertUserId(9001);
     client.setUpdateUserId(9001);
     clientService.save(client);
