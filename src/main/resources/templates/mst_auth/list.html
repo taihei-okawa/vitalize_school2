@@ -25,26 +25,7 @@
         </div>
       </div>
     </div>
-    <div class="table-filter">
-      <div class="mb-3">
-        <div class="row">
-          <div class="form-group col-2">
-            <label class="col-form-label col-form-label-sm">権限ID</label>
-            <input type="text" class="form-control" id="id" name="id" placeholder="テキスト入力欄" th:value="${id}"/>
-            <label class="col-form-label col-form-label-sm">ステータス</label>
-            <input type="text" class="form-control" id="status" name="status" placeholder="テキスト入力欄"
-                   th:value="${status}"/>
-          </div>
-          <br/>
-        </div>
-        <div class="row">
-          <div class="col text-center">
-            <button type="submit" class="btn btn-primary" style="float:none;"><i
-              class="fa fa-search"></i><span>検索</span></button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div th:replace="mst_auth/parts/search :: search"></div>
     <div class="col-sm-8">
       <div th:fragment='paginationbar'>
         <ul>
