@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/account")
@@ -55,6 +56,7 @@ public class AccountController {
     model.addAttribute("account",account);
     return "account/add";
   }
+
   /**
    * to 口座機能 編集画面表示
    */
@@ -81,6 +83,7 @@ public class AccountController {
   @PostMapping(value = "/add")
   public String create(@ModelAttribute Account account) {
     Integer client = account.getClientId();
+    account.setId(null);
     account.setInsertUserId(9001);
     account.setUpdateUserId(9001);
     accountService.save(account);
