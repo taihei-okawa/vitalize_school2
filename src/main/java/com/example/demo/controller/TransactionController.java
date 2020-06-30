@@ -120,11 +120,11 @@ public class TransactionController {
   }
   @ResponseBody
   @RequestMapping(value = "/download/csv", method = RequestMethod.GET)
-  public Object downloadCsv() {
+  public Object downloadCsv(@ModelAttribute TransactionSearchForm searchForm) {
     CsvMapper csvMapper = new CsvMapper();
     CsvSchema schema = csvMapper.schemaFor(Transaction.class).withHeader();
     // ↓DBからデータをセレクト
-    List<Transaction> dataList = transactionService.searchAll();
+    List<Transaction> dataList = transactionService.searchAll(searchForm);
     String csv = null;
     try {
       csv = csvMapper.writer(schema).writeValueAsString(dataList);
