@@ -66,5 +66,5 @@ public class MstAuthService {
     // ラムダ式で記述すると、引数のデータ型の指定が省略できる
     return statusName == "" || Objects.isNull(statusName) ? null : (root, query, cb) -> {
       return cb.like(root.get("statusName"), "%" + statusName + "%");
-    }
+    };
   }}

@@ -44,15 +44,6 @@ public class ClientService {
     clientRepository.deleteById(id);
   }
 
-  // 取引履歴機能の内容とページネーションを全検索
-  public Page<Client> getAll(Pageable pageable, ClientSearchForm searchForm) {
-    Specification<Client> spec = Specification
-            .where(userIdEqual(searchForm.getId()))
-            .and(nameContains(searchForm.getClientName()))
-            .and(nameKanaContains(searchForm.getClientNameKana()));
-    return clientRepository.findAll(spec, pageable);
-  }
-
   /**
    *  ID検索
    */
