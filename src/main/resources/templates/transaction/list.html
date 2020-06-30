@@ -50,7 +50,9 @@
       <div th:replace="commons/page :: page"></div>
     </div>
     <div class="col-sm-2">
-      <form id="csvform" method="get" th:action="@{/transaction/download/csv}">
+      <form id="csvform" method="get" th:action="@{/transaction/download/csv}" th:object="${searchForm}">
+        <input type="hidden" name="id" th:value="${searchForm.getId()}"/>
+        <input type="hidden" name="accountNumber" th:value="${searchForm.getAccountNumber()}"/>
         <input type="hidden" name="filename"/>
         <button class="btn btn-success btn-sm" type="submit">ダウンロード</button>
       </form>
