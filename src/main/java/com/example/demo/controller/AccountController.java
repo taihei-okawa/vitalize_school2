@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Account;
+import com.example.demo.entity.Client;
+import com.example.demo.searchform.AccountSearchForm;
 import com.example.demo.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,10 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/account")
@@ -24,13 +25,17 @@ public class AccountController {
   private static final int DEFAULT_PAGEABLE_SIZE = 15;
 
   @GetMapping(value = "/list")
-  /** to 口座機能 一覧画面表示*/
-  /** to 口座機能 ページネーション*/
-  public String displayList(Model model, @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Pageable pageable) {
-    Page<Account> accountlist = accountService.getAll(pageable);
-    model.addAttribute("page", accountlist);
-    model.addAttribute("accountlist", accountlist.getContent());
+  /**
+   * to 口座機能 一覧画面表示
+   * to 口座機能 ページネーション
+   * */
+  public String displayList(Model model, @ModelAttribute AccountSearchForm searchForm,
+                            @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Pageable pageable) {
+    Page<Account> accountList = accountService.getAll(pageable, searchForm);
+    model.addAttribute("page", accountList);
+    model.addAttribute("accountList", accountList.getContent());
     model.addAttribute("url", "list");
+    model.addAttribute("searchForm", searchForm);
     return "account/list";
   }
 
@@ -39,6 +44,16 @@ public class AccountController {
    */
   @GetMapping(value = "/add")
   public String add(Model model) {
+    model.addAttribute("account", new Account());
+    return "account/add";
+  }
+  /**
+   * to 顧客詳細　→　口座機能 登録画面表示
+   */
+  @GetMapping(value = "/add/{id}")
+  public String addClient(@PathVariable Integer id,Model model, Account account) {
+    account.setClientId(id);
+    model.addAttribute("account",account);
     return "account/add";
   }
 
@@ -62,28 +77,17 @@ public class AccountController {
     return "account/view";
   }
 
-  @PostMapping(value = "/search")
-  public ModelAndView login(ModelAndView mav
-    , @RequestParam("accountNumber") String accountNumber, @RequestParam("clientId") String clientId
-    , @RequestParam("branchCode") String branchCode) {
-    mav.addObject("accountNumber", accountNumber);
-    mav.addObject("clientId", clientId);
-    mav.addObject("branchCode", branchCode);
-    List<Account> accountlist = accountService.search(accountNumber, clientId, branchCode);
-    mav.addObject("accountlist", accountlist);
-    return mav;
-  }
-
   /**
    * to 口座機能 process 登録
    */
   @PostMapping(value = "/add")
-  public String create(@Valid @ModelAttribute Account account, BindingResult bindingResult) {
-    if (bindingResult.hasErrors()) return "account/add";
+  public String create(@ModelAttribute Account account) {
+    Integer client = account.getClientId();
+    account.setId(null);
     account.setInsertUserId(9001);
     account.setUpdateUserId(9001);
     accountService.save(account);
-    return "redirect:/account/list";
+    return "redirect:/client/"+ client;
   }
 
   /**
@@ -93,9 +97,8 @@ public class AccountController {
   public String update(@PathVariable Long id, @ModelAttribute Account account) {
     account.setInsertUserId(9001);
     account.setUpdateUserId(9001);
-    account.setId(id);
     accountService.save(account);
-    return "redirect:/account/list";
+    return "redirect:/account/"+ "{id}";
   }
 
   /**

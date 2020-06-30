@@ -43,7 +43,7 @@ public class MstUser implements Serializable {
   private String password;
 
   /**
-   * 支店コード
+   * ステータス
    */
   @Column(name = "status")
   private Integer status;

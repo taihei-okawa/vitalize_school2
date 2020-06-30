@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8"/>
   <title>VitalizeBank</title>
   <div id="header">
     <div th:replace="commons/header :: header"></div>
   </div>
-  <link rel="stylesheet" href="/css/bootstrap.css"/>
-  <link rel="stylesheet" href="/css/list.css"/>
+  <link rel="stylesheet"
+        href="/css/bootstrap.css"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/css/list.css"/>
 </head>
 <body>
 <div class="container">
@@ -22,31 +23,24 @@
       <div class="table-title">
         <div class="row">
           <div class="col-sm-4">
-            <h2>口座 詳細</h2>
+            <h2>手数料 編集</h2>
           </div>
         </div>
       </div>
-      <div class="col text-center">
+      <div class="mx-auto">
         <div class="row">
-          <div th:object="${account}">
-            <input type="hidden" th:value="*{id}">
-            <div>
-              <label>口座番号</label>
-              <p th:text="*{accountNumber}"></p>
+          <form th:action="@{/mst_fee/edit/{id}(id=${id})}" th:method="post" th:object="${mstFee}">
+            <div th:replace="~{mst_fee/parts/mstfee :: InputField}"></div>
+            <div class="form-group col-sm-8">
+              <button class="btn btn-warning btn-block" type="submit">更新</button>
             </div>
-            <div>
-              <label>顧客ID</label>
-              <p th:text="*{id}"></p>
-            </div>
-            <div>
-              <label>支店コード</label>
-              <p th:text="*{branchCode}"></p>
-            </div>
-          </div>
+          </form>
         </div>
       </div>
-      <div>
-        <a class="btn btn-info" href="/account/list">一覧画面へ</a>
+      <div class="row">
+        <div class="btn">
+          <a class="btn btn-success" href="/mst_fee/list">一覧画面</a>
+        </div>
       </div>
     </div>
   </div>

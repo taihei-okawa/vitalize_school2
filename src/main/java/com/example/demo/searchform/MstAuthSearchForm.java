@@ -4,7 +4,8 @@ import lombok.*;
 
 @Getter
 @Setter
-public class MstAuthSearchForm implements java.io.Serializable{
+public class MstAuthSearchForm  implements java.io.Serializable{
     private String id;
-    private String statusName;
+    private String status;
+
 }

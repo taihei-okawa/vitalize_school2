@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VitalizeBank</title>
   <div id="header">
-    <div th:replace="commons/header2 :: header"></div>
+    <div th:replace="commons/header :: header"></div>
   </div>
   <link rel="stylesheet" href="/css/bootstrap.css"/>
   <link rel="stylesheet" href="/css/list.css"/>
@@ -15,7 +15,8 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-</head><body>
+</head>
+<body>
 <div class="container">
   <div id="content">
     <div class="table-wrapper">
@@ -53,8 +54,81 @@
         <div class="btn">
           <a class="btn btn-info" href="/client/list">一覧画面</a>
         </div>
+        <div class="btn">
+          <a th:href="@{/account/add/{id}(id=*{id})}" class="btn btn-success btn-sm"><i class="material-icons">&#xE147;</i><span>口座登録</span></a>
+        </div>
       </div>
     </div>
+  </div>
+</div>
+<div class="container">
+  <div class="table-wrapper">
+    <div class="table-title">
+      <div class="row">
+        <div class="col-sm-4">
+          <h2>口座　一覧</h2>
+        </div>
+      </div>
+    </div>
+    <table class="table table-bordered">
+      <thead>
+      <tr class="heading-td">
+        <th>口座ID</th>
+        <th>口座番号</th>
+        <th>支店コード</th>
+        <th>登録日時</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="account:${account}" th:object="${account}">
+        <td th:text="*{id}"></td>
+        <td th:text="*{accountNumber}"></td>
+        <td th:text="*{branchCode}"></td>
+        <td th:text="${#dates.format(account.insertDate, 'yyyy/MM/dd')}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div class="container">
+  <div class="table-wrapper">
+    <div class="table-title">
+      <div class="row">
+        <div class="col-sm-4">
+          <h2>取引履歴　一覧</h2>
+        </div>
+      </div>
+    </div>
+    <table class="table table-bordered">
+      <thead>
+      <tr class="heading-td">
+        <th>取引履歴ID</th>
+        <th>口座番号</th>
+        <th>振込先口座番号</th>
+        <th>種別</th>
+        <th>保留フラグ</th>
+        <th>取引金額</th>
+        <th>手数料ID</th>
+        <th>取引後残高</th>
+        <th>作成者</th>
+        <th>作成日</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="task:${task}" th:object="${task}">
+        <td class="center" th:text="*{id}"></td>
+        <td class="center" th:text="*{accountNumber}"></td>
+        <td class="center" th:text="*{payAccountNumber}"></td>
+        <td class="center" th:text="*{type}"></td>
+        <td class="center" th:text="*{poolFlag}"></td>
+        <td class="center" th:text="*{amount}"></td>
+        <td class="center" th:text="*{feeId}"></td>
+        <td class="center" th:text="*{balance}"></td>
+        <td th:text="*{insertUserId}"></td>
+        <td class="center" th:text="${#dates.format(task.insertDate, 'yyyy/MM/dd')}"></td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 </body>

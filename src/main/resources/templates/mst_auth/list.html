@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VitalizeBank</title>
   <div id="header">
-    <div th:replace="commons/header2 :: header"></div>
+    <div th:replace="commons/header :: header"></div>
   </div>
   <link rel="stylesheet" href="/css/bootstrap.css"/>
   <link rel="stylesheet" href="/css/list.css"/>
@@ -27,36 +27,18 @@
     </div>
     <div th:replace="mst_auth/parts/search :: search"></div>
     <div class="col-sm-8">
-      <div th:fragment='paginationbar'>
-        <ul>
-          <li th:class="${page.first} ? 'disabled':''" style="display:inline">
-            <span th:if="${page.first}">←先頭</span>
-            <a th:if="${not page.first}" th:href="@{${url}(page=0)}">←先頭</a>
-          </li>
-          <li th:each='i : ${#numbers.sequence(0, page.totalPages-1)}' th:class="(${i}==${page.number})? 'active' : ''"
-              style="display:inline">
-            <span th:if='${i}==${page.number}' th:text='${i+1}'>1</span>
-            <a th:if='${i}!=${page.number}' th:href="@{${url}(page=${i})}">
-              <span th:text='${i+1}'>1</span>
-            </a>
-          </li>
-          <li th:class="${page.last} ? 'disabled':''" style="display:inline">
-            <span th:if="${page.last}">末尾➝</span>
-            <a th:if="${not page.last}" th:href="@{${url}(page=(${page.totalPages}-1))}">末尾➝</a>
-          </li>
-        </ul>
-      </div>
+      <div th:replace="commons/page :: page"></div>
     </div>
     <table class="table table-bordered">
       <thead>
       <tr class="heading-td">
-        <td>詳細</td>
-        <td>権限ID</td>
-        <td>管理権限ステータス</td>
-        <td>管理権限名</td>
-        <td>機能ステータス</td>
-        <td>作成日</td>
-        <td>更新日</td>
+        <th>詳細</th>
+        <th>権限ID</th>
+        <th>管理権限ステータス</th>
+        <th>管理権限名</th>
+        <th>機能ステータス</th>
+        <th>作成日</th>
+        <th>更新日</th>
       </tr>
       </thead>
       <tbody>
@@ -72,27 +54,6 @@
       </tr>
       </tbody>
     </table>
-    <div class="col-sm-8">
-      <div th:fragment='paginationbar'>
-        <ul>
-          <li th:class="${page.first} ? 'disabled':''" style="display:inline">
-            <span th:if="${page.first}">←先頭</span>
-            <a th:if="${not page.first}" th:href="@{${url}(page=0)}">←先頭</a>
-          </li>
-          <li th:each='i : ${#numbers.sequence(0, page.totalPages-1)}' th:class="(${i}==${page.number})? 'active' : ''"
-              style="display:inline">
-            <span th:if='${i}==${page.number}' th:text='${i+1}'>1</span>
-            <a th:if='${i}!=${page.number}' th:href="@{${url}(page=${i})}">
-              <span th:text='${i+1}'>1</span>
-            </a>
-          </li>
-          <li th:class="${page.last} ? 'disabled':''" style="display:inline">
-            <span th:if="${page.last}">末尾➝</span>
-            <a th:if="${not page.last}" th:href="@{${url}(page=(${page.totalPages}-1))}">末尾➝</a>
-          </li>
-        </ul>
-      </div>
-    </div>
   </div>
 </div>
 </body>

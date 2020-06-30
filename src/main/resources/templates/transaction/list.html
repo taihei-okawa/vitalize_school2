@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VitalizeBank</title>
   <div id="header">
-    <div th:replace="commons/header2 :: header"></div>
+    <div th:replace="commons/header :: header"></div>
   </div>
   <link rel="stylesheet" href="/css/bootstrap.css"/>
   <link rel="stylesheet" href="/css/list.css"/>
@@ -46,37 +46,30 @@
         </div>
       </form>
     </div>
-    <div th:fragment='paginationbar'>
-      <ul>
-        <li th:class="${page.first} ? 'disabled':''" style="display:inline">
-          <span th:if="${page.first}">←先頭</span>
-          <a th:if="${not page.first}" th:href="@{${url}(page=0)}">←先頭</a>
-        </li>
-        <li th:each='i : ${#numbers.sequence(0, page.totalPages-1)}' th:class="(${i}==${page.number})? 'active' : ''" style="display:inline">
-          <span th:if='${i}==${page.number}' th:text='${i+1}'>1</span>
-          <a th:if='${i}!=${page.number}' th:href="@{${url}(page=${i})}">
-            <span th:text='${i+1}'>1</span>
-          </a>
-        </li>
-        <li th:class="${page.last} ? 'disabled':''" style="display:inline">
-          <span th:if="${page.last}">末尾➝</span>
-          <a th:if="${not page.last}" th:href="@{${url}(page=(${page.totalPages}-1))}">末尾➝</a>
-        </li>
-      </ul>
+    <div class="col-sm-10">
+      <div th:replace="commons/page :: page"></div>
+    </div>
+    <div class="col-sm-2">
+      <form id="csvform" method="get" th:action="@{/transaction/download/csv}" th:object="${searchForm}">
+        <input type="hidden" name="id" th:value="${searchForm.getId()}"/>
+        <input type="hidden" name="accountNumber" th:value="${searchForm.getAccountNumber()}"/>
+        <input type="hidden" name="filename"/>
+        <button class="btn btn-success btn-sm" type="submit">ダウンロード</button>
+      </form>
     </div>
     <table class="table table-bordered">
       <thead>
       <tr class="heading-td">
-        <td>取引履歴ID</td>
-        <td>口座番号</td>
-        <td>振込先口座番号</td>
-        <td>種別</td>
-        <td>保留フラグ</td>
-        <td>取引金額</td>
-        <td>手数料ID</td>
-        <td>取引後残高</td>
-        <td>作成者</td>
-        <td>作成日</td>
+        <th>取引履歴ID</th>
+        <th>口座番号</th>
+        <th>振込先口座番号</th>
+        <th>種別</th>
+        <th>保留フラグ</th>
+        <th>取引金額</th>
+        <th>手数料ID</th>
+        <th>取引後残高</th>
+        <th>作成者</th>
+        <th>作成日</th>
       </tr>
       </thead>
       <tbody>
@@ -94,24 +87,6 @@
       </tr>
       </tbody>
     </table>
-    <div th:fragment='paginationbar'>
-      <ul>
-        <li th:class="${page.first} ? 'disabled':''" style="display:inline">
-          <span th:if="${page.first}">←先頭</span>
-          <a th:if="${not page.first}" th:href="@{${url}(page=0)}">←先頭</a>
-        </li>
-        <li th:each='i : ${#numbers.sequence(0, page.totalPages-1)}' th:class="(${i}==${page.number})? 'active' : ''" style="display:inline">
-          <span th:if='${i}==${page.number}' th:text='${i+1}'>1</span>
-          <a th:if='${i}!=${page.number}' th:href="@{${url}(page=${i})}">
-            <span th:text='${i+1}'>1</span>
-          </a>
-        </li>
-        <li th:class="${page.last} ? 'disabled':''" style="display:inline">
-          <span th:if="${page.last}">末尾➝</span>
-          <a th:if="${not page.last}" th:href="@{${url}(page=(${page.totalPages}-1))}">末尾➝</a>
-        </li>
-      </ul>
-    </div>
   </div>
 </div>
 </body>

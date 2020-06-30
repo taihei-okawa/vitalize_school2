@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>VitalizeBank</title>
   <div id="header">
-    <div th:replace="commons/header2 :: header"></div>
+    <div th:replace="commons/header :: header"></div>
   </div>
   <link rel="stylesheet" href="/css/bootstrap.css"/>
   <link rel="stylesheet" href="/css/list.css"/>
@@ -14,7 +14,6 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <a href="https://icons8.com/icon/118953/削除"></a>
 </head>
 <body>
 <div class="container">
@@ -28,25 +27,7 @@
     </div>
     <div th:replace="client/parts/search :: search"></div>
     <div class="col-sm-11">
-      <div th:fragment='paginationbar'>
-        <ul>
-          <li th:class="${page.first} ? 'disabled':''" style="display:inline">
-            <span th:if="${page.first}">←先頭</span>
-            <a th:if="${not page.first}" th:href="@{${url}(page=0)}">←先頭</a>
-          </li>
-          <li th:each='i : ${#numbers.sequence(0, page.totalPages-1)}' th:class="(${i}==${page.number})? 'active' : ''"
-              style="display:inline">
-            <span th:if='${i}==${page.number}' th:text='${i+1}'>1</span>
-            <a th:if='${i}!=${page.number}' th:href="@{${url}(page=${i})}">
-              <span th:text='${i+1}'>1</span>
-            </a>
-          </li>
-          <li th:class="${page.last} ? 'disabled':''" style="display:inline">
-            <span th:if="${page.last}">末尾➝</span>
-            <a th:if="${not page.last}" th:href="@{${url}(page=(${page.totalPages}-1))}">末尾➝</a>
-          </li>
-        </ul>
-      </div>
+      <div th:replace="commons/page :: page"></div>
     </div>
     <div class="col-sm-1">
       <a href="/client/add" class="btn btn-success btn-xs"><i class="material-icons">&#xE147;</i><span>登録</span></a>
@@ -54,23 +35,23 @@
     <table class="table table-bordered">
       <thead>
       <tr class="heading-td">
-        <td>詳細</td>
-        <td>編集</td>
-        <td>顧客ID</td>
-        <td>顧客名</td>
-        <td>顧客名フリガナ</td>
-        <td>電話番号</td>
-        <td>メールアドレス</td>
-        <td>パスワード</td>
-        <td>作成者</td>
-        <td>更新者</td>
-        <td>作成日</td>
-        <td>更新日</td>
+        <th>詳細</th>
+        <th>編集</th>
+        <th>顧客ID</th>
+        <th>顧客名</th>
+        <th>顧客名フリガナ</th>
+        <th>電話番号</th>
+        <th>メールアドレス</th>
+        <th>パスワード</th>
+        <th>作成者</th>
+        <th>更新者</th>
+        <th>作成日</th>
+        <th>更新日</th>
         <th>削除</th>
       </tr>
       </thead>
       <tbody>
-      <tr th:each="client:${clientlist}" th:object="${client}">
+      <tr th:each="client:${clientList}" th:object="${client}">
         <td><a class="view" th:href="@{/client/{id}(id=*{id})}" title="View" data-toggle="tooltip"><i
           class="material-icons">&#xE417;</i></a></td>
         <td><a class="settings" th:href="@{/client/edit/{id}(id=*{id})}" title="Settings" data-toggle="tooltip"><i
@@ -87,34 +68,12 @@
         <td class="center" th:text="${#dates.format(client.updateDate, 'yyyy/MM/dd')}"></td>
         <td>
           <form th:action="@{/client/{id}(id=*{id})}" th:method="delete">
-            <img src="https://img.icons8.com/cute-clipart/30/000000/delete.png"/>
             <input class="btn btn-danger btn-xs" type="submit" name="delete" value="削除"/>
           </form>
         </td>
       </tr>
       </tbody>
     </table>
-    <div class="col-sm-8">
-      <div th:fragment='paginationbar'>
-        <ul>
-          <li th:class="${page.first} ? 'disabled':''" style="display:inline">
-            <span th:if="${page.first}">←先頭</span>
-            <a th:if="${not page.first}" th:href="@{${url}(page=0)}">←先頭</a>
-          </li>
-          <li th:each='i : ${#numbers.sequence(0, page.totalPages-1)}' th:class="(${i}==${page.number})? 'active' : ''"
-              style="display:inline">
-            <span th:if='${i}==${page.number}' th:text='${i+1}'>1</span>
-            <a th:if='${i}!=${page.number}' th:href="@{${url}(page=${i})}">
-              <span th:text='${i+1}'>1</span>
-            </a>
-          </li>
-          <li th:class="${page.last} ? 'disabled':''" style="display:inline">
-            <span th:if="${page.last}">末尾➝</span>
-            <a th:if="${not page.last}" th:href="@{${url}(page=(${page.totalPages}-1))}">末尾➝</a>
-          </li>
-        </ul>
-      </div>
-    </div>
   </div>
 </div>
 </body>

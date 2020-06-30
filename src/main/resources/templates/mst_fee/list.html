@@ -20,25 +20,24 @@
     <div class="table-title">
       <div class="row">
         <div class="col-sm-4">
-          <h2>社員 一覧</h2>
+          <h2>手数料 一覧</h2>
         </div>
       </div>
     </div>
-    <div th:replace="mst_user/parts/search :: search"></div>
+    <div th:replace="mst_fee/parts/search :: search"></div>
     <div th:replace="commons/page :: page"></div>
     <div class="col-sm-1">
-      <a href="/mst_user/add" class="btn btn-success btn-xs"><i class="material-icons">&#xE147;</i><span>登録</span></a>
+      <a href="/mst_fee/add" class="btn btn-success btn-xs"><i class="material-icons">&#xE147;</i><span>登録</span></a>
     </div>
     <table class="table table-bordered">
       <thead>
       <tr class='heading-td'>
         <th>詳細</th>
         <th>編集</th>
-        <th>社員ID</th>
-        <th>社員名</th>
-        <th>社員コード</th>
-        <th>支店コード</th>
-        <th>役職コード</th>
+        <th>手数料ID</th>
+        <th>手数料コード</th>
+        <th>手数料額</th>
+        <th>銀行コード</th>
         <th>登録者</th>
         <th>更新者</th>
         <th>登録日</th>
@@ -47,22 +46,21 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="mstUser : ${userList}" th:object="${mstUser}">
-        <td><a class="view" th:href="@{/mst_user/{id}(id=*{id})}" title="View" data-toggle="tooltip"><i
+      <tr th:each="mstFee : ${mstFeeList}" th:object="${mstFee}">
+        <td><a class="view" th:href="@{/mst_fee/{id}(id=*{id})}" title="View" data-toggle="tooltip"><i
           class="material-icons">&#xE417;</i></a></td>
-        <td><a class="settings" th:href="@{/mst_user/edit/{id}(id=*{id})}" title="Settings" data-toggle="tooltip"><i
+        <td><a class="settings" th:href="@{/mst_fee/edit/{id}(id=*{id})}" title="Settings" data-toggle="tooltip"><i
           class="material-icons">&#xE8B8;</i></a></td>
         <td th:text="*{id}"></td>
-        <td th:text="*{userName}"></td>
-        <td th:text="*{userCode}"></td>
-        <td th:text="*{branchCode}"></td>
-        <td th:text="*{positionCode}"></td>
+        <td th:text="*{feeCode}"></td>
+        <td th:text="*{feePrice}"></td>
+        <td th:text="*{bankCode}"></td>
         <td th:text="*{insertUserId}"></td>
         <td th:text="*{updateUserId}"></td>
-        <td th:text="${#dates.format(mstUser.insertDate, 'yyyy/MM/dd')}"></td>
-        <td th:text="${#dates.format(mstUser.updateDate, 'yyyy/MM/dd')}"></td>
+        <td th:text="${#dates.format(mstFee.insertDate, 'yyyy/MM/dd')}"></td>
+        <td th:text="${#dates.format(mstFee.updateDate, 'yyyy/MM/dd')}"></td>
         <td>
-          <form th:action="@{/mst_user/{id}(id=*{id})}" th:method="delete">
+          <form th:action="@{/mst_fee/{id}(id=*{id})}" th:method="delete">
             <input class="btn btn-danger btn-xs" type="submit" value="削除"/>
           </form>
         </td>

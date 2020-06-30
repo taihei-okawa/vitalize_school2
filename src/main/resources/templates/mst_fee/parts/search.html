@@ -4,26 +4,18 @@
     <meta charset="UTF-8">
   </head>
   <div th:fragment="search" th:remove="tag">
-    <form action="/mst_auth/list" th:method="get" th:object="${searchForm}">
+    <form action="/mst_fee/list" th:method="get" th:object="${searchForm}">
       <div class="table-filter">
         <div class="mb-3">
           <div class="row">
             <div class="form-group col-2">
-              <label class="col-form-label col-form-label-sm">権限ID</label>
+              <label class="col-form-label col-form-label-sm">手数料ID</label>
               <input type="text" class="form-control" id="id" name="id" placeholder="テキスト入力欄"
                      th:value="${searchForm.id}"/>
-<<<<<<< HEAD
-              <label class="col-form-label col-form-label-sm">権限名</label>
-              <input type="text" class="form-control" id="statusName" name="statusName" placeholder="テキスト入力欄"
-                     th:value="${searchForm.statusName}"/>
+              <label class="col-form-label col-form-label-sm">手数料コード</label>
+              <input type="text" class="form-control" id="feeCode" name="feeCode" placeholder="テキスト入力欄"
+                     th:value="${searchForm.feeCode}"/>
             </div>
-=======
-              <label class="col-form-label col-form-label-sm">ステータス</label>
-              <input type="text" class="form-control" id="status" name="status" placeholder="テキスト入力欄"
-                     th:value="${searchForm.status}"/>
-            </div>
-            <br/>
->>>>>>> 9419bde9c78af970812dcefaa1b317febf737fde
           </div>
           <div class="row">
             <div class="col text-center">
