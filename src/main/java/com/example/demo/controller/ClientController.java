@@ -1,10 +1,13 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Client;
+import com.example.demo.entity.MstAuth;
+import com.example.demo.searchform.ClientSearchForm;
 import com.example.demo.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,11 +30,12 @@ public class ClientController {
    * to 顧客 ページネーション
    */
   @GetMapping(value = "/list")
-  public String displayList(Model model, Pageable pageable) {
-    Page<Client> clientlist = clientService.getAll(pageable);
+  public String displayList(Model model, @ModelAttribute ClientSearchForm searchForm, Pageable pageable) {
+    Page<Client> clientlist = clientService.getAll(pageable, searchForm);
     model.addAttribute("page", clientlist);
     model.addAttribute("clientlist", clientlist);
     model.addAttribute("url", "/list");
+    model.addAttribute("searchForm", searchForm);
     return "client/list";
   }
 

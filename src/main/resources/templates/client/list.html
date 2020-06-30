@@ -26,29 +26,7 @@
         </div>
       </div>
     </div>
-    <div class="table-filter">
-      <div class="mb-3">
-        <div class="row">
-          <div class="form-group col-2">
-            <label class="col-form-label col-form-label-sm">顧客</label>
-            <input type="text" class="form-control" id="id" name="clientId" placeholder="テキスト入力欄" th:value="${id}"/>
-            <label class="col-form-label col-form-label-sm">顧客名</label>
-            <input type="text" class="form-control" id="cliant_name" name="cliantName" placeholder="テキスト入力欄"
-                   th:value="${cliantName}"/>
-            <label class="col-form-label col-form-label-sm">顧客名フリガナ</label>
-            <input type="text" class="form-control" id="cliant_name_kana" name="cliantNameKana" placeholder="テキスト入力欄"
-                   th:value="${cliantNameKana}"/>
-          </div>
-          <br/>
-        </div>
-        <div class="row">
-          <div class="col text-center">
-            <button type="submit" class="btn btn-primary" style="float:none;"><i
-              class="fa fa-search"></i><span>検索</span></button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div th:replace="client/parts/search :: search"></div>
     <div class="col-sm-11">
       <div th:fragment='paginationbar'>
         <ul>
