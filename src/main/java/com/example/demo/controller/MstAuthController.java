@@ -30,7 +30,7 @@ public class MstAuthController {
    * to 権限機能 一覧画面表示
    * to 権限機能 ページネーション
    */
-  @GetMapping(value = "/mst_auth/list")
+  @GetMapping(value = "/list")
   public String displayList(Model model, @ModelAttribute MstAuthSearchForm searchForm,
                             @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Pageable pageable) {
     Page<MstAuth> mstAuthlist = mstAuthService.getAll(pageable, searchForm);
@@ -50,6 +50,4 @@ public class MstAuthController {
     model.addAttribute("mstAuth", mstAuth);
     return "mst_auth/view";
   }
-
 }
-
