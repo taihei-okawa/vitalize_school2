@@ -1,9 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Task;
-import com.example.demo.entity.Transaction;
+import com.example.demo.entity.Client;
 import com.example.demo.searchform.ClientSearchForm;
+import com.example.demo.service.ClientService;
+
+import com.example.demo.entity.Task;
 import com.example.demo.service.TaskService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,12 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.service.ClientService;
-import com.example.demo.entity.Client;
 import com.example.demo.service.AccountService;
 import com.example.demo.entity.Account;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
