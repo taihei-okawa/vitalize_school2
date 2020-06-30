@@ -1,7 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Transaction;
+import com.example.demo.entity.Task;
 import com.example.demo.searchform.ClientSearchForm;
+import com.example.demo.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,6 +27,8 @@ public class ClientController {
   private ClientService clientService;
   @Autowired
   private AccountService accountService;
+  @Autowired
+  private TaskService taskService;
   private static final int DEFAULT_PAGEABLE_SIZE = 15;
 
   /**
@@ -70,8 +73,11 @@ public class ClientController {
     Client client = clientService.findOne(id);
     Integer accountClientId = Integer.parseInt(String.valueOf(id));
     List<Account> account = accountService.findClientId(accountClientId);
+    Integer accountNumber = account.get(0).getAccountNumber();
+    List<Task> task = taskService.findNumber(accountNumber);
     model.addAttribute("client", client);
     model.addAttribute("account", account);
+    model.addAttribute("task", task);
     return "client/view";
   }
 
