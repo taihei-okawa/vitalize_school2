@@ -33,11 +33,9 @@ public class MstAuthController {
   @GetMapping(value = "/list")
   public String displayList(Model model, @ModelAttribute MstAuthSearchForm searchForm,
                             @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Pageable pageable) {
-    Page<MstAuth> mstAuthlist = mstAuthService.getAll(pageable, searchForm);
-    model.addAttribute("page", mstAuthlist);
+    Page<MstAuth> mstAuthlist = mstAuthService.searchAll(pageable, searchForm);
     model.addAttribute("url", "list");
     model.addAttribute("mstAuthlist", mstAuthlist.getContent());
-    model.addAttribute("searchForm", searchForm);
     return "mst_auth/list";
   }
 
