@@ -22,10 +22,19 @@ public class MstUserService {
 
   // 社員の内容とページネーションを全検索
   public Page<MstUser> getAll(Pageable pageable, MstUserSearchForm searchForm) {
-    Specification<MstUser> spec = Specification
-            .where(userIdEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "") ))
-            .and(nameContains(searchForm.getUserName() == null ? searchForm.getUserName() : searchForm.getUserName().replaceAll("　", "").replaceAll(" ", "")));
-    return mstUserRepository.findAll(spec, pageable);
+    try {
+      Integer.parseInt(searchForm.getId());
+      Specification<MstUser> spec = Specification
+              .where(userIdEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
+              .and(nameContains(searchForm.getUserName() == null ? searchForm.getUserName() : searchForm.getUserName().replaceAll("　", "").replaceAll(" ", "")));
+      return mstUserRepository.findAll(spec, pageable);
+    } catch(NumberFormatException e) {
+      searchForm.setId("");
+      Specification<MstUser> spec = Specification
+              .where(userIdEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
+              .and(nameContains(searchForm.getUserName() == null ? searchForm.getUserName() : searchForm.getUserName().replaceAll("　", "").replaceAll(" ", "")));
+      return mstUserRepository.findAll(spec, pageable);
+    }
   }
 
   public List<MstUser> findAll() {
