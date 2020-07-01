@@ -27,9 +27,9 @@ import com.example.demo.entity.Transaction;
 import com.example.demo.service.TaskService;
 import com.example.demo.service.TransactionService;
 
+@Transactional
 @Component
 @RestController
-@Transactional
 @RequestMapping("/task")
 public class TaskController {
   @Autowired
@@ -40,13 +40,13 @@ public class TaskController {
   /** to 取引履歴 指定実行*/
 
   /**
-   * to 営業時間開始　取引履歴 データ移行
+   * to 営業時間開始　取引履歴 営業時間外データ移行
    */
   @Scheduled(cron = "${scheduler.cron}", zone = "Asia/Tokyo")
   public void taskCronTimeZone() {
     List<Task> taskList = taskService.searchAll();
     taskList.stream()
-      .filter(tk -> tk.getTradingDate() == null && tk.getPoolFlag() == 1)
+      .filter(tk -> tk.getPoolFlag() == 1)
       .collect(Collectors.toList());
     List<Transaction> transactionList = new ArrayList<Transaction>();
     for (Task task : taskList) {
@@ -55,6 +55,7 @@ public class TaskController {
         .accountNumber(task.getAccountNumber())
         .payAccountNumber(task.getPayAccountNumber())
         .type(task.getType())
+        .amount(task.getAmount())
         .poolFlag(task.getPoolFlag())
         .feeId(task.getFeeId())
         .balance(task.getBalance())
@@ -88,6 +89,7 @@ public class TaskController {
         .accountNumber(task.getAccountNumber())
         .payAccountNumber(task.getPayAccountNumber())
         .type(task.getType())
+        .amount(task.getAmount())
         .poolFlag(task.getPoolFlag())
         .feeId(task.getFeeId())
         .balance(task.getBalance())
@@ -115,13 +117,13 @@ public class TaskController {
   /**
    * to 取引履歴　残高確認
    */
-  @GetMapping(value = "seach/{accountNumber}")
+  @GetMapping(value = "search/{accountNumber}")
   public Task getById(@PathVariable("accountNumber") Integer accountNumber) {
     return taskService.findOne(accountNumber);
   }
 
 //  /**
-//   * to 振込 処理(旧)
+//   * to 振込 処理(旧)k
 //   */
 //  @PostMapping
 //  @ResponseStatus(HttpStatus.CREATED)
@@ -144,17 +146,17 @@ public class TaskController {
     Integer answer;
     answer = balance - amount;
     //値を追加する
-    task.setType(2);
+    task.setType(3);
     task.setBalance(answer);
+
+    /** to 相手の口座　入金処理 */
+    List<Task> TaskPayList = taskService.findPayNumber(task.getPayAccountNumber());
+    Task MaxTaskPayList = TaskPayList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
+    Integer payBalance = MaxTaskPayList.getBalance();
+    Integer payAnswer;
+    payAnswer = payBalance + amount;
+    task.setType(3);
+    task.setBalance(payAnswer);
     return taskService.create(task);
-//    /** to 相手の口座　入金処理 */
-//    List<Task> TaskPayList = taskService.findPayNumber(task.getPayAccountNumber());
-//    Task MaxTaskPayList = TaskPayList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
-//    Integer payBalance = MaxTaskPayList.getBalance();
-//    Integer payAnswer;
-//    payAnswer = payBalance + amount;
-//    task.setType(1);
-//    task.setBalance(payAnswer);
-//    return taskService.create(task);
   }
 }
