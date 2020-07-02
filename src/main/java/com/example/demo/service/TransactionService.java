@@ -36,15 +36,25 @@ public class TransactionService {
 
   // 取引履歴機能の内容を全検索
   public List<Transaction> searchAll(TransactionSearchForm searchForm) {
-    Specification<Transaction> spec = Specification.where(idEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
-            .and(accountNumberLike(searchForm.getAccountNumber() == null ? searchForm.getAccountNumber() : searchForm.getAccountNumber().replaceAll("　", "").replaceAll(" ", "")));
+    Specification<Transaction> spec = Specification.where(idEqual(searchForm.getId()))
+            .and(accountNumberLike(searchForm.getAccountNumber()));
     return transactionRepository.findAll(spec);
   }
 
   public Page<Transaction> getAll(Pageable pageable, TransactionSearchForm searchForm) {
-    Specification<Transaction> spec = Specification.where(idEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
-      .and(accountNumberLike(searchForm.getAccountNumber() == null ? searchForm.getAccountNumber() : searchForm.getAccountNumber().replaceAll("　", "").replaceAll(" ", "")));
-    return transactionRepository.findAll(spec, pageable);
+    try {
+      // 文字列から数字変換できるか判定
+      Integer.parseInt(searchForm.getId());
+      Integer.parseInt(searchForm.getAccountNumber());
+
+      Specification<Transaction> spec = Specification
+              .where(idEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
+              .and(accountNumberLike(searchForm.getAccountNumber() == null ? searchForm.getAccountNumber() : searchForm.getAccountNumber().replaceAll("　", "").replaceAll(" ", "")));
+      return transactionRepository.findAll(spec, pageable);
+    } catch(NumberFormatException e) {
+      Specification<Transaction> spec = Specification.where(null);
+      return transactionRepository.findAll(spec, pageable);
+    }
   }
 
   // 取引履歴の登録
