@@ -24,7 +24,9 @@ public class MstUserService {
   public Page<MstUser> getAll(Pageable pageable, MstUserSearchForm searchForm) {
     String userName = searchForm.getUserName() == null ? searchForm.getUserName() : searchForm.getUserName().replaceAll("　", "").replaceAll(" ", "");
     try {
+      // idを文字列から数字変換できるか判定
       Integer.parseInt(searchForm.getId());
+
       Specification<MstUser> spec = Specification
               .where(userIdEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
               .and(nameContains(userName));
