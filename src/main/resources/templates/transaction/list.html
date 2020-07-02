@@ -64,9 +64,7 @@
         <th>口座番号</th>
         <th>振込先口座番号</th>
         <th>種別</th>
-        <th>保留フラグ</th>
         <th>取引金額</th>
-        <th>手数料ID</th>
         <th>取引後残高</th>
         <th>作成者</th>
         <th>作成日</th>
@@ -78,9 +76,7 @@
         <td class="center" th:text="*{accountNumber}"></td>
         <td class="center" th:text="*{payAccountNumber}"></td>
         <td class="center" th:text="*{type}"></td>
-        <td class="center" th:text="*{poolFlag}"></td>
         <td class="center" th:text="*{amount}"></td>
-        <td class="center" th:text="*{feeId}"></td>
         <td class="center" th:text="*{balance}"></td>
         <td th:text="*{insertUserId}"></td>
         <td class="center" th:text="${#dates.format(transaction.insertDate, 'yyyy/MM/dd')}"></td>

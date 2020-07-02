@@ -100,7 +100,6 @@ public class Transaction implements Serializable{
         setInsertDate(new Date());
         setUpdateDate(new Date());
     }
-
     @PreUpdate
     public void onPreUpdate() {
         setUpdateDate(new Date());

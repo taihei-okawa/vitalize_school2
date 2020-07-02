@@ -34,13 +34,17 @@ public class TransactionService {
   @Autowired
   private TransactionRepository transactionRepository;
 
-  // 取引履歴機能の内容を全検索
+  /**
+   * 取引履歴  ダウンロード検索 Repository
+   */
   public List<Transaction> searchAll(TransactionSearchForm searchForm) {
     Specification<Transaction> spec = Specification.where(idEqual(searchForm.getId()))
             .and(accountNumberLike(searchForm.getAccountNumber()));
     return transactionRepository.findAll(spec);
   }
-
+  /**
+   * 取引履歴 一覧検索 Repository
+   */
   public Page<Transaction> getAll(Pageable pageable, TransactionSearchForm searchForm) {
     try {
       // 文字列から数字変換できるか判定
@@ -57,7 +61,9 @@ public class TransactionService {
     }
   }
 
-  // 取引履歴の登録
+  /**
+   * 取引履歴 登録　Repository
+   */
   public Transaction save(Transaction transaction) {
     return transactionRepository.save(transaction);
   }
@@ -71,6 +77,9 @@ public class TransactionService {
     };
   }
 
+  /**
+   * 取引履歴 LIKE検索　Repository
+   */
   private Specification<Transaction> accountNumberLike(String accountNumber) {
     return accountNumber == "" || Objects.isNull(accountNumber) ? null : new Specification<Transaction>() {
       @Override
