@@ -30,9 +30,7 @@ public class MstUserService {
       return mstUserRepository.findAll(spec, pageable);
     } catch(NumberFormatException e) {
       searchForm.setId("");
-      Specification<MstUser> spec = Specification
-              .where(userIdEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
-              .and(nameContains(searchForm.getUserName() == null ? searchForm.getUserName() : searchForm.getUserName().replaceAll("　", "").replaceAll(" ", "")));
+      Specification<MstUser> spec = Specification.where(nameContains(searchForm.getUserName() == null ? searchForm.getUserName() : searchForm.getUserName().replaceAll("　", "").replaceAll(" ", "")));
       return mstUserRepository.findAll(spec, pageable);
     }
   }
