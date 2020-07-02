@@ -81,6 +81,7 @@ public class TransactionController {
   public String create(@ModelAttribute Transaction transaction) {
     transaction.setInsertUserId(9001);
     transaction.setUpdateUserId(9001);
+
     /**
      * to 処理　判断 取引履歴 process 登録
      */
@@ -108,12 +109,12 @@ public class TransactionController {
     }
     //振込
     if (transaction.getType() == 3) {
-      /** to 自分の口座　出金処理 */
       /** to 日付型変換*/
       SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
       Date date = sdf.parse(transaction.getStringTradingDate(), new ParsePosition(0));
       transaction.setTradingDate(date);
 
+      /** to 自分の口座　出金処理 */
       Integer amount = transaction.getAmount();
       List<Task> TaskList = taskService.findNumber(transaction.getAccountNumber());
       Task MaxTaskList = TaskList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
@@ -121,22 +122,8 @@ public class TransactionController {
       Integer answer;
       answer = balance - amount;
       transaction.setBalance(answer);
-      Task createTask = Task.builder()
-        .id(transaction.getId())
-        .accountNumber(transaction.getAccountNumber())
-        .payAccountNumber(transaction.getPayAccountNumber())
-        .type(transaction.getType())
-        .amount(transaction.getAmount())
-        .poolFlag(transaction.getPoolFlag())
-        .feeId(transaction.getFeeId())
-        .balance(transaction.getBalance())
-        .tradingDate(transaction.getTradingDate())
-        .insertUserId(transaction.getInsertUserId())
-        .updateUserId(transaction.getUpdateUserId())
-        .insertDate(transaction.getInsertDate())
-        .updateDate(transaction.getUpdateDate())
-        .build();
-      taskService.create(createTask);
+      List<Transaction> transactionList = new ArrayList<Transaction>();
+      transactionList.add(0,transaction);
 
       /** to 相手の口座　入金処理 */
       List<Task> TaskPayList = taskService.findPayNumber(transaction.getPayAccountNumber());
@@ -144,31 +131,44 @@ public class TransactionController {
       Integer payBalance = MaxTaskPayList.getBalance();
       Integer payAnswer;
       payAnswer = payBalance + amount;
-      transaction.setBalance(payAnswer);
-      Task task = Task.builder()
-        .id(transaction.getId())
-        .accountNumber(transaction.getAccountNumber())
-        .payAccountNumber(transaction.getPayAccountNumber())
-        .type(transaction.getType())
-        .amount(transaction.getAmount())
-        .poolFlag(transaction.getPoolFlag())
-        .feeId(transaction.getFeeId())
-        .balance(transaction.getBalance())
-        .tradingDate(transaction.getTradingDate())
-        .insertUserId(transaction.getInsertUserId())
-        .updateUserId(transaction.getUpdateUserId())
-        .insertDate(transaction.getInsertDate())
-        .updateDate(transaction.getUpdateDate())
-        .build();
-      taskService.create(task);
+      Transaction transactionNew = new Transaction();
+      transactionNew.setAccountNumber(transaction.getPayAccountNumber());
+      transactionNew.setPayAccountNumber(transaction.getAccountNumber());
+      transactionNew.setPoolFlag(transaction.getPoolFlag());
+      transactionNew.setAmount(transaction.getAmount());
+      transactionNew.setBalance(payAnswer);
+      transactionNew.setType(transaction.getType());
+      transactionNew.setInsertUserId(transaction.getInsertUserId());
+      transactionNew.setUpdateUserId(transaction.getUpdateUserId());
+      transactionList.add(1,transactionNew);
+
+      /** to Taskに一時的にデータを作る*/
+      List<Task> taskList = new ArrayList<Task>();
+      for (Transaction task : transactionList) {
+        Task createTask = Task.builder()
+          .accountNumber(task.getAccountNumber())
+          .payAccountNumber(task.getPayAccountNumber())
+          .type(task.getType())
+          .amount(task.getAmount())
+          .poolFlag(task.getPoolFlag())
+          .feeId(task.getFeeId())
+          .balance(task.getBalance())
+          .tradingDate(task.getTradingDate())
+          .insertUserId(task.getInsertUserId())
+          .updateUserId(task.getUpdateUserId())
+          .build();
+        taskList.add(createTask);
+      }
+      taskList.forEach(createTask -> taskService.create(createTask));
     }
 
-    /** to 日付型変換*/
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
-    Date date = sdf.parse(transaction.getStringTradingDate(), new ParsePosition(0));
-    transaction.setTradingDate(date);
-
     if (transaction.getType() == 1 || transaction.getType() == 2) {
+      /** to 日付型変換*/
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+      Date date = sdf.parse(transaction.getStringTradingDate(), new ParsePosition(0));
+      transaction.setTradingDate(date);
+
+      /** to Taskに一時的にデータを作る*/
       Task createTask = Task.builder()
         .id(transaction.getId())
         .accountNumber(transaction.getAccountNumber())
@@ -181,8 +181,6 @@ public class TransactionController {
         .tradingDate(transaction.getTradingDate())
         .insertUserId(transaction.getInsertUserId())
         .updateUserId(transaction.getUpdateUserId())
-        .insertDate(transaction.getInsertDate())
-        .updateDate(transaction.getUpdateDate())
         .build();
       taskService.create(createTask);
     }
