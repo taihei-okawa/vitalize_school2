@@ -3,6 +3,7 @@ package com.example.demo.service;
 import java.util.List;
 import java.util.Objects;
 
+import com.example.demo.entity.Account;
 import com.example.demo.entity.Client;
 import com.example.demo.repository.ClientRepository;
 import com.example.demo.searchform.ClientSearchForm;
@@ -22,10 +23,22 @@ public class ClientService {
   private ClientRepository clientRepository;
 
   public Page<Client> getAll(Pageable pageable, ClientSearchForm searchForm) {
-    Specification<Client> spec = Specification.where(idEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
-            .and(clientNameContains(searchForm.getClientName() == null ? searchForm.getClientName() : searchForm.getClientName().replaceAll("　", "").replaceAll(" ", "")))
-            .and(clientNameKanaContains(searchForm.getClientNameKana() == null ? searchForm.getClientNameKana() : searchForm.getClientNameKana().replaceAll("　", "").replaceAll(" ", "")));
-    return clientRepository.findAll(spec, pageable);
+    String clientName = searchForm.getClientName() == null ? searchForm.getClientName() : searchForm.getClientName().replaceAll("　", "").replaceAll(" ", "");
+    String clientNameKana = searchForm.getClientNameKana() == null ? searchForm.getClientNameKana() : searchForm.getClientNameKana().replaceAll("　", "").replaceAll(" ", "");
+
+    try {
+      // idを文字列から数字変換できるか判定
+      Integer.parseInt(searchForm.getId());
+
+      Specification<Client> spec = Specification.where(idEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
+              .and(clientNameContains(clientName))
+              .and(clientNameKanaContains(clientNameKana));
+      return clientRepository.findAll(spec, pageable);
+    } catch (NumberFormatException e) {
+      Specification<Client> spec = Specification.where(clientNameContains(clientName))
+              .and(clientNameKanaContains(clientNameKana));
+      return clientRepository.findAll(spec, pageable);
+    }
   }
 
   public List<Client> findAll() {
