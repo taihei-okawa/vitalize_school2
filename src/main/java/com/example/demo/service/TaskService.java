@@ -40,7 +40,6 @@ public class TaskService {
   public Task create(Task task) {
     return taskRepository.save(task);
   }
-
   /**
    * to 振込 処理 自分の口座　最新レコード取得
    */

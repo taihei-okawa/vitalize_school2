@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
-import java.util.Date;
+import java.text.ParsePosition;
+import java.util.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-
 import com.example.demo.searchform.TransactionSearchForm;
 
 import com.example.demo.entity.Task;
@@ -21,9 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.demo.service.TaskService;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -37,12 +36,11 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.transaction.Transactional;
 
 @Controller
 @RequestMapping("/transaction")
 public class TransactionController {
-
-
   @Autowired
   private TaskService taskService;
 
@@ -67,7 +65,6 @@ public class TransactionController {
 
     return "transaction/list";
   }
-
   /**
    * to 取引履歴機能 登録画面表示
    */
@@ -77,47 +74,120 @@ public class TransactionController {
   }
 
   /**
-   * to 取引履歴機能 process 登録
+   * to 取引履歴 process 登録
    */
+  @Transactional
   @PostMapping(value = "/add")
   public String create(@ModelAttribute Transaction transaction) {
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
     transaction.setInsertUserId(9001);
     transaction.setUpdateUserId(9001);
-    //振込の仕方別
-    if (transaction.getType() == 1 || transaction.getType() == 2) {
+
+    /**
+     * to 処理　判断 取引履歴 process 登録
+     */
+    //入金
+    if (transaction.getType() == 1){
       transaction.setAccountNumber(transaction.getPayAccountNumber());
+      Integer amount = transaction.getAmount();
+      List<Task> TaskList = taskService.findNumber(transaction.getPayAccountNumber());
+      Task MaxTaskList = TaskList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
+      Integer balance = MaxTaskList.getBalance();
+      Integer answer;
+      answer = balance + amount;
+      transaction.setBalance(answer);
     }
-    //最短日付か指定の日付か
-    if (transaction.getStringTradingDate() == "") {
-      Date date = new Date();
-      sdf.format(date);
-      transaction.setTradingDate(date);
+    //出金
+    if (transaction.getType() == 2) {
+      transaction.setAccountNumber(transaction.getPayAccountNumber());
+      Integer amount = transaction.getAmount();
+      List<Task> TaskList = taskService.findNumber(transaction.getPayAccountNumber());
+      Task MaxTaskList = TaskList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
+      Integer balance = MaxTaskList.getBalance();
+      Integer answer;
+      answer = balance - amount;
+      transaction.setBalance(answer);
     }
-    try {
-      Date date = sdf.parse(transaction.getStringTradingDate());
+    //振込
+    if (transaction.getType() == 3) {
+      /** to 日付型変換*/
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+      Date date = sdf.parse(transaction.getStringTradingDate(), new ParsePosition(0));
       transaction.setTradingDate(date);
-    } catch (ParseException e) {
-      e.printStackTrace();
+
+      /** to 自分の口座　出金処理 */
+      Integer amount = transaction.getAmount();
+      List<Task> TaskList = taskService.findNumber(transaction.getAccountNumber());
+      Task MaxTaskList = TaskList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
+      Integer balance = MaxTaskList.getBalance();
+      Integer answer;
+      answer = balance - amount;
+      transaction.setBalance(answer);
+      List<Transaction> transactionList = new ArrayList<Transaction>();
+      transactionList.add(0,transaction);
+
+      /** to 相手の口座　入金処理 */
+      List<Task> TaskPayList = taskService.findPayNumber(transaction.getPayAccountNumber());
+      Task MaxTaskPayList = TaskPayList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
+      Integer payBalance = MaxTaskPayList.getBalance();
+      Integer payAnswer;
+      payAnswer = payBalance + amount;
+      Transaction transactionNew = new Transaction();
+      transactionNew.setAccountNumber(transaction.getPayAccountNumber());
+      transactionNew.setPayAccountNumber(transaction.getAccountNumber());
+      transactionNew.setPoolFlag(transaction.getPoolFlag());
+      transactionNew.setAmount(transaction.getAmount());
+      transactionNew.setBalance(payAnswer);
+      transactionNew.setType(transaction.getType());
+      transactionNew.setInsertUserId(transaction.getInsertUserId());
+      transactionNew.setUpdateUserId(transaction.getUpdateUserId());
+      transactionList.add(1,transactionNew);
+
+      /** to Taskに一時的にデータを作る*/
+      List<Task> taskList = new ArrayList<Task>();
+      for (Transaction task : transactionList) {
+        Task createTask = Task.builder()
+          .accountNumber(task.getAccountNumber())
+          .payAccountNumber(task.getPayAccountNumber())
+          .type(task.getType())
+          .amount(task.getAmount())
+          .poolFlag(task.getPoolFlag())
+          .feeId(task.getFeeId())
+          .balance(task.getBalance())
+          .tradingDate(task.getTradingDate())
+          .insertUserId(task.getInsertUserId())
+          .updateUserId(task.getUpdateUserId())
+          .build();
+        taskList.add(createTask);
+      }
+      taskList.forEach(createTask -> taskService.create(createTask));
     }
 
-    Task createTask = Task.builder()
-      .id(transaction.getId())
-      .accountNumber(transaction.getAccountNumber())
-      .payAccountNumber(transaction.getPayAccountNumber())
-      .type(transaction.getType())
-      .poolFlag(transaction.getPoolFlag())
-      .feeId(transaction.getFeeId())
-      .balance(transaction.getBalance())
-      .tradingDate(transaction.getTradingDate())
-      .insertUserId(transaction.getInsertUserId())
-      .updateUserId(transaction.getUpdateUserId())
-      .insertDate(transaction.getInsertDate())
-      .updateDate(transaction.getUpdateDate())
-      .build();
-    taskService.create(createTask);
+    if (transaction.getType() == 1 || transaction.getType() == 2) {
+      /** to 日付型変換*/
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+      Date date = sdf.parse(transaction.getStringTradingDate(), new ParsePosition(0));
+      transaction.setTradingDate(date);
+
+      /** to Taskに一時的にデータを作る*/
+      Task createTask = Task.builder()
+        .id(transaction.getId())
+        .accountNumber(transaction.getAccountNumber())
+        .payAccountNumber(transaction.getPayAccountNumber())
+        .type(transaction.getType())
+        .amount(transaction.getAmount())
+        .poolFlag(transaction.getPoolFlag())
+        .feeId(transaction.getFeeId())
+        .balance(transaction.getBalance())
+        .tradingDate(transaction.getTradingDate())
+        .insertUserId(transaction.getInsertUserId())
+        .updateUserId(transaction.getUpdateUserId())
+        .build();
+      taskService.create(createTask);
+    }
     return "redirect:/transaction/list";
   }
+
+  /** to CSVダウンロード*/
   @ResponseBody
   @RequestMapping(value = "/download/csv", method = RequestMethod.GET)
   public Object downloadCsv(@ModelAttribute TransactionSearchForm searchForm) {
