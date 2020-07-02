@@ -1,21 +1,13 @@
 package com.example.demo.service;
-
-import java.util.List;
 import java.util.Objects;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.example.demo.entity.MstAuth;
-
 import com.example.demo.repository.MstAuthRepository;
 import com.example.demo.searchform.MstAuthSearchForm;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 
 /**
@@ -34,15 +26,10 @@ public class MstAuthService {
   /**
    * 取引履歴機能の内容とページネーションを全検索
    */
-  public Page<MstAuth> getAll(Pageable pageable, MstAuthSearchForm searchForm) {
+  public Page<MstAuth> searchAll(Pageable pageable, MstAuthSearchForm searchForm) {
     Specification<MstAuth> spec = Specification.where(authIdEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
             .and(statusNameEqual(searchForm.getStatusName() == null ? searchForm.getStatusName() : searchForm.getStatusName().replaceAll("　", "").replaceAll(" ", "")));
     return mstAuthRepository.findAll(spec, pageable);
-  }
-
-  // 権限の内容を全検索
-  public List<MstAuth> searchAll() {
-    return mstAuthRepository.findAll();
   }
 
   public MstAuth findOne(Long id) {

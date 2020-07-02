@@ -40,9 +40,9 @@ public class AccountService {
   // 口座機能の内容とページネーションを全検索
   public Page<Account> getAll(Pageable pageable, AccountSearchForm searchForm) {
     Specification<Account> spec = Specification
-            .where(idEqual(searchForm.getId()))
-            .and(numberEqual(searchForm.getAccountNumber()))
-            .and(branchCodeContains(searchForm.getBranchCode()));
+            .where(idEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
+            .and(numberEqual(searchForm.getAccountNumber() == null ? searchForm.getAccountNumber() : searchForm.getAccountNumber().replaceAll("　", "").replaceAll(" ", "")))
+            .and(branchCodeContains(searchForm.getBranchCode() == null ? searchForm.getBranchCode() : searchForm.getBranchCode().replaceAll("　", "").replaceAll(" ", "")));
     return accountRepository.findAll(spec, pageable);
   }
 
