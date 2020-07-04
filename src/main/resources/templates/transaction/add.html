@@ -84,19 +84,19 @@
                         <div class="tabbable">
                           <ul class="nav tab-group col-sm-6">
                             <li class="active">
-                              <a href="#photo4" data-toggle="tab">最短日数</a>
+                              <a href="#photo10" data-toggle="tab">最短日数</a>
                             </li>
                             <li>
-                              <a href="#photo5" class="nav-link" data-toggle="tab">日付を指定する</a>
+                              <a href="#photo11" class="nav-link" data-toggle="tab">日付を指定する</a>
                             </li>
                           </ul>
                         </div>
                         <!-- タブ -->
                         <div class="tab-content">
-                          <div id="photo4" class="tab-pane active ">
+                          <div id="photo10" class="tab-pane active ">
                             <div th:replace="~{transaction/parts/tradingCalendarNodate :: InputField}"></div>
                           </div>
-                          <div id="photo5" class="tab-pane">
+                          <div id="photo11" class="tab-pane">
                             <div th:replace="~{transaction/parts/tradingCalendar :: InputField}"></div>
                           </div>
                         </div>
@@ -115,19 +115,19 @@
                         <div class="tabbable">
                           <ul class="nav tab-group col-sm-6">
                             <li class="active">
-                              <a href="#photo4" data-toggle="tab">最短日数</a>
+                              <a href="#photo12" data-toggle="tab">最短日数</a>
                             </li>
                             <li>
-                              <a href="#photo5" class="nav-link" data-toggle="tab">日付を指定する</a>
+                              <a href="#photo13" class="nav-link" data-toggle="tab">日付を指定する</a>
                             </li>
                           </ul>
                         </div>
                         <!-- タブ -->
                         <div class="tab-content">
-                          <div id="photo4" class="tab-pane active ">
+                          <div id="photo12" class="tab-pane active ">
                             <div th:replace="~{transaction/parts/tradingCalendarNodate :: InputField}"></div>
                           </div>
-                          <div id="photo5" class="tab-pane">
+                          <div id="photo13" class="tab-pane">
                             <div th:replace="~{transaction/parts/tradingCalendar :: InputField}"></div>
                           </div>
                         </div>
@@ -157,9 +157,7 @@
     flatpickr('#tradingCalendar', {
         enableTime: true,
         allowInput: true
-
     });
-
 </script>
 </body>
 </html>
