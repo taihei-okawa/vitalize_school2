@@ -38,11 +38,22 @@ public class AccountService {
 
   // 口座機能の内容とページネーションを全検索
   public Page<Account> getAll(Pageable pageable, AccountSearchForm searchForm) {
-    Specification<Account> spec = Specification
-            .where(idEqual(searchForm.getId()))
-            .and(numberEqual(searchForm.getAccountNumber()))
-            .and(branchCodeContains(searchForm.getBranchCode()));
-    return accountRepository.findAll(spec, pageable);
+    String branchCode = searchForm.getBranchCode() == null ? searchForm.getBranchCode() : searchForm.getBranchCode().replaceAll("　", "").replaceAll(" ", "");
+
+    try {
+      // idを文字列から数字変換できるか判定
+      Integer.parseInt(searchForm.getId());
+      Integer.parseInt(searchForm.getAccountNumber());
+
+      Specification<Account> spec = Specification
+              .where(idEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
+              .and(numberEqual(searchForm.getAccountNumber() == null ? searchForm.getAccountNumber() : searchForm.getAccountNumber().replaceAll("　", "").replaceAll(" ", "")))
+              .and(branchCodeContains(branchCode));
+      return accountRepository.findAll(spec, pageable);
+    } catch(NumberFormatException e) {
+      Specification<Account> spec = Specification.where(branchCodeContains(branchCode));
+      return accountRepository.findAll(spec, pageable);
+    }
   }
 
   /**

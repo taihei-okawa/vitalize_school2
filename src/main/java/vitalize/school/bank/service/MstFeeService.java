@@ -22,10 +22,20 @@ public class MstFeeService {
 
   // 社員の内容とページネーションを全検索
   public Page<MstFee> getAll(Pageable pageable, MstFeeSearchForm searchForm) {
-    Specification<MstFee> spec = Specification
-            .where(mstFeeIdEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
-            .and(feeCodeContains(searchForm.getFeeCode() == null ? searchForm.getFeeCode() : searchForm.getFeeCode().replaceAll("　", "").replaceAll(" ", "")));
-    return mstFeeRepository.findAll(spec, pageable);
+    String feeCode = searchForm.getFeeCode() == null ? searchForm.getFeeCode() : searchForm.getFeeCode().replaceAll("　", "").replaceAll(" ", "");
+
+    try {
+      // idを文字列から数字変換できるか判定
+      Integer.parseInt(searchForm.getId());
+
+      Specification<MstFee> spec = Specification
+              .where(mstFeeIdEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
+              .and(feeCodeContains(feeCode));
+      return mstFeeRepository.findAll(spec, pageable);
+    } catch (NumberFormatException e) {
+      Specification<MstFee> spec = Specification.where(feeCodeContains(feeCode));
+      return mstFeeRepository.findAll(spec, pageable);
+    }
   }
 
   public List<MstFee> findAll() {

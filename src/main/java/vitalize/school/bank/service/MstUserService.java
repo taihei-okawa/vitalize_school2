@@ -22,10 +22,19 @@ public class MstUserService {
 
   // 社員の内容とページネーションを全検索
   public Page<MstUser> getAll(Pageable pageable, MstUserSearchForm searchForm) {
-    Specification<MstUser> spec = Specification
-            .where(userIdEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "") ))
-            .and(nameContains(searchForm.getUserName() == null ? searchForm.getUserName() : searchForm.getUserName().replaceAll("　", "").replaceAll(" ", "")));
-    return mstUserRepository.findAll(spec, pageable);
+    String userName = searchForm.getUserName() == null ? searchForm.getUserName() : searchForm.getUserName().replaceAll("　", "").replaceAll(" ", "");
+    try {
+      // idを文字列から数字変換できるか判定
+      Integer.parseInt(searchForm.getId());
+
+      Specification<MstUser> spec = Specification
+              .where(userIdEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
+              .and(nameContains(userName));
+      return mstUserRepository.findAll(spec, pageable);
+    } catch(NumberFormatException e) {
+      Specification<MstUser> spec = Specification.where(nameContains(userName));
+      return mstUserRepository.findAll(spec, pageable);
+    }
   }
 
   public List<MstUser> findAll() {

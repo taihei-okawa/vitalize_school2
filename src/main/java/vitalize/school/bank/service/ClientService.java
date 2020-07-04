@@ -6,7 +6,6 @@ import java.util.Objects;
 import vitalize.school.bank.entity.Client;
 import vitalize.school.bank.repository.ClientRepository;
 import vitalize.school.bank.searchform.ClientSearchForm;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,10 +21,22 @@ public class ClientService {
   private ClientRepository clientRepository;
 
   public Page<Client> getAll(Pageable pageable, ClientSearchForm searchForm) {
-    Specification<Client> spec = Specification.where(idEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
-            .and(clientNameContains(searchForm.getClientName() == null ? searchForm.getClientName() : searchForm.getClientName().replaceAll("　", "").replaceAll(" ", "")))
-            .and(clientNameKanaContains(searchForm.getClientNameKana() == null ? searchForm.getClientNameKana() : searchForm.getClientNameKana().replaceAll("　", "").replaceAll(" ", "")));
-    return clientRepository.findAll(spec, pageable);
+    String clientName = searchForm.getClientName() == null ? searchForm.getClientName() : searchForm.getClientName().replaceAll("　", "").replaceAll(" ", "");
+    String clientNameKana = searchForm.getClientNameKana() == null ? searchForm.getClientNameKana() : searchForm.getClientNameKana().replaceAll("　", "").replaceAll(" ", "");
+
+    try {
+      // idを文字列から数字変換できるか判定
+      Integer.parseInt(searchForm.getId());
+
+      Specification<Client> spec = Specification.where(idEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
+              .and(clientNameContains(clientName))
+              .and(clientNameKanaContains(clientNameKana));
+      return clientRepository.findAll(spec, pageable);
+    } catch (NumberFormatException e) {
+      Specification<Client> spec = Specification.where(clientNameContains(clientName))
+              .and(clientNameKanaContains(clientNameKana));
+      return clientRepository.findAll(spec, pageable);
+    }
   }
 
   public List<Client> findAll() {
