@@ -35,13 +35,12 @@
         <th>詳細</th>
         <th>編集</th>
         <th>手数料ID</th>
-        <th>手数料コード</th>
         <th>手数料額</th>
-        <th>銀行コード</th>
-        <th>登録者</th>
-        <th>更新者</th>
-        <th>登録日</th>
-        <th>更新日</th>
+        <th>支店名</th>
+        <th>営業日</th>
+        <th>休日</th>
+        <th>取引開始時間</th>
+        <th>取引終了時間</th>
         <th>削除</th>
       </tr>
       </thead>
@@ -52,13 +51,12 @@
         <td><a class="settings" th:href="@{/mst_fee/edit/{id}(id=*{id})}" title="Settings" data-toggle="tooltip"><i
           class="material-icons">&#xE8B8;</i></a></td>
         <td th:text="*{id}"></td>
-        <td th:text="*{feeCode}"></td>
         <td th:text="*{feePrice}"></td>
-        <td th:text="*{bankCode}"></td>
-        <td th:text="*{insertUserId}"></td>
-        <td th:text="*{updateUserId}"></td>
-        <td th:text="${#dates.format(mstFee.insertDate, 'yyyy/MM/dd')}"></td>
-        <td th:text="${#dates.format(mstFee.updateDate, 'yyyy/MM/dd')}"></td>
+        <td th:text="*{branchCode}"></td>
+        <td th:text="*{businessDay}"></td>
+        <td th:text="*{holiday}"></td>
+        <td th:text="*{startDay}"></td>
+        <td th:text="*{endDay}"></td>
         <td>
           <form th:action="@{/mst_fee/{id}(id=*{id})}" th:method="delete">
             <input class="btn btn-danger btn-xs" type="submit" value="削除"/>

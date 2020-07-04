@@ -53,7 +53,7 @@ public class Account implements Serializable {
 	@Column(name = "client_id")
   private Integer clientId;
 	/**
-   * 支店コード
+   * 支店名
    */
 	@Column(name = "branch_code")
   private String branchCode;

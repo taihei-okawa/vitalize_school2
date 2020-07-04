@@ -73,7 +73,8 @@ public class TransactionController {
    */
   @Transactional
   @PostMapping(value = "/add")
-  public String create(@ModelAttribute Transaction transaction) {
+  public String create( @ModelAttribute Transaction transaction) {
+    List<Task> TaskList = taskService.findNumber(transaction.getPayAccountNumber());
     transaction.setInsertUserId(9001);
     transaction.setUpdateUserId(9001);
 
@@ -84,7 +85,6 @@ public class TransactionController {
     if (transaction.getType() == 1){
       transaction.setAccountNumber(transaction.getPayAccountNumber());
       Integer amount = transaction.getAmount();
-      List<Task> TaskList = taskService.findNumber(transaction.getPayAccountNumber());
       Task MaxTaskList = TaskList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
       Integer balance = MaxTaskList.getBalance();
       Integer answer;
@@ -95,7 +95,6 @@ public class TransactionController {
     if (transaction.getType() == 2) {
       transaction.setAccountNumber(transaction.getPayAccountNumber());
       Integer amount = transaction.getAmount();
-      List<Task> TaskList = taskService.findNumber(transaction.getPayAccountNumber());
       Task MaxTaskList = TaskList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
       Integer balance = MaxTaskList.getBalance();
       Integer answer;
@@ -112,7 +111,6 @@ public class TransactionController {
 
       /** to 自分の口座　出金処理 */
       Integer amount = transaction.getAmount();
-      List<Task> TaskList = taskService.findNumber(transaction.getAccountNumber());
       Task MaxTaskList = TaskList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
       Integer balance = MaxTaskList.getBalance();
       Integer answer;

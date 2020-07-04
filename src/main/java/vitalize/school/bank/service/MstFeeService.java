@@ -22,7 +22,7 @@ public class MstFeeService {
 
   // 社員の内容とページネーションを全検索
   public Page<MstFee> getAll(Pageable pageable, MstFeeSearchForm searchForm) {
-    String feeCode = searchForm.getFeeCode() == null ? searchForm.getFeeCode() : searchForm.getFeeCode().replaceAll("　", "").replaceAll(" ", "");
+    String feeCode = searchForm.getBranchCode() == null ? searchForm.getBranchCode() : searchForm.getBranchCode().replaceAll("　", "").replaceAll(" ", "");
 
     try {
       // idを文字列から数字変換できるか判定

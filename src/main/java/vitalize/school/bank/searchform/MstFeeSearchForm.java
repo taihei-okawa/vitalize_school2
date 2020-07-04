@@ -7,5 +7,5 @@ import lombok.Setter;
 @Setter
 public class MstFeeSearchForm implements java.io.Serializable{
     private String id;
-    private String feeCode;
+    private String branchCode;
 }

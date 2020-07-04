@@ -27,13 +27,6 @@ public class MstFee implements Serializable {
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-
-  /**
-   * 手数料コード
-   */
-  @Column(name = "fee_code")
-  private String feeCode;
-
   /**
    * 手数料額
    */
@@ -41,10 +34,10 @@ public class MstFee implements Serializable {
   private Integer feePrice;
 
   /**
-   * 銀行コード
+   * 支店名
    */
-  @Column(name = "bank_code")
-  private String bankCode;
+  @Column(name = "branch_code")
+  private String branchCode;
   /**
    * 営業日
    */
