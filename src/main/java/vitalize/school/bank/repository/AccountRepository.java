@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import vitalize.school.bank.entity.Account;
+import vitalize.school.bank.entity.Transaction;
 
 import java.util.List;
 
@@ -14,4 +15,5 @@ import java.util.List;
 public interface AccountRepository extends JpaRepository<Account, Long>, JpaSpecificationExecutor<Account> {
     public Page<Account> findAll(Pageable pageable);
     public List<Account> findByClientId(Integer clientId);
+    public List<Account>  findByAccountNumber(Integer accountNumber);
 }

@@ -1,6 +1,8 @@
 package vitalize.school.bank.service;
 
 import vitalize.school.bank.entity.Account;
+import vitalize.school.bank.entity.Client;
+import vitalize.school.bank.entity.Transaction;
 import vitalize.school.bank.repository.AccountRepository;
 import vitalize.school.bank.searchform.AccountSearchForm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,9 @@ public class AccountService {
   @Autowired
   private AccountRepository accountRepository;
 
+  /**
+   *  口座 一覧
+   */
   public List<Account> findAll() {
     return accountRepository.findAll();
   }
@@ -27,16 +32,21 @@ public class AccountService {
   public List<Account> findClientId(Integer accountClientId) {
     return accountRepository.findByClientId(accountClientId);
   }
-
+  /**
+   *  口座 登録
+   */
   public Account save(Account account) {
     return accountRepository.save(account);
   }
-
+  /**
+   *  口座 削除
+   */
   public void delete(Long id) {
     accountRepository.deleteById(id);
   }
-
-  // 口座機能の内容とページネーションを全検索
+  /**
+   *  口座の内容とページネーションを全検索
+   */
   public Page<Account> getAll(Pageable pageable, AccountSearchForm searchForm) {
     String branchCode = searchForm.getBranchCode() == null ? searchForm.getBranchCode() : searchForm.getBranchCode().replaceAll("　", "").replaceAll(" ", "");
 
@@ -57,7 +67,7 @@ public class AccountService {
   }
 
   /**
-   *  口座ID検索
+   *  口座ID 検索
    */
   private static Specification<Account> idEqual(String id) {
     // ラムダ式で記述すると、引数のデータ型の指定が省略できる
@@ -67,7 +77,7 @@ public class AccountService {
   }
 
   /**
-   *  口座番号検索
+   *  口座番号 検索
    */
   private static Specification<Account> numberEqual(String accountNumber) {
     // ラムダ式で記述すると、引数のデータ型の指定が省略できる
@@ -77,13 +87,20 @@ public class AccountService {
   }
 
   /**
-   *  視点コード検索
+   *  支店名 検索
    */
   private static Specification<Account> branchCodeContains(String branchCode) {
     // ラムダ式で記述すると、引数のデータ型の指定が省略できる
     return branchCode == "" || Objects.isNull(branchCode) ? null : (root, query, cb) -> {
       return cb.like(root.get("branchCode"), "%" + branchCode + "%");
     };
+  }
+
+  /**
+   *  口座番号 検索
+   */
+  public List<Account>  findAccount(Integer accountNumber) {
+    return accountRepository.findByAccountNumber(accountNumber);
   }
 }
 
