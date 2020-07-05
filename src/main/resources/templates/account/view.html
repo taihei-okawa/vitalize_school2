@@ -43,6 +43,12 @@
               <p th:text="*{branchCode}"></p>
             </div>
           </div>
+          <div th:object="${task}">
+            <div>
+              <label>残高</label>
+              <p th:text="*{balance}"></p>
+            </div>
+          </div>
         </div>
       </div>
       <div>

@@ -30,10 +30,10 @@
         <div class="row">
           <div th:object="${mstFee}">
             <input type="hidden" th:value="*{id}">
-            <div>
-              <label>手数料コード</label>
-              <p th:text="*{feeCode}"></p>
-            </div>
+<!--            <div>-->
+<!--              <label>手数料コード</label>-->
+<!--              <p th:text="*{feeCode}"></p>-->
+<!--            </div>-->
             <div>
               <label>手数料額</label>
               <p th:text="*{feePrice}"></p>
@@ -41,6 +41,22 @@
             <div>
               <label>銀行コード</label>
               <p th:text="*{bankCode}"></p>
+            </div>
+            <div>
+              <label>営業日</label>
+              <p th:text="*{businessDay}"></p>
+            </div>
+            <div>
+              <label>休日</label>
+              <p th:text="*{holiday}"></p>
+            </div>
+            <div>
+              <label>取引開始時間</label>
+              <p th:text="*{startDay}"></p>
+            </div>
+            <div>
+              <label>取引終了時間</label>
+              <p th:text="*{endDay}"></p>
             </div>
             <div>
               <label>登録日</label>
