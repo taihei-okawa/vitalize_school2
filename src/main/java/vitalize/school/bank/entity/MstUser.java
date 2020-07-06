@@ -49,19 +49,19 @@ public class MstUser implements Serializable {
   private Integer status;
 
   /**
-   * 支店コード
+   * 支店名
    */
   @Column(name = "branch_code")
   private Integer branchCode;
 
   /**
-   * 役職コード
+   * 役職名
    */
   @Column(name = "position_code")
   private String positionCode;
 
   /**
-   * 業務コード
+   * 業務名
    */
   @Column(name = "business_code")
   private String businessCode;

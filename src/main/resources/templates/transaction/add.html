@@ -46,7 +46,7 @@
               <!-- タブ -->
               <div class="tab-content">
                 <div id="photo1" class="tab-pane active">
-                  <form th:action="@{/transaction/add}" th:method="post">
+                  <form th:action="@{/transaction/add}" th:method="post" th:object="${transaction}">
                     <div class="tab-content">
                       <div th:replace="~{transaction/parts/transactionDeposit :: InputField}"></div>
                       <div class="mx-aut">

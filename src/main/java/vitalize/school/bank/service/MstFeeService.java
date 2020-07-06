@@ -22,7 +22,7 @@ public class MstFeeService {
 
   // 社員の内容とページネーションを全検索
   public Page<MstFee> getAll(Pageable pageable, MstFeeSearchForm searchForm) {
-    String feeCode = searchForm.getFeeCode() == null ? searchForm.getFeeCode() : searchForm.getFeeCode().replaceAll("　", "").replaceAll(" ", "");
+    String branchCode = searchForm.getBranchCode() == null ? searchForm.getBranchCode() : searchForm.getBranchCode().replaceAll("　", "").replaceAll(" ", "");
 
     try {
       // idを文字列から数字変換できるか判定
@@ -30,10 +30,10 @@ public class MstFeeService {
 
       Specification<MstFee> spec = Specification
               .where(mstFeeIdEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
-              .and(feeCodeContains(feeCode));
+              .and(branchCodeContains(branchCode));
       return mstFeeRepository.findAll(spec, pageable);
     } catch (NumberFormatException e) {
-      Specification<MstFee> spec = Specification.where(feeCodeContains(feeCode));
+      Specification<MstFee> spec = Specification.where(branchCodeContains(branchCode));
       return mstFeeRepository.findAll(spec, pageable);
     }
   }
@@ -53,7 +53,12 @@ public class MstFeeService {
   public void delete(Long id) {
     mstFeeRepository.deleteById(id);
   }
-
+  /**
+   *  支店　検索
+   */
+  public List<MstFee> findBranchCode(String branchCode) {
+    return mstFeeRepository.findByBranchCode(branchCode);
+  }
 
   /**
    *  ID検索
@@ -68,10 +73,10 @@ public class MstFeeService {
   /**
    *  ユーザー名検索
    */
-  private static Specification<MstFee> feeCodeContains(String feeCode) {
+  private static Specification<MstFee> branchCodeContains(String branchCode) {
     // ラムダ式で記述すると、引数のデータ型の指定が省略できる
-    return feeCode == "" || Objects.isNull(feeCode) ? null : (root, query, cb) -> {
-      return cb.like(root.get("feeCode"), "%" + feeCode + "%");
+    return branchCode == "" || Objects.isNull(branchCode) ? null : (root, query, cb) -> {
+      return cb.like(root.get("branchCode"), "%" + branchCode + "%");
     };
   }
 }

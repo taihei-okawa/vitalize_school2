@@ -5,17 +5,13 @@
   </head>
   <body>
     <div th:fragment="InputField" th:remove="tag">
-<!--      <div class="form-group col-sm-8">-->
-<!--        <label class="col-form-label col-form-label-sm">手数料コード</label>-->
-<!--        <input class="form-control" type="text" placeholder="手数料コード" required="required" name="feeCode" th:field="*{feeCode}"/>-->
-<!--      </div>-->
       <div class="form-group col-sm-8">
         <label class="col-form-label col-form-label-sm">手数料額</label>
         <input class="form-control" type="number" placeholder="手数料額" required="required" name="feePrice" th:field="*{feePrice}"/>
       </div>
       <div class="form-group col-sm-8">
         <label class="col-form-label col-form-label-sm">支店名</label>
-        <input class="form-control" type="text" placeholder="支店名" required="required" name="bankCode" th:field="*{bankCode}"/>
+        <input class="form-control" type="text" placeholder="支店名" required="required" name="branchCode" th:field="*{branchCode}"/>
       </div>
       <div class="form-group col-sm-8">
         <label class="col-form-label col-form-label-sm">営業日</label>
