@@ -72,6 +72,14 @@ public class TransactionController {
    */
   @GetMapping(value = "/add")
   public String add(Model model) {
+    List<Account> account = accountService.findAll();
+    List<Integer> accountList = new ArrayList<Integer>();
+    //昇順にソート
+    for (Account accountDate:account){
+      accountList.add(accountDate.getAccountNumber());
+    }
+    Collections.sort(accountList);
+    model.addAttribute("accountList", accountList);
     return "transaction/add";
   }
 
@@ -95,27 +103,27 @@ public class TransactionController {
     Task MaxTaskList = TaskList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
     Integer balance = MaxTaskList.getBalance();
 
-    /** to 手数料計算 */
-    //口座テーブルに口座番号で支店名を検索
-    Integer accountNumber = transaction.getAccountNumber();
-    List<Account> Account  = accountService.findAccount(accountNumber);
-    //手数料テーブルに支店名で検索
-    String branchCode = Account.get(0).getBranchCode();
-    List<MstFee> mstFeeList = mstFeeService.findBranchCode(branchCode);
-    //曜日判断
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    String strTradingDate = dateFormat.format(transaction.getStringTradingDate());
-    mstFeeList.stream()
-      .filter(msl -> msl.getBusinessDay() == strTradingDate || msl.getHoliday() == strTradingDate)
-      .collect(Collectors.toList());
-    //時間判断
-    SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
-    Integer intTradingTime = Integer.valueOf(timeFormat.format(transaction.getStringTradingDate()));
-    mstFeeList.stream()
-      .filter(msl -> Integer.valueOf(msl.getStartDay()) <= intTradingTime && Integer.valueOf(msl.getEndDay()) <= intTradingTime)
-      .collect(Collectors.toList());
-    //手数料決定
-    Integer feePrice = mstFeeList.get(0).getFeePrice();
+//    /** to 手数料計算 */
+//    //口座テーブルに口座番号で支店名を検索
+//    Integer accountNumber = transaction.getAccountNumber();
+//    List<Account> Account  = accountService.findAccount(accountNumber);
+//    //手数料テーブルに支店名で検索
+//    String branchCode = Account.get(0).getBranchCode();
+//    List<MstFee> mstFeeList = mstFeeService.findBranchCode(branchCode);
+//    //曜日判断
+//    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//    String strTradingDate = dateFormat.format(transaction.getStringTradingDate());
+//    mstFeeList.stream()
+//      .filter(msl -> msl.getBusinessDay() == strTradingDate || msl.getHoliday() == strTradingDate)
+//      .collect(Collectors.toList());
+//    //時間判断
+//    SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
+//    Integer intTradingTime = Integer.valueOf(timeFormat.format(transaction.getStringTradingDate()));
+//    mstFeeList.stream()
+//      .filter(msl -> Integer.valueOf(msl.getStartDay()) <= intTradingTime && Integer.valueOf(msl.getEndDay()) <= intTradingTime)
+//      .collect(Collectors.toList());
+//    //手数料決定
+//    Integer feePrice = mstFeeList.get(0).getFeePrice();
 
     /** to 日付型に変換*/
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm");
@@ -131,21 +139,21 @@ public class TransactionController {
     if (transaction.getType() == 1){
       transaction.setPayAccountNumber(transaction.getAccountNumber());
       Integer answer;
-      answer = balance + amount - feePrice;
+      answer = balance + amount;
       transaction.setBalance(answer);
     }
     //出金
     if (transaction.getType() == 2) {
       transaction.setPayAccountNumber(transaction.getAccountNumber());
       Integer answer;
-      answer = balance - amount - feePrice;
+      answer = balance - amount;
       transaction.setBalance(answer);
     }
     //振込
     if (transaction.getType() == 3) {
       /** to 自分の口座　出金処理 */
       Integer answer;
-      answer = balance - amount - feePrice;
+      answer = balance - amount;
       transaction.setBalance(answer);
       List<Transaction> transactionList = new ArrayList<Transaction>();
       transactionList.add(0,transaction);
