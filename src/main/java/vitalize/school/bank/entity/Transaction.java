@@ -43,6 +43,7 @@ public class Transaction implements Serializable{
      */
     @Column(name="type")
     private Integer type;
+    private String stringType;
     /**
      * 保留フラグ
      */

@@ -62,6 +62,15 @@ public class TransactionController {
   public String displayList(Model model, @ModelAttribute TransactionSearchForm searchForm,
                             @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Pageable pageable) {
     Page<Transaction> transactionlist = transactionService.getAll(pageable, searchForm);
+    for(Transaction transaction:transactionlist) {
+      if (transaction.getType() == 1) {
+        transaction.setStringType("入金");
+      } else if (transaction.getType() == 2) {
+        transaction.setStringType("出金");
+      } else if (transaction.getType() == 3) {
+        transaction.setStringType("振込");
+      }
+    }
     model.addAttribute("page", transactionlist);
     model.addAttribute("transactionlist", transactionlist.getContent());
     model.addAttribute("url", "list");
