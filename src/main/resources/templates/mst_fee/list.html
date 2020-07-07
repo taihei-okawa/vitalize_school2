@@ -51,7 +51,7 @@
         <td><a class="settings" th:href="@{/mst_fee/edit/{id}(id=*{id})}" title="Settings" data-toggle="tooltip"><i
           class="material-icons">&#xE8B8;</i></a></td>
         <td th:text="*{id}"></td>
-        <td th:text="*{feePrice}"></td>
+        <td th:text="*{feePrice} + '円'"></td>
         <td th:text="*{branchCode}"></td>
         <td th:text="*{businessDay}"></td>
         <td th:text="*{holiday}"></td>
