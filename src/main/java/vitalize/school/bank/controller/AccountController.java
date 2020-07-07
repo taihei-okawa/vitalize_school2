@@ -95,10 +95,21 @@ public class AccountController {
   public String create(@ModelAttribute Account account) {
     Integer client = account.getClientId();
     account.setId(null);
-    account.setInsertUserId(9001);
-    account.setUpdateUserId(9001);
+    List<Account> accountList = accountService.findAll();
+    Account MaxAccountList = accountList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
+    Integer MaxAccountNumber = MaxAccountList.getAccountNumber();
+    if(MaxAccountNumber == null) {
+      account.setAccountNumber(000001);
+      account.setInsertUserId(9001);
+      account.setUpdateUserId(9001);
+    }else{
+      String MaxNumber = String.format("%06d", MaxAccountNumber + 1);
+      account.setAccountNumber(Integer.parseInt(MaxNumber));
+      account.setInsertUserId(9001);
+      account.setUpdateUserId(9001);
+    }
     accountService.save(account);
-    return "redirect:/client/"+ client;
+    return "redirect:/client/" + client;
   }
 
   /**
