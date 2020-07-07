@@ -38,7 +38,6 @@ public class TaskController {
   private TransactionService transactionService;
 
   /** to 取引履歴 指定実行*/
-
   /**
    * to 営業時間開始　取引履歴 営業時間外データ移行
    */
@@ -69,7 +68,6 @@ public class TaskController {
     }
     transactionList.forEach(transaction -> transactionService.save(transaction));
   }
-
   /**
    * to 営業時間内　取引履歴 データ移行
    */
