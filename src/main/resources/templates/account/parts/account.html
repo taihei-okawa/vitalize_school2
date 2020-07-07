@@ -12,12 +12,13 @@
     <input class="form-control" type="hidden" placeholder="口座ID" name="id" th:field="*{id}"/>
   </div>
   <div class="form-group col-sm-8">
-    <label class="col-form-label col-form-label-sm">口座番号</label>
+    <label class="col-form-label col-form-label-sm"><p th:text="#{account.accountNumber}"></p></label>
     <input class="form-control" type="number" placeholder="口座番号" required="required" name="account_number"
            th:field="*{accountNumber}"/>
   </div>
+
   <div class="form-group col-sm-8">
-    <label class="col-form-label col-form-label-sm">支店名</label>
+    <label class="col-form-label col-form-label-sm"><p th:text="#{account.branchCode}"></p></label>
     <input class="form-control" type="text" placeholder="支店名" required="required" name="branchCode"
            th:field="*{branchCode}"/>
   </div>
