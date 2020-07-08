@@ -6,6 +6,7 @@ import java.text.ParsePosition;
 import java.util.*;
 import java.text.SimpleDateFormat;
 
+import lombok.RequiredArgsConstructor;
 import vitalize.school.bank.entity.Account;
 import vitalize.school.bank.entity.MstFee;
 import vitalize.school.bank.searchform.TransactionSearchForm;
@@ -40,6 +41,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.transaction.Transactional;
 
+
 @Controller
 @RequestMapping("/transaction")
 public class TransactionController {
@@ -63,7 +65,9 @@ public class TransactionController {
                             @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Pageable pageable) {
     Page<Transaction> transactionlist = transactionService.getAll(pageable, searchForm);
     for(Transaction transaction:transactionlist) {
-      if (transaction.getType() == 1) {
+      if (transaction.getType() == 0) {
+        transaction.setStringType("新規");
+      } else if(transaction.getType() == 1) {
         transaction.setStringType("入金");
       } else if (transaction.getType() == 2) {
         transaction.setStringType("出金");

@@ -102,8 +102,6 @@ public class TaskController {
     transactionList.forEach(transaction -> transactionService.save(transaction));
   }
 
-  /** todo ユーザー認証必要 */
-
   /**
    * to 取引履歴 全件取得
    */

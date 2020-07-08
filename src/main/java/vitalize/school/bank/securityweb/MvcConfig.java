@@ -18,11 +18,4 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addViewController("/login").setViewName("login");
 
     }
-    @Override
-    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        PageableHandlerMethodArgumentResolver resolver = new PageableHandlerMethodArgumentResolver();
-        // 1ページに表示する最大件数(20件)を設定する
-        resolver.setMaxPageSize(20);
-        argumentResolvers.add(resolver);
-    }
 }

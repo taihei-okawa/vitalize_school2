@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 
+import vitalize.school.bank.entity.Account;
 import vitalize.school.bank.entity.MstFee;
 import vitalize.school.bank.entity.Task;
 import vitalize.school.bank.repository.TransactionRepository;
@@ -101,9 +102,8 @@ public class TransactionService {
       }
     };
   }
-
   /**
-   * 取引履歴 振込ロジック　Repository　前田さんすいません。。
+   * todo 取引履歴 振込ロジック　Repository　前田さんすいません。。
    */
   public void AccountPay(Transaction transaction) throws ParseException {
     /** to 本日日付に代入*/
@@ -115,7 +115,6 @@ public class TransactionService {
     }
 
     /** to 取引履歴の最新の情報だけを取得 */
-
     List<Task> TaskList = taskService.findNumber(transaction.getAccountNumber());
     Integer amount = transaction.getAmount();
     Task MaxTaskList = TaskList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
@@ -124,7 +123,7 @@ public class TransactionService {
     /** to 手数料計算 */
     //口座テーブルに口座番号で支店名を検索
     Integer accountNumber = transaction.getAccountNumber();
-    List<vitalize.school.bank.entity.Account> Account = accountService.findAccount(accountNumber);
+    List<Account> Account = accountService.findAccount(accountNumber);
     //手数料テーブルに支店名で検索
     String branchCode = Account.get(0).getBranchCode();
     List<MstFee> mstFeeList = mstFeeService.findBranchCode(branchCode);
@@ -133,7 +132,12 @@ public class TransactionService {
     mstFeeList.stream()
       .filter(msl -> msl.getBusinessDay().contains(strTrading) || msl.getHoliday().contains(strTrading))
       .collect(Collectors.toList());
-    Integer feePrice = mstFeeList.get(0).getFeePrice();
+    Integer feePrice;
+    if(mstFeeList == null && mstFeeList.size() == 0){
+      feePrice = 0;
+    }else{
+      feePrice = mstFeeList.get(0).getFeePrice();
+    }
     //時間判断
 //    Date tradingTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(transaction.getStringTradingDate());
 //    Date startTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(mstFeeList.get(0).getStartDay());
@@ -174,6 +178,7 @@ public class TransactionService {
       transaction.setBalance(answer);
       List<Transaction> transactionList = new ArrayList<Transaction>();
       transactionList.add(0, transaction);
+
       /** to 相手の口座　入金処理 */
       List<Task> TaskPayList = taskService.findPayNumber(transaction.getPayAccountNumber());
       Task MaxTaskPayList = TaskPayList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
