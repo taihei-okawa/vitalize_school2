@@ -1,5 +1,6 @@
 package vitalize.school.bank.controller;
 
+import lombok.RequiredArgsConstructor;
 import vitalize.school.bank.entity.Client;
 import vitalize.school.bank.searchform.ClientSearchForm;
 import vitalize.school.bank.service.ClientService;
@@ -30,6 +31,7 @@ public class ClientController {
   private AccountService accountService;
   @Autowired
   private TaskService taskService;
+
   private static final int DEFAULT_PAGEABLE_SIZE = 15;
 
   /**

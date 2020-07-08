@@ -9,7 +9,7 @@
       <input type="hidden" value="3" name="type" />
       <div class="form-group col-sm-8">
         <label>出金口座番号</label>
-        <select class="form-control form-control-sm col-sm-8" name="accountNumber">
+        <select class="form-control form-control-sm col-sm-8" name="accountNumber" required="required" >
           <option value=""></option>
           <option th:each="account : ${accountList}" th:value="${account}"
                   th:text="${account}"></option>
@@ -17,7 +17,7 @@
       </div>
       <div class="form-group col-sm-8">
         <label>送金先口座番号</label>
-        <select class="form-control form-controls-sm col-sm-8" name="payAccountNumber">
+        <select class="form-control form-controls-sm col-sm-8" name="payAccountNumber" required="required">
           <option value=""></option>
           <option th:each="account : ${accountList}" th:value="${account}"
                   th:text="${account}"></option>
@@ -25,7 +25,7 @@
       </div>
       <div class="form-group col-sm-8">
         <label class="col-form-label col-form-label-sm">送金額</label>
-        <input class="form-control" type="number" placeholder="出金" required="required" min="1000" name="amount" />
+        <input class="form-control" type="number" placeholder="出金" required="required" min="1000" max="200000" name="amount" />
       </div>
     </div>
   </body>

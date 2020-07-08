@@ -1,5 +1,7 @@
 package vitalize.school.bank.controller;
 
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import vitalize.school.bank.entity.MstUser;
 import vitalize.school.bank.searchform.MstUserSearchForm;
 import vitalize.school.bank.service.MstUserService;
@@ -57,7 +59,10 @@ public class MstUserController {
    * to ユーザー process 登録
    */
   @PostMapping(value = "/add")
-  public String create(@ModelAttribute MstUser mstUser) {
+  public String create(@Validated @ModelAttribute MstUser mstUser, BindingResult result) {
+    if (result.hasErrors()) {
+      return "mst_user/add";
+    }
     mstUser.setInsertUserId(9001);
     mstUser.setUpdateUserId(9001);
     mstUser.setStatus(1);

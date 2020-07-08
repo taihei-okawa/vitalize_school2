@@ -2,6 +2,7 @@ package vitalize.school.bank.service;
 
 import vitalize.school.bank.entity.Account;
 import vitalize.school.bank.entity.Client;
+import vitalize.school.bank.entity.Task;
 import vitalize.school.bank.entity.Transaction;
 import vitalize.school.bank.repository.AccountRepository;
 import vitalize.school.bank.searchform.AccountSearchForm;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,6 +21,8 @@ public class AccountService {
 
   @Autowired
   private AccountRepository accountRepository;
+  @Autowired
+  private TaskService taskService;
 
   /**
    *  口座 一覧
@@ -36,6 +40,22 @@ public class AccountService {
    *  口座 登録
    */
   public Account save(Account account) {
+    /**
+     *  新規口座の取引履歴作成
+     */
+    Task taskNew = new Task();
+    List<Task> taskNewList = new ArrayList<Task>();
+    taskNew.setAccountNumber(account.getAccountNumber());
+    taskNew.setPayAccountNumber(account.getAccountNumber());
+    taskNew.setPoolFlag(0);
+    taskNew.setAmount(0);
+    //口座開設時に1000円をもらう想定
+    taskNew.setBalance(1000);
+    taskNew.setType(0);
+    taskNew.setInsertUserId(9001);
+    taskNew.setUpdateUserId(9001);
+    taskNewList.add(taskNew);
+    taskNewList.stream().forEach(taskSave -> taskService.create(taskSave));
     return accountRepository.save(account);
   }
   /**

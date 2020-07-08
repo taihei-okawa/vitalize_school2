@@ -36,11 +36,8 @@
         <th>編集</th>
         <th>社員ID</th>
         <th>社員名</th>
-        <th>社員コード</th>
         <th>支店名</th>
-        <th>役職コード</th>
-        <th>登録者</th>
-        <th>更新者</th>
+        <th>役職名</th>
         <th>登録日</th>
         <th>更新日</th>
         <th>削除</th>
@@ -54,11 +51,8 @@
           class="material-icons">&#xE8B8;</i></a></td>
         <td th:text="*{id}"></td>
         <td th:text="*{userName}"></td>
-        <td th:text="*{userCode}"></td>
         <td th:text="*{branchCode}"></td>
         <td th:text="*{positionCode}"></td>
-        <td th:text="*{insertUserId}"></td>
-        <td th:text="*{updateUserId}"></td>
         <td th:text="${#dates.format(mstUser.insertDate, 'yyyy/MM/dd')}"></td>
         <td th:text="${#dates.format(mstUser.updateDate, 'yyyy/MM/dd')}"></td>
         <td>

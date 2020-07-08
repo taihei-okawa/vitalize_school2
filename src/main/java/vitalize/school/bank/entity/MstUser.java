@@ -3,6 +3,7 @@ package vitalize.school.bank.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -27,18 +28,14 @@ public class MstUser implements Serializable {
   /**
    * 社員名
    */
+  @NotEmpty
   @Column(name = "user_name")
   private String userName;
 
   /**
-   * 社員コード
-   */
-  @Column(name = "user_code")
-  private Integer userCode;
-
-  /**
    * パスワード
    */
+  @NotEmpty
   @Column(name = "password")
   private String password;
 
@@ -52,7 +49,7 @@ public class MstUser implements Serializable {
    * 支店名
    */
   @Column(name = "branch_code")
-  private Integer branchCode;
+  private String branchCode;
 
   /**
    * 役職名
@@ -96,26 +93,14 @@ public class MstUser implements Serializable {
   @Column(name = "delete_date")
   private Date deleteDate;
 
-  private int insertId;
-
-  public void setInsertId(int inserId) {
-    this.insertId = insertId;
-  }
-
   @PrePersist
   public void onPrePersist() {
     setInsertDate(new Date());
     setUpdateDate(new Date());
   }
-
   @PreUpdate
   public void onPreUpdate() {
     setUpdateDate(new Date());
   }
 
-  public void addObject(String column, String column1) {
-  }
-
-  public void setUpdateId(int i) {
-  }
 }
