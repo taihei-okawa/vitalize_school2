@@ -160,7 +160,11 @@ public class TransactionService {
       transaction.setPayAccountNumber(transaction.getAccountNumber());
       Integer answer;
       answer = balance - amount - feePrice;
-      transaction.setBalance(answer);
+      if(Math.signum(answer) == -1.0) {
+        System.out.println("残高足りないので実行できません");
+      }else{
+        transaction.setBalance(answer);
+      }
     }
     //振込
     if (transaction.getType() == 3) {
@@ -170,7 +174,6 @@ public class TransactionService {
       transaction.setBalance(answer);
       List<Transaction> transactionList = new ArrayList<Transaction>();
       transactionList.add(0, transaction);
-
       /** to 相手の口座　入金処理 */
       List<Task> TaskPayList = taskService.findPayNumber(transaction.getPayAccountNumber());
       Task MaxTaskPayList = TaskPayList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
