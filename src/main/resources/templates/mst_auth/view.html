@@ -31,15 +31,15 @@
           <div th:object="${mstAuth}">
             <input type="hidden" th:value="*{id}">
             <div>
-              <label>管理権限ステータス</label>
+              <label><p th:text="#{mstAuth.status}"></p></label>
               <p th:text="*{status}"></p>
             </div>
             <div>
-              <label>管理権限名</label>
+              <label><p th:text="#{statusName}"></p></label>
               <p th:text="*{statusName}"></p>
             </div>
             <div>
-              <label>機能ステータス</label>
+              <label><p th:text="#{functionStatus}"></p></label>
               <p th:text="*{functionStatus}"></p>
             </div>
           </div>

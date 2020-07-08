@@ -31,23 +31,35 @@
           <div th:object="${mstUser}">
             <input type="hidden" th:value="*{id}">
             <div>
-              <label>社員名</label>
+              <label><p th:text="#{userName}"></p></label>
               <p th:text="*{userName}"></p>
             </div>
             <div>
-              <label>パスワード</label>
+              <label><p th:text="#{password}"></p></label>
               <p th:text="*{password}"></p>
             </div>
             <div>
-              <label>作成者</label>
+              <label><p th:text="#{branchCode}"></p></label>
+              <p th:text="*{branchCode}"></p>
+            </div>
+            <div>
+              <label><p th:text="#{positionCode}"></label>
+              <p th:text="*{positionCode}"></p>
+            </div>
+            <div>
+              <label><p th:text="#{businessCode}"></label>
+              <p th:text="*{businessCode}"></p>
+            </div>
+            <div>
+              <label><p th:text="#{insertUserId}"></label>
               <p th:text="*{insertUserId}"></p>
             </div>
             <div>
-              <label>更新者</label>
+              <label><p th:text="#{updateUserId}"></label>
               <p th:text="*{updateUserId}"></p>
             </div>
             <div>
-              <label>作成日</label>
+              <label><p th:text="#{businessCode}"></label>
               <p th:text="${#dates.format(mstUser.insertDate, 'yyyy/MM/dd')}"></p>
             </div>
           </div>

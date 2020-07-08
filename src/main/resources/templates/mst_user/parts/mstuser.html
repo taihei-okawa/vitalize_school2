@@ -8,7 +8,7 @@
       <div class="form-group col-sm-8">
         <label class="col-form-label col-form-label-sm"><p th:text="#{userName}"></p></label><span class="text-danger">※必須</span><br />
         <input class="form-control" type="text" placeholder="名前" name="userName" th:field="*{userName}"/>
-        <p th:if="${#fields.hasErrors('userName')}"><span class="text-danger">名前は必須入力です</span></p>
+        <p th:if="${#fields.hasErrors('userName')}"><span class="text-danger">社員名は必須入力です</span></p>
       </div>
       <div class="form-group col-sm-8">
         <label class="col-form-label col-form-label-sm"><p th:text="#{password}"></p></label><span class="text-danger">※必須</span><br />
@@ -17,7 +17,19 @@
       </div>
       <div class="form-group col-sm-8">
         <label class="col-form-label col-form-label-sm"><p th:text="#{branchCode}"></p></label>
-        <input class="form-control" type="text" placeholder="支店名"  name="branchCode" th:field="*{branchCode}"/>
+        <select id="branchCode" name="branchCode" type="text" class="form-control">
+          <option value="新宿支店">新宿支店</option>
+          <option value="宮崎支店">宮崎支店</option>
+          <option value="喜界島支社">喜界島支社</option>
+        </select>
+      </div>
+      <div class="form-group col-sm-8">
+        <label class="col-form-label col-form-label-sm"><p th:text="#{positionCode}"></p></label>
+        <input class="form-control" type="text" placeholder="役職名"  name="positionCode" th:field="*{positionCode}"/>
+      </div>
+      <div class="form-group col-sm-8">
+        <label class="col-form-label col-form-label-sm"><p th:text="#{businessCode}"></p></label>
+        <input class="form-control" type="text" placeholder="業務名"  name="businessCode" th:field="*{businessCode}"/>
       </div>
     </div>
   </body>
