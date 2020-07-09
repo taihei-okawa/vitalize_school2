@@ -1,6 +1,8 @@
 package vitalize.school.bank.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import vitalize.school.bank.entity.Client;
 import vitalize.school.bank.searchform.ClientSearchForm;
 import vitalize.school.bank.service.ClientService;
@@ -95,7 +97,10 @@ public class ClientController {
    * to 顧客 process 登録
    */
   @PostMapping(value = "/add")
-  public String create(@ModelAttribute Client client, Model model) {
+  public String create(@Validated @ModelAttribute Client client, BindingResult result) {
+    if (result.hasErrors()) {
+      return "client/add";
+    }
     client.setInsertUserId(9001);
     client.setUpdateUserId(9001);
     clientService.save(client);
