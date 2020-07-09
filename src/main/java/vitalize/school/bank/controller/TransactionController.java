@@ -103,7 +103,7 @@ public class TransactionController {
    */
   @Transactional
   @PostMapping(value = "/add")
-  public String create( @ModelAttribute Transaction transaction) throws ParseException {
+  public String create(@ModelAttribute Transaction transaction) throws ParseException {
     transactionService.AccountPay(transaction);
     return "redirect:/transaction/list";
   }

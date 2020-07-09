@@ -9,10 +9,10 @@
         <div class="mb-3">
           <div class="row">
             <div class="form-group col-2">
-              <label class="col-form-label col-form-label-sm">社員ID</label>
+              <label class="col-form-label col-form-label-sm"><p th:text="#{mstUserId}"></p></label>
               <input type="text" class="form-control" id="id" name="id" placeholder="数値入力欄"
                      th:value="${searchForm.id}"/>
-              <label class="col-form-label col-form-label-sm">社員名</label>
+              <label class="col-form-label col-form-label-sm"><p th:text="#{userName}"></p></label>
               <input type="text" class="form-control" id="userName" name="userName" placeholder="テキスト入力欄"
                      th:value="${searchForm.userName}"/>
             </div>

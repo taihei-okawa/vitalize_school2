@@ -1,5 +1,6 @@
 package vitalize.school.bank.controller;
 
+import org.springframework.validation.annotation.Validated;
 import vitalize.school.bank.entity.Account;
 import vitalize.school.bank.entity.Task;
 import vitalize.school.bank.searchform.AccountSearchForm;

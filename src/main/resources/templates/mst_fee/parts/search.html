@@ -9,12 +9,16 @@
         <div class="mb-3">
           <div class="row">
             <div class="form-group col-2">
-              <label class="col-form-label col-form-label-sm">手数料ID</label>
-              <input type="text" class="form-control" id="id" name="id" placeholder="テキスト入力欄"
+              <label class="col-form-label col-form-label-sm"><p th:text="#{mstFeeId}"></p></label>
+              <input type="text" class="form-control" id="id" name="id" placeholder="数値入力欄"
                      th:value="${searchForm.id}"/>
-              <label class="col-form-label col-form-label-sm">支店名</label>
-              <input type="text" class="form-control" id="branchCode" name="branchCode" placeholder="テキスト入力欄"
-                     th:value="${searchForm.branchCode}"/>
+              <label class="col-form-label col-form-label-sm"><p th:text="#{branchCode}"></p></label>
+              <select id="branchCode" name="branchCode" type="text" class="col-form-label col-form-label-sm"th:value="${searchForm.branchCode}"/>
+              <option value="">検索なし</option>
+              <option value="新宿支店">新宿支店</option>
+              <option value="宮崎支店">宮崎支店</option>
+              <option value="喜界島支社">喜界島支社</option>
+              </select>
             </div>
           </div>
           <div class="row">

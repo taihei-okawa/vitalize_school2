@@ -32,19 +32,19 @@
           <div th:object="${client}">
             <input type="hidden" th:value="*{id}">
             <div>
-              <label>顧客名</label>
+              <label><p th:text="#{clientName}"></p></label>
               <p th:text="*{clientName}"></p>
             </div>
             <div>
-              <label>顧客名フリガナ</label>
+              <label><p th:text="#{clientNameKana}"></p></label>
               <p th:text="*{clientNameKana}"></p>
             </div>
             <div>
-              <label>電話番号</label>
+              <label><p th:text="#{tell}"></p></label>
               <p th:text="*{tell}"></p>
             </div>
             <div>
-              <label>メールアドレス</label>
+              <label><p th:text="#{mailAddress}"></p></label>
               <p th:text="*{mailAddress}"></p>
             </div>
           </div>
@@ -73,10 +73,10 @@
     <table class="table table-bordered">
       <thead>
       <tr class="heading-td">
-        <th>口座ID</th>
-        <th>口座番号</th>
-        <th>支店名</th>
-        <th>登録日時</th>
+        <th><p th:text="#{accountId}"></p></th>
+        <th><p th:text="#{accountNumber}"></p></th>
+        <th><p th:text="#{branchCode}"></p></th>
+        <th><p th:text="#{insertDate}"></p></th>
       </tr>
       </thead>
       <tbody>
@@ -102,16 +102,15 @@
     <table class="table table-bordered">
       <thead>
       <tr class="heading-td">
-        <th>取引履歴ID</th>
-        <th>口座番号</th>
-        <th>振込先口座番号</th>
-        <th>種別</th>
-        <th>保留フラグ</th>
-        <th>取引金額</th>
-        <th>手数料ID</th>
-        <th>取引後残高</th>
-        <th>作成者</th>
-        <th>作成日</th>
+        <th><p th:text="#{transactionId}"></p></th>
+        <th><p th:text="#{accountNumber}"></p></th>
+        <th><p th:text="#{payAccountNumber}"></p></th>
+        <th><p th:text="#{type}"></p></th>
+        <th><p th:text="#{amount}"></p></th>
+        <th><p th:text="#{feeId}"></p></th>
+        <th><p th:text="#{balance}"></p></th>
+        <th><p th:text="#{insertUserId}"></p></th>
+        <th><p th:text="#{insertDate}"></p></th>
       </tr>
       </thead>
       <tbody>
@@ -120,7 +119,6 @@
         <td class="center" th:text="*{accountNumber}"></td>
         <td class="center" th:text="*{payAccountNumber}"></td>
         <td class="center" th:text="*{type}"></td>
-        <td class="center" th:text="*{poolFlag}"></td>
         <td class="center" th:text="*{amount}"></td>
         <td class="center" th:text="*{feeId}"></td>
         <td class="center" th:text="*{balance}"></td>

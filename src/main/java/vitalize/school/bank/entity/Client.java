@@ -3,12 +3,13 @@ package vitalize.school.bank.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 /**
  * 情報 Entitygit a
@@ -26,11 +27,11 @@ public class Client implements Serializable {
   @Column(name = "id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-
-
   /**
    * 顧客名
    */
+  @NotEmpty
+  @Size(min=1, max=20)
   @Column(name = "client_name")
   private String clientName;
   /**
@@ -41,16 +42,20 @@ public class Client implements Serializable {
   /**
    * 電話番号
    */
+  @Size(min=11, max=12)
   @Column(name = "tell")
   private String tell;
   /**
    * メールアドレス
    */
+  @NotEmpty
+  @Email
   @Column(name = "mail_address")
   private String mailAddress;
   /**
    * パスワード
    */
+  @NotEmpty
   @Column(name = "password")
   private String password;
   /**

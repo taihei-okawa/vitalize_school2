@@ -4,8 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
@@ -30,6 +35,9 @@ public class MstFee implements Serializable {
   /**
    * 手数料額
    */
+  @NotNull
+  @Min(0)
+  @Max(1000)
   @Column(name = "fee_price")
   private Integer feePrice;
 
@@ -51,11 +59,13 @@ public class MstFee implements Serializable {
   /**
    * 取引開始時間
    */
+  @NotEmpty
   @Column(name = "start_day")
   private String startDay;
   /**
    * 取引時間終了
    */
+  @NotEmpty
   @Column(name = "end_day")
   private String endDay;
   /**

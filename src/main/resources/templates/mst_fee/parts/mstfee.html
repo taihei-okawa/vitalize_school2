@@ -6,28 +6,35 @@
   <body>
     <div th:fragment="InputField" th:remove="tag">
       <div class="form-group col-sm-8">
-        <label class="col-form-label col-form-label-sm">手数料額</label>
-        <input class="form-control" type="number" placeholder="手数料額" required="required" name="feePrice" th:field="*{feePrice}"/>
+        <label class="col-form-label col-form-label-sm"><p th:text="#{feePrice}"></p></label><span class="text-danger">※必須</span><br/>
+        <input class="form-control" type="number" placeholder="手数料" name="feePrice" th:field="*{feePrice}"/>
+        <p th:if="${#fields.hasErrors('feePrice')}"><span class="text-danger">手数料は必須入力かつ1000以下です</span></p>
       </div>
       <div class="form-group col-sm-8">
-        <label class="col-form-label col-form-label-sm">支店名</label>
-        <input class="form-control" type="text" placeholder="支店名" required="required" name="branchCode" th:field="*{branchCode}"/>
+        <label class="col-form-label col-form-label-sm"><p th:text="#{branchCode}"></p></label>
+        <select id="branchCode" name="branchCode" type="text" class="form-control">
+          <option value="新宿支店">新宿支店</option>
+          <option value="宮崎支店">宮崎支店</option>
+          <option value="喜界島支社">喜界島支社</option>
+        </select>
       </div>
       <div class="form-group col-sm-8">
-        <label class="col-form-label col-form-label-sm">営業日</label>
-        <input class="form-control" type="date" name="businessDay" th:field="*{businessDay}"/>
+        <label class="col-form-label col-form-label-sm"><p th:text="#{businessDay}"></p></label>
+        <input class="form-control" type="date" name="businessDay" th:field="*{businessDay}" id="firstBox"/>
       </div>
       <div class="form-group col-sm-8">
-        <label class="col-form-label col-form-label-sm">休日</label>
-        <input class="form-control" type="date" name="holiday" th:field="*{holiday}"/>
+        <label class="col-form-label col-form-label-sm"><p th:text="#{holiday}"></p></label>
+        <input class="form-control" type="date" name="holiday" th:field="*{holiday}" id="secondBox" />
       </div>
       <div class="form-group col-sm-8">
-        <label class="col-form-label col-form-label-sm">取引開始時間</label>
-        <input class="form-control" type="time" required="required"  name="startDay" th:field="*{startDay}"/>
+        <label class="col-form-label col-form-label-sm"><p th:text="#{startDay}"></p></label><span class="text-danger">※必須</span><br/>
+        <input class="form-control" type="time" name="startDay" th:field="*{startDay}"/>
+        <p th:if="${#fields.hasErrors('feePrice')}"><span class="text-danger">取引開始時間は必須入力</span></p>
       </div>
       <div class="form-group col-sm-8">
-        <label class="col-form-label col-form-label-sm">取引終了時間</label>
-        <input class="form-control" type="time" required="required"  name="endDay" th:field="*{endDay}"/>
+        <label class="col-form-label col-form-label-sm"><p th:text="#{endDay}"></p></label><span class="text-danger">※必須</span><br/>
+        <input class="form-control" type="time"  name="endDay" th:field="*{endDay}"/>
+        <p th:if="${#fields.hasErrors('feePrice')}"><span class="text-danger">取引終了時間は必須入力</span></p>
       </div>
     </div>
   </body>

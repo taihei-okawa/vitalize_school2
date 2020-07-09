@@ -9,13 +9,13 @@
         <div class="mb-3">
           <div class="row">
             <div class="form-group col-2">
-              <label class="col-form-label col-form-label-sm">顧客ID</label>
-              <input type="text" class="form-control" id="id" name="id" placeholder="テキスト入力欄"
+              <label class="col-form-label col-form-label-sm"><p th:text="#{clientId}"></p></label>
+              <input type="text" class="form-control" id="id" name="id" placeholder="数値入力欄"
                      th:value="${searchForm.id}"/>
-              <label class="col-form-label col-form-label-sm">顧客名</label>
+              <label class="col-form-label col-form-label-sm"><p th:text="#{clientName}"></p></label>
               <input type="text" class="form-control" id="clientName" name="clientName" placeholder="テキスト入力欄"
                      th:value="${searchForm.clientName}"/>
-              <label class="col-form-label col-form-label-sm">顧客名フリガナ</label>
+              <label class="col-form-label col-form-label-sm"><p th:text="#{clientNameKana}"></p></label>
               <input type="text" class="form-control" id="clientNameKana" name="clientNameKana" placeholder="テキスト入力欄"
                      th:value="${searchForm.clientNameKana}"/>
             </div>
