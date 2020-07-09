@@ -7,16 +7,16 @@
     <div th:fragment="InputField" th:remove="tag">
       <input type="hidden" value="1" name="type" />
       <div class="form-group col-sm-8">
-        <label>入金先口座番号</label>
-        <select class="form-control form-control-sm col-sm-8" name="accountNumber" required="required">
+        <label><p th:text="#{newAccountNumber}"></p></label><span class="text-danger">※必須</span><br/>
+        <select class="form-control form-control-sm col-sm-8" name="accountNumber" required="required" >
           <option value=""></option>
           <option th:each="account : ${accountList}" th:value="${account}"
                   th:text="${account}"></option>
         </select>
       </div>
       <div class="form-group col-sm-8">
-        <label class="col-form-label col-form-label-sm">入金額</label>
-        <input class="form-control" type="number" placeholder="入金" required="required" min="1000" max="200000" name="amount" />
+        <label class="col-form-label col-form-label-sm"><p th:text="#{newAmount}"></p></label><span class="text-danger">※必須</span><br/>
+        <input class="form-control" type="number" placeholder="入金" name="amount" required="required" min="1000" max="200000"/>
       </div>
     </div>
   </body>
