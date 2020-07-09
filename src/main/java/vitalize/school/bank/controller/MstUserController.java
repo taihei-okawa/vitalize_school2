@@ -13,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/mst_user")
 public class MstUserController {
@@ -85,8 +87,9 @@ public class MstUserController {
   /**
    * to 社員 process 編集
    */
-  @PostMapping(value = "/edit/{id}") //PostMappingを使う
-  public String update(@PathVariable Long id, @ModelAttribute MstUser mstUser) {
+  @PostMapping(value = "/edit/{id}")
+  public String update(@Validated @ModelAttribute MstUser mstUser, BindingResult result, @PathVariable Long id) {
+    if(result.hasErrors()) return "mst_user/edit";
     mstUser.setInsertUserId(9001);
     mstUser.setUpdateUserId(9001);
     mstUser.setStatus(1);

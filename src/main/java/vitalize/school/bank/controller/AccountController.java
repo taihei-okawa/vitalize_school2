@@ -112,17 +112,20 @@ public class AccountController {
     accountService.save(account);
     return "redirect:/client/" + client;
   }
-
   /**
-   * to 口座機能 process 編集
+   * todo 口座編集いらないかも。。
    */
-  @PostMapping(value = "/edit/{id}")
-  public String update(@PathVariable Long id, @ModelAttribute Account account) {
-    account.setInsertUserId(9001);
-    account.setUpdateUserId(9001);
-    accountService.save(account);
-    return "redirect:/account/"+ "{id}";
-  }
+
+//  /**
+//   * to 口座機能 process 編集
+//   */
+//  @PostMapping(value = "/edit/{id}")
+//  public String update(@PathVariable Long id, @ModelAttribute Account account) {
+//    account.setInsertUserId(9001);
+//    account.setUpdateUserId(9001);
+//    accountService.save(account);
+//    return "redirect:/account/"+ "{id}";
+//  }
 
   /**
    * to 口座機能 削除

@@ -91,7 +91,8 @@ public class MstFeeController {
    * to 手数料マスタ process 編集
    */
   @PostMapping(value = "/edit/{id}")
-  public String update(@PathVariable Long id, @ModelAttribute MstFee mstFee) {
+  public String update(@PathVariable Long id,@Validated @ModelAttribute MstFee mstFee, BindingResult result) {
+    if(result.hasErrors()) return "mst_fee/edit";
     mstFee.setInsertUserId(9001);
     mstFee.setUpdateUserId(9001);
     mstFeeService.save(mstFee);
