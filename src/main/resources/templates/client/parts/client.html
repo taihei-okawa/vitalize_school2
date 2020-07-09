@@ -9,7 +9,7 @@
 		<input class="form-control" type="hidden" placeholder="顧客ID" name="id" th:field="*{id}" />
 	</div>
 	<div class="form-group col-sm-8">
-		<label class="col-form-label col-form-label-sm"><p th:text="#{clientName}"></p></label><span class="text-danger">※必須</span><br />
+		<label class="col-form-label col-form-label-sm"><p th:text="#{clientName}"></p></label><span class="text-danger">※必須</span><br/>
 		<input class="form-control" type="text" placeholder="顧客名" name="clientName" th:field="*{clientName}" />
 		<p th:if="${#fields.hasErrors('clientName')}"><span class="text-danger">顧客名は必須入力かつ20文字以内です</span></p>
 	</div>
@@ -18,17 +18,17 @@
 		<input class="form-control" type="text" placeholder="顧客フリガナ" name="clientNameKana"th:field="*{clientNameKana}" />
 	</div>
 	<div class="form-group col-sm-8">
-		<label class="col-form-label col-form-label-sm"><p th:text="#{password}"></p></label><span class="text-danger">※必須</span><br />
+		<label class="col-form-label col-form-label-sm"><p th:text="#{password}"></p></label><span class="text-danger">※必須</span><br/>
 		<input class="form-control" type="text" placeholder="パスワード"  name="password" th:field="*{password}"/>
 		<p th:if="${#fields.hasErrors('password')}"><span class="text-danger">パスワードは必須入力です</span></p>
 	</div>
 	<div class="form-group col-sm-8">
-		<label class="col-form-label col-form-label-sm"><p th:text="#{tell}"></p></label><span class="text-danger">※ハイフン不要</span><br />
+		<label class="col-form-label col-form-label-sm"><p th:text="#{tell}"></p></label><span class="text-danger">※ハイフン不要</span><br/>
 		<input class="form-control" type="text" placeholder="電話番号"  name="tell"th:field="*{tell}" />
 		<p th:if="${#fields.hasErrors('tell')}"><span class="text-danger">11数字以上12数字以内に記入してください</span></p>
 	</div>
 	<div class="form-group col-sm-8">
-		<label class="col-form-label col-form-label-sm"><p th:text="#{mailAddress}"></p></label><span class="text-danger">※例:〜@test.co.jp形式で記入</span><br />
+		<label class="col-form-label col-form-label-sm"><p th:text="#{mailAddress}"></p></label><span class="text-danger">※例:〜@test.co.jp形式で記入</span><br/>
 		<input class="form-control" type="text" placeholder="メールアドレス" name="mailAddress" th:field="*{mailAddress}"/>
 		<p th:if="${#fields.hasErrors('mailAddress')}"><span class="text-danger">形式が違います</span></p>
 	</div>

@@ -158,6 +158,7 @@ public class TransactionService {
       Integer answer;
       answer = balance + amount - feePrice;
       transaction.setBalance(answer);
+      transaction.setFeeId(feePrice);
     }
     //出金
     if (transaction.getType() == 2) {
@@ -168,6 +169,7 @@ public class TransactionService {
         System.out.println("残高足りないので実行できません");
       }else{
         transaction.setBalance(answer);
+        transaction.setFeeId(feePrice);
       }
     }
     //振込
@@ -176,6 +178,7 @@ public class TransactionService {
       Integer answer;
       answer = balance - amount - feePrice;
       transaction.setBalance(answer);
+      transaction.setFeeId(feePrice);
       List<Transaction> transactionList = new ArrayList<Transaction>();
       transactionList.add(0, transaction);
 

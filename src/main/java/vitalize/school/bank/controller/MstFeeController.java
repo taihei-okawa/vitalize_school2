@@ -1,5 +1,9 @@
 package vitalize.school.bank.controller;
 
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import vitalize.school.bank.searchform.MstFeeSearchForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -72,7 +76,10 @@ public class MstFeeController {
    * to 手数料マスタ process 登録
    */
   @PostMapping(value = "/add")
-  public String create(@ModelAttribute MstFee mstFee) {
+  public String create(@Validated @ModelAttribute MstFee mstFee, BindingResult result) {
+    if (result.hasErrors()) {
+      return "mst_fee/add";
+    }
     mstFee.setInsertUserId(9001);
     mstFee.setUpdateUserId(9001);
     mstFeeService.save(mstFee);
@@ -99,6 +106,5 @@ public class MstFeeController {
     mstFeeService.delete(id);
     return "redirect:/mst_fee/list";
   }
-
 
 }

@@ -31,31 +31,31 @@
           <div th:object="${mstFee}">
             <input type="hidden" th:value="*{id}">
             <div>
-              <label>手数料額</label>
+              <label><p th:text="#{feePrice}"></p></label>
               <p th:text="*{feePrice}"></p>
             </div>
             <div>
-              <label>支店名</label>
+              <label><p th:text="#{branchCode}"></p></label>
               <p th:text="*{branchCode}"></p>
             </div>
             <div>
-              <label>営業日</label>
+              <label><p th:text="#{businessDay}"></p></label>
               <p th:text="*{businessDay}"></p>
             </div>
             <div>
-              <label>休日</label>
+              <label><p th:text="#{holiday}"></p></label>
               <p th:text="*{holiday}"></p>
             </div>
             <div>
-              <label>取引開始時間</label>
+              <label><p th:text="#{startDay}"></p></label>
               <p th:text="*{startDay}"></p>
             </div>
             <div>
-              <label>取引終了時間</label>
+              <label><p th:text="#{endDay}"></p></label>
               <p th:text="*{endDay}"></p>
             </div>
             <div>
-              <label>登録日</label>
+              <label><p th:text="#{insertDate}"></p></label>
               <p th:text="${#dates.format(mstFee.insertDate, 'yyyy/MM/dd')}"></p>
             </div>
           </div>
