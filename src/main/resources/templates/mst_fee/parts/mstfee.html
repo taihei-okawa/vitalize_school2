@@ -19,21 +19,20 @@
         </select>
       </div>
       <div class="form-group col-sm-8">
-        <label class="col-form-label col-form-label-sm"><p th:text="#{businessDay}"></p></label>
-        <input class="form-control" type="date" name="businessDay" th:field="*{businessDay}" id="firstBox"/>
-      </div>
-      <div class="form-group col-sm-8">
-        <label class="col-form-label col-form-label-sm"><p th:text="#{holiday}"></p></label>
-        <input class="form-control" type="date" name="holiday" th:field="*{holiday}" id="secondBox" />
+        <label class="col-form-label col-form-label-sm"><p th:text="#{businessFrag}"></p></label>
+        <select id="businessFrag" name="businessFrag" type="text" class="form-control">
+          <option value="営業日">営業日</option>
+          <option value="休日">休日</option>
+        </select>
       </div>
       <div class="form-group col-sm-8">
         <label class="col-form-label col-form-label-sm"><p th:text="#{startDay}"></p></label><span class="text-danger">※必須</span><br/>
-        <input class="form-control" type="time" name="startDay" th:field="*{startDay}"/>
+        <input class="form-control" type="datetime-local" name="startDay" th:field="*{startDay}"/>
         <p th:if="${#fields.hasErrors('feePrice')}"><span class="text-danger">取引開始時間は必須入力</span></p>
       </div>
       <div class="form-group col-sm-8">
         <label class="col-form-label col-form-label-sm"><p th:text="#{endDay}"></p></label><span class="text-danger">※必須</span><br/>
-        <input class="form-control" type="time"  name="endDay" th:field="*{endDay}"/>
+        <input class="form-control" type="datetime-local"  name="endDay" th:field="*{endDay}"/>
         <p th:if="${#fields.hasErrors('feePrice')}"><span class="text-danger">取引終了時間は必須入力</span></p>
       </div>
     </div>

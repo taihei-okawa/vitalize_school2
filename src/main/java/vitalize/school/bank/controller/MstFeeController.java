@@ -80,6 +80,15 @@ public class MstFeeController {
     if (result.hasErrors()) {
       return "mst_fee/add";
     }
+    mstFee.setStartDay(mstFee.getStartDay().replace("T", "  "));
+    mstFee.setEndDay(mstFee.getEndDay().replace("T", "  "));
+    String strDay = mstFee.getStartDay();
+    String endDay = mstFee.getEndDay();
+    String time = ":00";
+    String strTime = strDay.concat(time);
+    String endTime = endDay.concat(time);
+    mstFee.setStartDay(strTime);
+    mstFee.setEndDay(endTime);
     mstFee.setInsertUserId(9001);
     mstFee.setUpdateUserId(9001);
     mstFeeService.save(mstFee);
@@ -95,6 +104,15 @@ public class MstFeeController {
     if(result.hasErrors()) return "mst_fee/edit";
     mstFee.setInsertUserId(9001);
     mstFee.setUpdateUserId(9001);
+    mstFee.setStartDay(mstFee.getStartDay().replace("T", "  "));
+    mstFee.setEndDay(mstFee.getEndDay().replace("T", "  "));
+    String strDay = mstFee.getStartDay();
+    String endDay = mstFee.getEndDay();
+    String time = ":00";
+    String strTime = strDay.concat(time);
+    String endTime = endDay.concat(time);
+    mstFee.setStartDay(strTime);
+    mstFee.setEndDay(endTime);
     mstFeeService.save(mstFee);
     return "redirect:/mst_fee/" + "{id}";
   }

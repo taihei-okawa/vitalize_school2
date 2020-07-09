@@ -47,15 +47,10 @@ public class MstFee implements Serializable {
   @Column(name = "branch_code")
   private String branchCode;
   /**
-   * 営業日
+   * 営業日フラグ
    */
-  @Column(name = "business_day")
-  private String businessDay;
-  /**
-   * 休日
-   */
-  @Column(name = "holiday")
-  private String holiday;
+  @Column(name = "business_frag")
+  private String businessFrag;
   /**
    * 取引開始時間
    */
