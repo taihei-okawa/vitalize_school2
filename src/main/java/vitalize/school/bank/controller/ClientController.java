@@ -112,7 +112,8 @@ public class ClientController {
    * to 顧客 process 編集
    */
   @PostMapping(value = "/edit/{id}")
-  public String update(@PathVariable Long id, @ModelAttribute Client client) {
+  public String update(@PathVariable Long id,@Validated @ModelAttribute Client client, BindingResult result) {
+    if(result.hasErrors()) return "client/edit";
     client.setInsertUserId(9001);
     client.setUpdateUserId(9001);
     clientService.save(client);
