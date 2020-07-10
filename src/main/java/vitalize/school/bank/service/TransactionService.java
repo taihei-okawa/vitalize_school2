@@ -102,9 +102,6 @@ public class TransactionService {
       }
     };
   }
-  /**
-   * todo 取引履歴 振込ロジック　Repository　前田さんすいません。。
-   */
   public void AccountPay(Transaction transaction) throws ParseException {
     /** to 本日日付に代入*/
     if (transaction.getStringTradingDate().isEmpty()) {
@@ -201,6 +198,9 @@ public class TransactionService {
       transactionNew.setAmount(transaction.getAmount());
       transactionNew.setBalance(payAnswer);
       transactionNew.setType(transaction.getType());
+      transactionNew.setBalance(payAnswer);
+      transactionNew.setStringTradingDate(transaction.getStringTradingDate());
+      transactionNew.setTradingDate(transaction.getTradingDate());
       transactionNew.setInsertUserId(transaction.getInsertUserId());
       transactionNew.setUpdateUserId(transaction.getUpdateUserId());
       transactionList.add(1, transactionNew);
@@ -216,6 +216,7 @@ public class TransactionService {
           .poolFlag(task.getPoolFlag())
           .feeId(task.getFeeId())
           .balance(task.getBalance())
+          .stringTradingDate(task.getStringTradingDate())
           .tradingDate(task.getTradingDate())
           .insertUserId(task.getInsertUserId())
           .updateUserId(task.getUpdateUserId())
@@ -236,6 +237,7 @@ public class TransactionService {
         .poolFlag(transaction.getPoolFlag())
         .feeId(transaction.getFeeId())
         .balance(transaction.getBalance())
+        .stringTradingDate(transaction.getStringTradingDate())
         .tradingDate(transaction.getTradingDate())
         .insertUserId(transaction.getInsertUserId())
         .updateUserId(transaction.getUpdateUserId())

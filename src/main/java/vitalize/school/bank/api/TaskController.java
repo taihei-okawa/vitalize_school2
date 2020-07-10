@@ -1,5 +1,7 @@
 package vitalize.school.bank.api;
 
+import java.text.ParseException;
+import java.time.Duration;
 import java.util.*;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -42,10 +44,24 @@ public class TaskController {
    * to 営業時間開始　取引履歴 営業時間外データ移行
    */
   @Scheduled(cron = "${scheduler.cron}", zone = "Asia/Tokyo")
-  public void taskCronTimeZone() {
+  public void taskCronTimeZone() throws ParseException {
     List<Task> taskList = taskService.searchAll();
+    /** to 取引履歴 営業時間外チェック*/
+    Date now = new Date();
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat custom = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    String todayNow = sdf.format(now);
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(now);
+    cal.add(Calendar.DAY_OF_MONTH, -1);
+    String timeStart = "09:00:00";
+    String timeEnd = "18:00:00";
+    String strTime = todayNow.concat(timeStart);
+    String endTime = cal.getTime().toString().substring(0, 10).concat(timeEnd);
+    Date start = custom.parse(strTime);
+    Date end = custom.parse(endTime);
     taskList.stream()
-      .filter(tk -> tk.getPoolFlag() == 1)
+      .filter(tk -> tk.getPoolFlag() == 1 && end.before(tk.getTradingDate())&& start.after(tk.getTradingDate()))
       .collect(Collectors.toList());
     List<Transaction> transactionList = new ArrayList<Transaction>();
     for (Task task : taskList) {
@@ -72,13 +88,14 @@ public class TaskController {
    * to 営業時間内　取引履歴 データ移行
    */
   @Scheduled(cron = "${scheduler.today}", zone = "Asia/Tokyo")
-  public void taskTimeZone() {
+  public void taskTimeZone() throws ParseException {
     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String today = sdf.format(timestamp);
     List<Task> taskList = taskService.searchAll();
+    /** to 営業時間　日付チェック */
     taskList.stream()
-      .filter(tk -> tk.getTradingDate() != null && tk.getTradingDate().toString() == today)
+      .filter(tk -> tk.getTradingDate() != null && tk.getTradingDate().toString().substring(0, 10) == today ||tk.getPoolFlag() == 0)
       .collect(Collectors.toList());
     List<Transaction> transactionList = new ArrayList<Transaction>();
     for (Task task : taskList) {
