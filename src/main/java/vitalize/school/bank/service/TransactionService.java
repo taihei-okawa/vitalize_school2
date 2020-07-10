@@ -130,21 +130,27 @@ public class TransactionService {
     //曜日判断
     String strTrading = transaction.getStringTradingDate().substring(0, 10);
     mstFeeList.stream()
-      .filter(msl -> msl.getBusinessDay().contains(strTrading) || msl.getHoliday().contains(strTrading))
+      .filter(msl -> msl.getStartDay().contains(strTrading) || msl.getStartDay().contains(strTrading)|| transaction.getPoolFlag()==1)
       .collect(Collectors.toList());
-    Integer feePrice;
+    Integer feePrice = 0;
     if(mstFeeList == null && mstFeeList.size() == 0){
       feePrice = 0;
     }else{
-      feePrice = mstFeeList.get(0).getFeePrice();
+      //時間判断
+      for(MstFee fee:mstFeeList) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date start = format.parse(fee.getStartDay());
+        Date end = format.parse(fee.getEndDay());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Date todayDate = sdf.parse(transaction.getStringTradingDate());
+        if(start.before(todayDate) && end.after(todayDate)){
+          feePrice = mstFeeList.get(0).getFeePrice();
+        }
+      }
     }
-    //時間判断
-//    Date tradingTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(transaction.getStringTradingDate());
-//    Date startTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(mstFeeList.get(0).getStartDay());
-//    Date endTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").parse(mstFeeList.get(0).getEndDay());
     /** to 日付型に変換*/
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm");
-    Date date = sdf.parse(transaction.getStringTradingDate(), new ParsePosition(0));
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    Date date = sdf.parse(transaction.getStringTradingDate());
     transaction.setTradingDate(date);
     transaction.setInsertUserId(9001);
     transaction.setUpdateUserId(9001);

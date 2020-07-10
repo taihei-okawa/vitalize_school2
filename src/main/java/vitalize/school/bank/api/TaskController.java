@@ -74,7 +74,7 @@ public class TaskController {
   @Scheduled(cron = "${scheduler.today}", zone = "Asia/Tokyo")
   public void taskTimeZone() {
     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String today = sdf.format(timestamp);
     List<Task> taskList = taskService.searchAll();
     taskList.stream()

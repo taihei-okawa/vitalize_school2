@@ -31,18 +31,17 @@
     </div>
     <table class="table table-bordered">
       <thead>
-      <tr class='heading-td'>
-        <th><p th:text="#{view}"></p></th>
-        <th><p th:text="#{edit}"></p></th>
-        <th><p th:text="#{mstFeeId}"></p></th>
-        <th><p th:text="#{feePrice}"></p></th>
-        <th><p th:text="#{branchCode}"></p></th>
-        <th><p th:text="#{businessDay}"></p></th>
-        <th><p th:text="#{holiday}"></p></th>
-        <th><p th:text="#{startDay}"></p></th>
-        <th><p th:text="#{endDay}"></p></th>
-        <th><p th:text="#{delete}"></p></th>
-      </tr>
+        <tr class='heading-td'>
+          <th><p th:text="#{view}"></p></th>
+          <th><p th:text="#{edit}"></p></th>
+          <th><p th:text="#{mstFeeId}"></p></th>
+          <th><p th:text="#{feePrice}"></p></th>
+          <th><p th:text="#{branchCode}"></p></th>
+          <th><p th:text="#{businessFrag}"></p></th>
+          <th><p th:text="#{startDay}"></p></th>
+          <th><p th:text="#{endDay}"></p></th>
+          <th><p th:text="#{delete}"></p></th>
+        </tr>
       </thead>
       <tbody>
       <tr th:each="mstFee : ${mstFeeList}" th:object="${mstFee}">
@@ -53,8 +52,7 @@
         <td th:text="*{id}"></td>
         <td th:text="*{feePrice} + '円'"></td>
         <td th:text="*{branchCode}"></td>
-        <td th:text="*{businessDay}"></td>
-        <td th:text="*{holiday}"></td>
+        <td th:text="*{businessFrag}"></td>
         <td th:text="*{startDay}"></td>
         <td th:text="*{endDay}"></td>
         <td>

@@ -32,12 +32,12 @@
     <table class="table table-bordered">
       <thead>
       <tr class="heading-td">
-        <th>詳細</th>
-        <th>口座ID</th>
-        <th>口座番号</th>
-        <th>支店名</th>
-        <th>口座開設日時</th>
-        <th>削除</th>
+        <th><p th:text="#{view}"></p></th>
+        <th><p th:text="#{accountId}"></p></th>
+        <th><p th:text="#{accountNumber}"></p></th>
+        <th><p th:text="#{branchCode}"></p></th>
+        <th><p th:text="#{insertDate}"></p></th>
+        <th><p th:text="#{delete}"></p></th>
       </tr>
       </thead>
       <tbody>
@@ -47,7 +47,7 @@
         <td th:text="*{id}"></td>
         <td th:text="*{accountNumber}"></td>
         <td th:text="*{branchCode}"></td>
-        <td th:text="*{insertDate}"></td>
+        <td class="center" th:text="${#dates.format(accountLists.insertDate, 'yyyy/MM/dd')}"></td>
         <td>
           <form th:action="@{/account/{id}(id=*{id})}" th:method="delete">
             <input class="btn btn-danger btn-xs" type="submit" value="削除"/>

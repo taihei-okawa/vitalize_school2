@@ -31,21 +31,21 @@
           <div th:object="${account}">
             <input type="hidden" th:value="*{id}">
             <div>
-              <label>口座番号</label>
+              <label><p th:text="#{accountNumber}"></p></label>
               <p th:text="*{accountNumber}"></p>
             </div>
             <div>
-              <label>顧客ID</label>
+              <label><p th:text="#{clientId}"></p></label>
               <p th:text="*{id}"></p>
             </div>
             <div>
-              <label>支店名</label>
+              <label><p th:text="#{branchCode}"></p></label>
               <p th:text="*{branchCode}"></p>
             </div>
           </div>
           <div th:object="${task}">
             <div>
-              <label>残高</label>
+              <label><p th:text="#{balance}"></p></label>
               <p th:text="*{balance}"></p>
             </div>
           </div>
