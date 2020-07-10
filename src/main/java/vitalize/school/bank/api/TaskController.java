@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.Null;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -61,7 +62,7 @@ public class TaskController {
     Date start = custom.parse(strTime);
     Date end = custom.parse(endTime);
     taskList.stream()
-      .filter(tk -> tk.getPoolFlag() == 1 && end.before(tk.getTradingDate())&& start.after(tk.getTradingDate()))
+      .filter(tk -> tk.getPoolFlag() == 1 && tk.getPoolFlag() != null && end.before(tk.getTradingDate())&& start.after(tk.getTradingDate()))
       .collect(Collectors.toList());
     List<Transaction> transactionList = new ArrayList<Transaction>();
     for (Task task : taskList) {
@@ -88,14 +89,14 @@ public class TaskController {
    * to 営業時間内　取引履歴 データ移行
    */
   @Scheduled(cron = "${scheduler.today}", zone = "Asia/Tokyo")
-  public void taskTimeZone() throws ParseException {
+  public void taskTimeZone() {
     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String today = sdf.format(timestamp);
     List<Task> taskList = taskService.searchAll();
     /** to 営業時間　日付チェック */
     taskList.stream()
-      .filter(tk -> tk.getTradingDate() != null && tk.getTradingDate().toString().substring(0, 10) == today ||tk.getPoolFlag() == 0)
+      .filter(tk -> tk.getTradingDate() != null && tk.getTradingDate().toString().substring(0, 10) == today || tk.getPoolFlag() != null && tk.getPoolFlag() == 0)
       .collect(Collectors.toList());
     List<Transaction> transactionList = new ArrayList<Transaction>();
     for (Task task : taskList) {
