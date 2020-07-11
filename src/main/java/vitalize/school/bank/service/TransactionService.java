@@ -109,6 +109,12 @@ public class TransactionService {
       SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
       String strDate = dateFormat.format(date);
       transaction.setStringTradingDate(strDate);
+    }else{
+      String time = ":00";
+      String Trading= transaction.getStringTradingDate();
+      String strTime = Trading.concat(time);
+      transaction.setStringTradingDate(strTime);
+      transaction.setPoolFlag(1);
     }
 
     /** to 取引履歴の最新の情報だけを取得 */
