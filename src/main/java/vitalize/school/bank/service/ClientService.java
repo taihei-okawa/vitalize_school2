@@ -28,9 +28,10 @@ public class ClientService {
       // idを文字列から数字変換できるか判定
       Integer.parseInt(searchForm.getId());
 
-      Specification<Client> spec = Specification.where(idEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
-              .and(clientNameContains(clientName))
-              .and(clientNameKanaContains(clientNameKana));
+      Specification<Client> spec = Specification
+        .where(idEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
+        .and(clientNameContains(clientName))
+        .and(clientNameKanaContains(clientNameKana));
       return clientRepository.findAll(spec, pageable);
     } catch (NumberFormatException e) {
       Specification<Client> spec = Specification.where(clientNameContains(clientName))

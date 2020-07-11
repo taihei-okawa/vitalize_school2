@@ -44,7 +44,7 @@
         </tr>
       </thead>
       <tbody>
-      <tr th:each="mstFee : ${mstFeeList}" th:object="${mstFee}">
+      <tr th:each="mstFee: ${mstFeeList}" th:object="${mstFee}">
         <td><a class="view" th:href="@{/mst_fee/{id}(id=*{id})}" title="View" data-toggle="tooltip"><i
           class="material-icons">&#xE417;</i></a></td>
         <td><a class="settings" th:href="@{/mst_fee/edit/{id}(id=*{id})}" title="Settings" data-toggle="tooltip"><i

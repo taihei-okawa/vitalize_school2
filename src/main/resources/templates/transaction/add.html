@@ -9,7 +9,7 @@
   <div th:replace="commons/header :: header"></div>
   <link rel="stylesheet" href="/css/bootstrap.css"/>
   <link rel="stylesheet" href="/css/list.css"/>
-  <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
+  <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_green.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -155,6 +155,8 @@
 <script>
     flatpickr.localize(flatpickr.l10ns.ja);
     flatpickr('#tradingCalendar', {
+        minDate: new Date().fp_incr(+1), //1日後から
+        maxDate: new Date().fp_incr(10), //10日後まで
         enableTime: true,
         allowInput: true
     });
