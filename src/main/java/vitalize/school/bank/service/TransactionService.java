@@ -102,6 +102,10 @@ public class TransactionService {
       }
     };
   }
+
+  /**
+   * 取引履歴 入金　出金　振込　ロジック　Repository
+   */
   public void AccountPay(Transaction transaction) throws ParseException {
     /** to 本日日付に代入*/
     if (transaction.getStringTradingDate().isEmpty()) {
@@ -235,7 +239,6 @@ public class TransactionService {
     if (transaction.getType() == 1 || transaction.getType() == 2) {
       /** to Taskに一時的にデータを作る*/
       Task createTask = Task.builder()
-        .id(transaction.getId())
         .accountNumber(transaction.getAccountNumber())
         .payAccountNumber(transaction.getPayAccountNumber())
         .type(transaction.getType())
