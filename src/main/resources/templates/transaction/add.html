@@ -9,7 +9,7 @@
   <div th:replace="commons/header :: header"></div>
   <link rel="stylesheet" href="/css/bootstrap.css"/>
   <link rel="stylesheet" href="/css/list.css"/>
-  <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_green.css">
+  <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -131,8 +131,9 @@
                             <div th:replace="~{transaction/parts/tradingCalendar :: InputField}"></div>
                           </div>
                         </div>
-                      </div><div class="form-group col-sm-8">
-                        <button class="btn btn-primary btn-lg btn-block" type="submit">作成</button>
+                      </div>
+                      <div class="form-group col-sm-8">
+                        <button class="btn btn-primary btn-lg btn-block" type="submit" data-toggle="modal" data-target="#demoNormalModal">作成</button>
                       </div>
                     </div>
                   </form>
@@ -146,6 +147,27 @@
         <div class="btn">
           <a class="btn btn-info" href="/transaction/list">一覧画面へ</a>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- モーダルダイアログ -->
+<div class="modal fade" id="demoNormalModal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="demoModalTitle">タイトル</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        内容・・・
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+        <button type="button" class="btn btn-primary">ボタン</button>
       </div>
     </div>
   </div>
