@@ -110,10 +110,6 @@ public class TaskController {
         .feeId(task.getFeeId())
         .balance(task.getBalance())
         .tradingDate(task.getTradingDate())
-        .insertUserId(task.getInsertUserId())
-        .updateUserId(task.getUpdateUserId())
-        .insertDate(task.getInsertDate())
-        .updateDate(task.getUpdateDate())
         .build();
       transactionList.add(transaction);
     }
@@ -143,16 +139,12 @@ public class TaskController {
   @ResponseStatus(HttpStatus.CREATED)
   void save(@RequestBody Task task) throws ParseException {
     Transaction transaction = Transaction.builder()
-      .id(task.getId())
       .accountNumber(task.getAccountNumber())
       .payAccountNumber(task.getPayAccountNumber())
       .type(task.getType())
       .amount(task.getAmount())
       .poolFlag(task.getPoolFlag())
-      .feeId(task.getFeeId())
-      .balance(task.getBalance())
       .stringTradingDate(task.getStringTradingDate())
-      .tradingDate(task.getTradingDate())
       .insertUserId(task.getInsertUserId())
       .updateUserId(task.getUpdateUserId())
       .build();

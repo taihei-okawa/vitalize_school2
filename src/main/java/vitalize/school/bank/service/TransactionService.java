@@ -186,7 +186,7 @@ public class TransactionService {
       }
     }
     //振込
-    if (transaction.getType() == 3) {
+    if (transaction.getType() == 3 || transaction.getType() == 4) {
       /** to 自分の口座　出金処理 */
       Integer answer;
       answer = balance - amount - feePrice;
