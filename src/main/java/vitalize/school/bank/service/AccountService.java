@@ -72,8 +72,8 @@ public class AccountService {
 
     try {
       // idを文字列から数字変換できるか判定
-      Integer.parseInt(searchForm.getId());
-      Integer.parseInt(searchForm.getAccountNumber());
+      if (searchForm.getId() != "") Integer.parseInt(searchForm.getId());
+      if (searchForm.getAccountNumber() != "") Integer.parseInt(searchForm.getAccountNumber());
 
       Specification<Account> spec = Specification
               .where(idEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
