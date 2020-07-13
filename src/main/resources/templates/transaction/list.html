@@ -80,7 +80,7 @@
         <td class="center" th:text="*{amount} + '円'"></td>
         <td class="center" th:text="*{feeId} + '円'"></td>
         <td class="center" th:text="*{balance} + '円'"></td>
-        <td th:text="*{insertUserId}"></td>
+        <td class="center" th:text="*{insertUserId}"></td>
         <td class="center" th:text="${#dates.format(transaction.insertDate, 'yyyy/MM/dd')}"></td>
       </tr>
       </tbody>

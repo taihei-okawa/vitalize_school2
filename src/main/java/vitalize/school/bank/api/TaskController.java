@@ -110,6 +110,10 @@ public class TaskController {
         .feeId(task.getFeeId())
         .balance(task.getBalance())
         .tradingDate(task.getTradingDate())
+        .insertUserId(task.getInsertUserId())
+        .updateUserId(task.getUpdateUserId())
+        .insertDate(task.getInsertDate())
+        .updateDate(task.getUpdateDate())
         .build();
       transactionList.add(transaction);
     }

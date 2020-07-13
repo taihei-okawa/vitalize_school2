@@ -209,6 +209,7 @@ public class TransactionService {
       transactionNew.setBalance(payAnswer);
       transactionNew.setType(transaction.getType());
       transactionNew.setBalance(payAnswer);
+      transactionNew.setFeeId(0);
       transactionNew.setStringTradingDate(transaction.getStringTradingDate());
       transactionNew.setTradingDate(transaction.getTradingDate());
       transactionNew.setInsertUserId(transaction.getInsertUserId());
