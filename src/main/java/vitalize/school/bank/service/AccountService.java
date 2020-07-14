@@ -47,6 +47,7 @@ public class AccountService {
     List<Task> taskNewList = new ArrayList<Task>();
     taskNew.setAccountNumber(account.getAccountNumber());
     taskNew.setPayAccountNumber(account.getAccountNumber());
+    //手数料0想定
     taskNew.setFeeId(0);
     taskNew.setPoolFlag(0);
     taskNew.setAmount(0);
