@@ -13,6 +13,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import vitalize.school.bank.service.TransactionService;
 
 import java.util.Comparator;
 import java.util.List;
@@ -25,6 +26,8 @@ public class AccountController {
   private AccountService accountService;
   @Autowired
   private TaskService taskService;
+  @Autowired
+  private TransactionService transactionService;
 
   private static final int DEFAULT_PAGEABLE_SIZE = 15;
 
@@ -112,26 +115,16 @@ public class AccountController {
     accountService.save(account);
     return "redirect:/client/" + client;
   }
-  /**
-   * todo 口座編集いらないかも。。
-   */
-
-//  /**
-//   * to 口座機能 process 編集
-//   */
-//  @PostMapping(value = "/edit/{id}")
-//  public String update(@PathVariable Long id, @ModelAttribute Account account) {
-//    account.setInsertUserId(9001);
-//    account.setUpdateUserId(9001);
-//    accountService.save(account);
-//    return "redirect:/account/"+ "{id}";
-//  }
 
   /**
    * to 口座機能 削除
    */
   @PostMapping("{id}")
   public String destroy(@PathVariable Long id) {
+    Account account = accountService.findOne(id);
+    Integer accountNumber = account.getAccountNumber();
+    taskService.delete(accountNumber);
+    transactionService.delete(accountNumber);
     accountService.delete(id);
     return "redirect:/account/list";
   }

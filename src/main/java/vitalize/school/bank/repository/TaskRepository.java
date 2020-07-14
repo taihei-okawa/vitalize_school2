@@ -15,4 +15,5 @@ import java.util.List;
 public interface TaskRepository extends JpaRepository<Task, Long>, JpaSpecificationExecutor<Task> {
     public List<Task> findByAccountNumber(Integer accountNumber);
     public List<Task> findByPayAccountNumber(Integer payAccountNumber);
+    public Integer deleteByAccountNumber(Integer accountNumber);
 }

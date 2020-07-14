@@ -73,6 +73,8 @@ public class TransactionController {
         transaction.setStringType("出金");
       } else if (transaction.getType() == 3) {
         transaction.setStringType("振込");
+      } else if (transaction.getType() == 4) {
+        transaction.setStringType("振込(ATM)");
       }
     }
     model.addAttribute("page", transactionlist);

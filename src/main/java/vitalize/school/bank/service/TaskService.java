@@ -48,11 +48,17 @@ public class TaskService {
   public List<Task> findPayNumber(Integer payAccountNumber) {
     return taskRepository.findByPayAccountNumber(payAccountNumber);
   }
+  /**
+   * to 振込 処理 相手の口座　最新レコード取得
+   */
+  public void delete(Integer accountNumber) {
+    taskRepository.deleteByAccountNumber(accountNumber);
+  }
 
   /**
    * to 取引履歴の口座で検索
    */
-  public Task findOne(Integer accountNumber) {
-    return taskRepository.findByAccountNumber(accountNumber).get(0);
+  public List<Task> findOne(Integer accountNumber) {
+    return taskRepository.findByAccountNumber(accountNumber);
   }
 }

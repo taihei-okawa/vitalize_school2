@@ -16,5 +16,5 @@ import org.springframework.data.domain.Pageable;
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long>, JpaSpecificationExecutor<Transaction> {
     public Page<Transaction> findAll(Pageable pageable);
-
+    public Integer deleteByAccountNumber(Integer accountNumber);
 }

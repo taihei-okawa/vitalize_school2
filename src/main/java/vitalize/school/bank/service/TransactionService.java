@@ -90,6 +90,12 @@ public class TransactionService {
       }
     };
   }
+  /**
+   * 取引履歴 削除　Repository
+   */
+  public void delete(Integer accountNumber) {
+    transactionRepository.deleteByAccountNumber(accountNumber);
+  }
 
   /**
    * 取引履歴 LIKE検索　Repository
@@ -186,7 +192,7 @@ public class TransactionService {
       }
     }
     //振込
-    if (transaction.getType() == 3) {
+    if (transaction.getType() == 3 || transaction.getType() == 4) {
       /** to 自分の口座　出金処理 */
       Integer answer;
       answer = balance - amount - feePrice;
@@ -209,6 +215,7 @@ public class TransactionService {
       transactionNew.setBalance(payAnswer);
       transactionNew.setType(transaction.getType());
       transactionNew.setBalance(payAnswer);
+      transactionNew.setFeeId(0);
       transactionNew.setStringTradingDate(transaction.getStringTradingDate());
       transactionNew.setTradingDate(transaction.getTradingDate());
       transactionNew.setInsertUserId(transaction.getInsertUserId());

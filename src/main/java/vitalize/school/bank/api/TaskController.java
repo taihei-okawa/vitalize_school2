@@ -132,8 +132,10 @@ public class TaskController {
    * to 取引履歴　残高確認
    */
   @GetMapping(value = "search/{accountNumber}")
-  public Task getById(@PathVariable("accountNumber") Integer accountNumber) {
-    return taskService.findOne(accountNumber);
+  public List<Task> getById(@PathVariable("accountNumber") Integer accountNumber) {
+    List<Task> accountNumberList = taskService.findOne(accountNumber);
+    Task MaxTaskPayList = accountNumberList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
+    return Collections.singletonList(MaxTaskPayList);
   }
 
   /**
@@ -143,16 +145,12 @@ public class TaskController {
   @ResponseStatus(HttpStatus.CREATED)
   void save(@RequestBody Task task) throws ParseException {
     Transaction transaction = Transaction.builder()
-      .id(task.getId())
       .accountNumber(task.getAccountNumber())
       .payAccountNumber(task.getPayAccountNumber())
       .type(task.getType())
       .amount(task.getAmount())
       .poolFlag(task.getPoolFlag())
-      .feeId(task.getFeeId())
-      .balance(task.getBalance())
       .stringTradingDate(task.getStringTradingDate())
-      .tradingDate(task.getTradingDate())
       .insertUserId(task.getInsertUserId())
       .updateUserId(task.getUpdateUserId())
       .build();
