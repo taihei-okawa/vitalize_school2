@@ -47,6 +47,7 @@ public class AccountService {
     List<Task> taskNewList = new ArrayList<Task>();
     taskNew.setAccountNumber(account.getAccountNumber());
     taskNew.setPayAccountNumber(account.getAccountNumber());
+    taskNew.setFeeId(0);
     taskNew.setPoolFlag(0);
     taskNew.setAmount(0);
     //口座開設時に1000円をもらう想定

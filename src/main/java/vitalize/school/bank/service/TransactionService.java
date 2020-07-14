@@ -90,6 +90,12 @@ public class TransactionService {
       }
     };
   }
+  /**
+   * 取引履歴 削除　Repository
+   */
+  public void delete(Integer accountNumber) {
+    transactionRepository.deleteByAccountNumber(accountNumber);
+  }
 
   /**
    * 取引履歴 LIKE検索　Repository
