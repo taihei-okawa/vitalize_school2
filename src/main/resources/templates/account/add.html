@@ -30,9 +30,7 @@
         <div class="row">
           <form th:action="@{/account/add}" th:method="post" th:object="${account}">
             <div th:replace="~{account/parts/account :: InputField}"></div>
-            <div class="form-group col-sm-8">
-              <button class="btn btn-primary btn-block" type="submit"><p th:text="#{save}"></p></label></button>
-            </div>
+            <div th:replace="commons/modal :: addModal"></div>
           </form>
         </div>
       </div>

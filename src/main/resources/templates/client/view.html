@@ -47,6 +47,26 @@
               <label><p th:text="#{mailAddress}"></p></label>
               <p th:text="*{mailAddress}"></p>
             </div>
+            <div>
+              <label><p th:text="#{password}"></p></label>
+              <p th:text="*{password}"></p>
+            </div>
+            <div>
+              <label><p th:text="#{insertUserId}"></p></label>
+              <p th:text="*{insertUserId}"></p>
+            </div>
+            <div>
+              <label><p th:text="#{updateUserId}"></p></label>
+              <p th:text="*{updateUserId}"></p>
+            </div>
+            <div>
+              <label><p th:text="#{insertDate}"></p></label>
+              <p th:text="*{insertDate}"></p>
+            </div>
+            <div>
+              <label><p th:text="#{updateDate}"></p></label>
+              <p th:text="*{updateDate}"></p>
+            </div>
           </div>
         </div>
       </div>
@@ -118,7 +138,7 @@
         <td class="center" th:text="*{id}"></td>
         <td class="center" th:text="*{accountNumber}"></td>
         <td class="center" th:text="*{payAccountNumber}"></td>
-        <td class="center" th:text="*{type}"></td>
+        <td class="center" th:text="*{stringType}"></td>
         <td class="center" th:text="*{amount}"></td>
         <td class="center" th:text="*{feeId}"></td>
         <td class="center" th:text="*{balance}"></td>

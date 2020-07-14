@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+  </head>
+  <div th:fragment="addModal" th:remove="tag">
+    <div class="form-group col-sm-8">
+      <input type="button" class="btn btn-success btn-block" value="保存"
+             data-toggle="modal" data-target="#confirmWithdraw">
+      <!-- モーダル -->
+      <div class="modal" id="confirmWithdraw" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">登録確認</h5>
+              <button type="button" class="close" data-dismiss="modal"
+                      aria-label="Close">
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>保存を押下すると入力内容が保存されます。</p>
+              <p>本当に保存しますか。</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary"
+                      data-dismiss="modal">キャンセル</button>
+              <button type="submit" class="btn btn-success">保存</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div th:fragment="editModal" th:remove="tag">
+    <div class="form-group col-sm-8">
+      <input type="button" class="btn btn-warning btn-block" value="更新"
+             data-toggle="modal" data-target="#confirm">
+      <!-- モーダル -->
+      <div class="modal" id="confirm" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">更新確認</h5>
+              <button type="button" class="close" data-dismiss="modal"
+                      aria-label="Close">
+              </button>
+            </div>
+            <div class="modal-body">
+              <p>更新を押下すると入力内容が更新されます。</p>
+              <p>本当に更新しますか。</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary"
+                      data-dismiss="modal">キャンセル</button>
+              <button type="submit" class="btn btn-warning">更新</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>　　
+  <div th:fragment="deleteModal" th:remove="tag">
+    <input type="button" class="btn btn-danger btn-block btn-xs" value="削除"
+           data-toggle="modal" data-target="#confirmDate">
+    <!-- モーダル -->
+    <div class="modal" id="confirmDate" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">削除確認</h5>
+            <button type="button" class="close" data-dismiss="modal"
+                    aria-label="Close">
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>削除を押下すると対象のデータが削除されます。</p>
+            <p>本当に削除しますか。</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary"
+                    data-dismiss="modal">キャンセル</button>
+            <button type="submit" class="btn btn-danger">削除</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</html>
