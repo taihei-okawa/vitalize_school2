@@ -57,7 +57,7 @@
         <td th:text="*{endDay}"></td>
         <td>
           <form th:action="@{/mst_fee/{id}(id=*{id})}" th:method="delete">
-            <input class="btn btn-danger btn-xs" type="submit" value="削除"/>
+            <div th:replace="commons/modal :: deleteModal"></div>
           </form>
         </td>
       </tr>

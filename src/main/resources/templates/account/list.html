@@ -50,7 +50,7 @@
         <td class="center" th:text="${#dates.format(accountLists.insertDate, 'yyyy/MM/dd')}"></td>
         <td>
           <form th:action="@{/account/{id}(id=*{id})}" th:method="delete">
-            <input class="btn btn-danger btn-xs" type="submit" value="削除"/>
+            <div th:replace="commons/modal :: deleteModal"></div>
           </form>
         </td>
       </tr>

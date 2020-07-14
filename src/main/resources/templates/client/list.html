@@ -58,7 +58,7 @@
         <td class="center" th:text="${#dates.format(client.insertDate, 'yyyy/MM/dd')}"></td>
         <td>
           <form th:action="@{/client/{id}(id=*{id})}" th:method="delete">
-            <input class="btn btn-danger btn-xs" type="submit" name="delete" value="削除"/>
+            <div th:replace="commons/modal :: deleteModal"></div>
           </form>
         </td>
       </tr>
