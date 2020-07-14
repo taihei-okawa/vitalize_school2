@@ -52,7 +52,7 @@ public class TaskService {
   /**
    * to 取引履歴の口座で検索
    */
-  public Task findOne(Integer accountNumber) {
-    return taskRepository.findByAccountNumber(accountNumber).get(0);
+  public List<Task> findOne(Integer accountNumber) {
+    return taskRepository.findByAccountNumber(accountNumber);
   }
 }

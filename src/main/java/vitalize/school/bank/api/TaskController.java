@@ -132,8 +132,10 @@ public class TaskController {
    * to 取引履歴　残高確認
    */
   @GetMapping(value = "search/{accountNumber}")
-  public Task getById(@PathVariable("accountNumber") Integer accountNumber) {
-    return taskService.findOne(accountNumber);
+  public List<Task> getById(@PathVariable("accountNumber") Integer accountNumber) {
+    List<Task> accountNumberList = taskService.findOne(accountNumber);
+    Task MaxTaskPayList = accountNumberList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
+    return Collections.singletonList(MaxTaskPayList);
   }
 
   /**
