@@ -5931,7 +5931,8 @@ button.close {
   bottom: 0;
   left: 0;
   z-index: 1040;
-  opacity: 0.25; /* 55％不透明度(＝45％透過) */
+  opacity: 0.55; /* 55％不透明度(＝45％透過) */
+  /* 水色　background-color: #CCFFFF; */
   background-color: #428bca;
 }
 .modal-backdrop.fade {
