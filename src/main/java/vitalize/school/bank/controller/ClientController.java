@@ -3,6 +3,7 @@ package vitalize.school.bank.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vitalize.school.bank.entity.Client;
 import vitalize.school.bank.entity.Transaction;
 import vitalize.school.bank.searchform.ClientSearchForm;
@@ -110,10 +111,11 @@ public class ClientController {
    * to 顧客 process 登録
    */
   @PostMapping(value = "/add")
-  public String create(@Validated @ModelAttribute Client client, BindingResult result) {
+  public String create(RedirectAttributes attr, @Validated @ModelAttribute Client client, BindingResult result) {
     if (result.hasErrors()) {
       return "client/add";
     }
+    attr.addFlashAttribute("message", "保存完了しました。");
     client.setInsertUserId(9001);
     client.setUpdateUserId(9001);
     clientService.save(client);
