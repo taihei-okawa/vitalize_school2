@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:c="">
 
 <head>
   <meta charset="utf-8">
@@ -19,6 +19,9 @@
 <body>
 <div class="container">
   <div id="content">
+    <c:if test="${message != null}">
+      <p><c:out value="${message}" /></p>
+    </c:if>
     <div class="table-wrapper">
       <div class="table-title">
         <div class="row">
