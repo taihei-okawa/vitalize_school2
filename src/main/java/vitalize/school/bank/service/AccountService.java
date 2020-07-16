@@ -12,10 +12,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@Transactional
 @Service
 public class AccountService {
 
@@ -23,6 +25,8 @@ public class AccountService {
   private AccountRepository accountRepository;
   @Autowired
   private TaskService taskService;
+  @Autowired
+  private TransactionService transactionService;
 
   /**
    *  口座 一覧
@@ -65,6 +69,15 @@ public class AccountService {
    */
   public void delete(Long id) {
     accountRepository.deleteById(id);
+  }
+  public void deleteClient(Integer clientId) {
+    List<Account> accountClientList = accountRepository.findByClientId(clientId);
+    for(Account account:accountClientList){
+      Integer accountNumber = account.getAccountNumber();
+      transactionService.delete(accountNumber);
+      taskService.delete(accountNumber);
+    }
+    accountRepository.deleteByClientId(clientId);
   }
   /**
    *  口座の内容とページネーションを全検索
@@ -124,5 +137,11 @@ public class AccountService {
   public List<Account>  findAccount(Integer accountNumber) {
     return accountRepository.findByAccountNumber(accountNumber);
   }
+  /**
+   *  顧客ID 検索
+   */
+//  public List<Account>  findAccountClient(Integer clientId) {
+//    return accountRepository.findByClientId(clientId);
+//  }
 }
 

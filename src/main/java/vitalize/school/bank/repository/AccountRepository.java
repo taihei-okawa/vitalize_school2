@@ -16,4 +16,6 @@ public interface AccountRepository extends JpaRepository<Account, Long>, JpaSpec
     public Page<Account> findAll(Pageable pageable);
     public List<Account> findByClientId(Integer clientId);
     public List<Account>  findByAccountNumber(Integer accountNumber);
+    public Integer deleteByClientId(Integer clientId);
+
 }
