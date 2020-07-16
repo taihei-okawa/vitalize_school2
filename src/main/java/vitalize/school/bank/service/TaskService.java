@@ -43,13 +43,13 @@ public class TaskService {
   }
 
   /**
-   * to 振込 処理 相手の口座　最新レコード取得
+   * to 振込 処理 相手の口座　検索
    */
   public List<Task> findPayNumber(Integer payAccountNumber) {
     return taskRepository.findByPayAccountNumber(payAccountNumber);
   }
   /**
-   * to 振込 処理 相手の口座　最新レコード取得
+   * to 振込 処理 相手の口座　削除
    */
   public void delete(Integer accountNumber) {
     taskRepository.deleteByAccountNumber(accountNumber);

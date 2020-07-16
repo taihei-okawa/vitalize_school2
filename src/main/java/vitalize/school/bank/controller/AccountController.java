@@ -100,7 +100,7 @@ public class AccountController {
   public String create(RedirectAttributes attr, @ModelAttribute Account account) {
     Integer client = account.getClientId();
     account.setId(null);
-    List<Account> accountList = accountService.findAll();
+    List<Account> accountList = accountService.findAccount(account.getAccountNumber());
     if(accountList.isEmpty()){
       account.setAccountNumber(100000);
     }else{

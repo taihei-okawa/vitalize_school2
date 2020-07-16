@@ -144,8 +144,10 @@ public class ClientController {
    * to 顧客 削除
    */
   @PostMapping("{id}")
-  public String destroy(RedirectAttributes attr,@PathVariable Long id) {
+  public String destroy(RedirectAttributes attr,@PathVariable Long id,@ModelAttribute Client client) {
     clientService.delete(id);
+    Integer clientId = Math.toIntExact(client.getId());
+    accountService.deleteClient(clientId);
     attr.addFlashAttribute("message", "※顧客が削除されました※");
     return "redirect:/client/list";
   }
