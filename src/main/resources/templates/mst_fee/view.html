@@ -30,30 +30,34 @@
       <div class="col text-center">
         <div class="row">
           <div th:object="${mstFee}">
-            <input type="hidden" th:value="*{id}">
-            <div>
-              <label><p th:text="#{feePrice}"></p></label>
-              <p th:text="*{feePrice}"></p>
+            <div class="col-sm-6">
+              <input type="hidden" th:value="*{id}">
+              <div>
+                <label><p th:text="#{feePrice}"></p></label>
+                <p th:text="*{feePrice}"></p>
+              </div>
+              <div>
+                <label><p th:text="#{branchCode}"></p></label>
+                <p th:text="*{branchCode}"></p>
+              </div>
+              <div>
+                <label><p th:text="#{branchCode}"></p></label>
+                <p th:text="*{businessFrag}"></p>
+              </div>
             </div>
-            <div>
-              <label><p th:text="#{branchCode}"></p></label>
-              <p th:text="*{branchCode}"></p>
-            </div>
-            <div>
-              <label><p th:text="#{branchCode}"></p></label>
-              <p th:text="*{businessFrag}"></p>
-            </div>
-            <div>
-              <label><p th:text="#{startDay}"></p></label>
-              <p th:text="*{startDay}"></p>
-            </div>
-            <div>
-              <label><p th:text="#{endDay}"></p></label>
-              <p th:text="*{endDay}"></p>
-            </div>
-            <div>
-              <label><p th:text="#{insertDate}"></p></label>
-              <p th:text="${#dates.format(mstFee.insertDate, 'yyyy/MM/dd')}"></p>
+            <div class="col-sm-6">
+              <div>
+                <label><p th:text="#{startDay}"></p></label>
+                <p th:text="*{startDay}"></p>
+              </div>
+              <div>
+                <label><p th:text="#{endDay}"></p></label>
+                <p th:text="*{endDay}"></p>
+              </div>
+              <div>
+                <label><p th:text="#{insertDate}"></p></label>
+                <p th:text="${#dates.format(mstFee.insertDate, 'yyyy/MM/dd')}"></p>
+              </div>
             </div>
           </div>
         </div>

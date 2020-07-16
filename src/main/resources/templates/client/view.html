@@ -31,42 +31,46 @@
       <div class="col text-center">
         <div class="row">
           <div th:object="${client}">
-            <input type="hidden" th:value="*{id}">
-            <div>
-              <label><p th:text="#{clientName}"></p></label>
-              <p th:text="*{clientName}"></p>
+            <div class="col-sm-6">
+              <input type="hidden" th:value="*{id}">
+              <div>
+                <label><p th:text="#{clientName}"></p></label>
+                <p th:text="*{clientName}"></p>
+              </div>
+              <div>
+                <label><p th:text="#{clientNameKana}"></p></label>
+                <p th:text="*{clientNameKana}"></p>
+              </div>
+              <div>
+                <label><p th:text="#{tell}"></p></label>
+                <p th:text="*{tell}"></p>
+              </div>
+              <div>
+                <label><p th:text="#{mailAddress}"></p></label>
+                <p th:text="*{mailAddress}"></p>
+              </div>
             </div>
-            <div>
-              <label><p th:text="#{clientNameKana}"></p></label>
-              <p th:text="*{clientNameKana}"></p>
-            </div>
-            <div>
-              <label><p th:text="#{tell}"></p></label>
-              <p th:text="*{tell}"></p>
-            </div>
-            <div>
-              <label><p th:text="#{mailAddress}"></p></label>
-              <p th:text="*{mailAddress}"></p>
-            </div>
-            <div>
-              <label><p th:text="#{password}"></p></label>
-              <p th:text="*{password}"></p>
-            </div>
-            <div>
-              <label><p th:text="#{insertUserId}"></p></label>
-              <p th:text="*{insertUserId}"></p>
-            </div>
-            <div>
-              <label><p th:text="#{updateUserId}"></p></label>
-              <p th:text="*{updateUserId}"></p>
-            </div>
-            <div>
-              <label><p th:text="#{insertDate}"></p></label>
-              <p th:text="*{insertDate}"></p>
-            </div>
-            <div>
-              <label><p th:text="#{updateDate}"></p></label>
-              <p th:text="*{updateDate}"></p>
+            <div class="col-sm-6">
+              <div>
+                <label><p th:text="#{password}"></p></label>
+                <p th:text="*{password}"></p>
+              </div>
+              <div>
+                <label><p th:text="#{insertUserId}"></p></label>
+                <p th:text="*{insertUserId}"></p>
+              </div>
+              <div>
+                <label><p th:text="#{updateUserId}"></p></label>
+                <p th:text="*{updateUserId}"></p>
+              </div>
+              <div>
+                <label><p th:text="#{insertDate}"></p></label>
+                <p th:text="*{insertDate}"></p>
+              </div>
+              <div>
+                <label><p th:text="#{updateDate}"></p></label>
+                <p th:text="*{updateDate}"></p>
+              </div>
             </div>
           </div>
         </div>

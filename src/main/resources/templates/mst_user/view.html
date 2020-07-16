@@ -30,38 +30,42 @@
       <div class="col text-center">
         <div class="row">
           <div th:object="${mstUser}">
-            <input type="hidden" th:value="*{id}">
-            <div>
-              <label><p th:text="#{userName}"></p></label>
-              <p th:text="*{userName}"></p>
+            <div class="col-sm-6">
+              <input type="hidden" th:value="*{id}">
+              <div>
+                <label><p th:text="#{userName}"></p></label>
+                <p th:text="*{userName}"></p>
+              </div>
+              <div>
+                <label><p th:text="#{password}"></p></label>
+                <p th:text="*{password}"></p>
+              </div>
+              <div>
+                <label><p th:text="#{branchCode}"></p></label>
+                <p th:text="*{branchCode}"></p>
+              </div>
+              <div>
+                <label><p th:text="#{positionCode}"></label>
+                <p th:text="*{positionCode}"></p>
+              </div>
             </div>
-            <div>
-              <label><p th:text="#{password}"></p></label>
-              <p th:text="*{password}"></p>
-            </div>
-            <div>
-              <label><p th:text="#{branchCode}"></p></label>
-              <p th:text="*{branchCode}"></p>
-            </div>
-            <div>
-              <label><p th:text="#{positionCode}"></label>
-              <p th:text="*{positionCode}"></p>
-            </div>
-            <div>
-              <label><p th:text="#{businessCode}"></label>
-              <p th:text="*{businessCode}"></p>
-            </div>
-            <div>
-              <label><p th:text="#{insertUserId}"></label>
-              <p th:text="*{insertUserId}"></p>
-            </div>
-            <div>
-              <label><p th:text="#{updateUserId}"></label>
-              <p th:text="*{updateUserId}"></p>
-            </div>
-            <div>
-              <label><p th:text="#{businessCode}"></label>
-              <p th:text="${#dates.format(mstUser.insertDate, 'yyyy/MM/dd')}"></p>
+            <div class="col-sm-6">
+              <div>
+                <label><p th:text="#{businessCode}"></label>
+                <p th:text="*{businessCode}"></p>
+              </div>
+              <div>
+                <label><p th:text="#{insertUserId}"></label>
+                <p th:text="*{insertUserId}"></p>
+              </div>
+              <div>
+                <label><p th:text="#{updateUserId}"></label>
+                <p th:text="*{updateUserId}"></p>
+              </div>
+              <div>
+                <label><p th:text="#{businessCode}"></label>
+                <p th:text="${#dates.format(mstUser.insertDate, 'yyyy/MM/dd')}"></p>
+              </div>
             </div>
           </div>
         </div>

@@ -39,8 +39,6 @@
         <th><p th:text="#{userName}"></p></th>
         <th><p th:text="#{positionCode}"></p></th>
         <th><p th:text="#{businessCode}"></p></th>
-        <th><p th:text="#{insertDate}"></p></th>
-        <th><p th:text="#{updateDate}"></p></th>
         <th><p th:text="#{delete}"></p></th>
       </tr>
       </thead>
@@ -54,8 +52,6 @@
         <td th:text="*{userName}"></td>
         <td th:text="*{branchCode}"></td>
         <td th:text="*{positionCode}"></td>
-        <td th:text="${#dates.format(mstUser.insertDate, 'yyyy/MM/dd')}"></td>
-        <td th:text="${#dates.format(mstUser.updateDate, 'yyyy/MM/dd')}"></td>
         <td>
           <form th:action="@{/mst_user/{id}(id=*{id})}" th:method="delete">
             <div th:replace="commons/modal :: deleteModal"></div>

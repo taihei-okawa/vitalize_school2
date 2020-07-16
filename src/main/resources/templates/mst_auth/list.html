@@ -28,7 +28,7 @@
     <table class="table table-bordered">
       <thead>
       <tr class="heading-td">
-        <th><p th:text="#{view}"></p></th>
+<!--        <th><p th:text="#{view}"></p></th>-->
         <th><p th:text="#{mstAuthId}"></p></th>
         <th><p th:text="#{mstAuth.status}"></p></th>
         <th><p th:text="#{statusName}"></p></th>
@@ -39,8 +39,8 @@
       </thead>
       <tbody>
       <tr th:each="mstAuth : ${mstAuthlist}" th:object="${mstAuth}">
-        <td><a class="view" th:href="@{/mst_auth/{id}(id=*{id})}" title="View" data-toggle="tooltip"><i
-          class="material-icons">&#xE417;</i></a></td>
+<!--        <td><a class="view" th:href="@{/mst_auth/{id}(id=*{id})}" title="View" data-toggle="tooltip"><i-->
+<!--          class="material-icons">&#xE417;</i></a></td>-->
         <td class="center" th:text="*{id}"></td>
         <td class="center" th:text="*{status}"></td>
         <td class="center" th:text="*{statusName}"></td>
