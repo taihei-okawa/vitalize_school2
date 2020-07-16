@@ -7,6 +7,8 @@ import java.util.*;
 import java.text.SimpleDateFormat;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.SortDefault;
 import vitalize.school.bank.entity.Account;
 import vitalize.school.bank.entity.MstFee;
 import vitalize.school.bank.searchform.TransactionSearchForm;
@@ -62,8 +64,9 @@ public class TransactionController {
   @GetMapping(value = "/list")
   /** to 取引履歴 一覧画面表示 ページネーション*/
   public String displayList(Model model, @ModelAttribute TransactionSearchForm searchForm,
-                            @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Pageable pageable) {
+                            @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) @SortDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
     Page<Transaction> transactionlist = transactionService.getAll(pageable, searchForm);
+
     for(Transaction transaction:transactionlist) {
       if (transaction.getType() == 0) {
         transaction.setStringType("新規");
