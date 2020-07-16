@@ -1,6 +1,7 @@
 package vitalize.school.bank.controller;
 
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vitalize.school.bank.entity.Account;
 import vitalize.school.bank.entity.Task;
 import vitalize.school.bank.searchform.AccountSearchForm;
@@ -96,10 +97,10 @@ public class AccountController {
    * to 口座機能 process 登録
    */
   @PostMapping(value = "/add")
-  public String create(@ModelAttribute Account account) {
+  public String create(RedirectAttributes attr, @ModelAttribute Account account) {
     Integer client = account.getClientId();
     account.setId(null);
-    List<Account> accountList = accountService.findAll();
+    List<Account> accountList = accountService.findAccount(account.getAccountNumber());
     if(accountList.isEmpty()){
       account.setAccountNumber(100000);
     }else{
@@ -111,6 +112,7 @@ public class AccountController {
     account.setInsertUserId(9001);
     account.setUpdateUserId(9001);
     accountService.save(account);
+    attr.addFlashAttribute("message", "※口座が作成されました※");
     return "redirect:/client/" + client;
   }
 
@@ -118,12 +120,13 @@ public class AccountController {
    * to 口座機能 削除
    */
   @PostMapping("{id}")
-  public String destroy(@PathVariable Long id) {
+  public String destroy(RedirectAttributes attr,@PathVariable Long id) {
     Account account = accountService.findOne(id);
     Integer accountNumber = account.getAccountNumber();
     taskService.delete(accountNumber);
     transactionService.delete(accountNumber);
     accountService.delete(id);
+    attr.addFlashAttribute("message", "※口座が削除されました※");
     return "redirect:/account/list";
   }
 

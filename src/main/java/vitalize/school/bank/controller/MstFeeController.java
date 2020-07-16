@@ -4,6 +4,7 @@ import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vitalize.school.bank.searchform.MstFeeSearchForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,6 +41,8 @@ public class MstFeeController {
     model.addAttribute("mstFeeList", mstFeeList.getContent());
     model.addAttribute("url", "list");
     model.addAttribute("searchForm", searchForm);
+    String message = (String) model.getAttribute("message");
+    model.addAttribute("redirectParameter", message);
     return "mst_fee/list";
   }
 
@@ -69,6 +72,8 @@ public class MstFeeController {
   public String view(@PathVariable Long id, Model model) {
     MstFee mstFee = mstFeeService.findOne(id);
     model.addAttribute("mstFee", mstFee);
+    String message = (String) model.getAttribute("message");
+    model.addAttribute("redirectParameter", message);
     return "mst_fee/view";
   }
 
@@ -76,7 +81,7 @@ public class MstFeeController {
    * to 手数料マスタ process 登録
    */
   @PostMapping(value = "/add")
-  public String create(@Validated @ModelAttribute MstFee mstFee, BindingResult result) {
+  public String create(RedirectAttributes attr, @Validated @ModelAttribute MstFee mstFee, BindingResult result) {
     if (result.hasErrors()) {
       return "mst_fee/add";
     }
@@ -93,6 +98,7 @@ public class MstFeeController {
     mstFee.setUpdateUserId(9001);
     mstFeeService.save(mstFee);
     Long newId = mstFee.getId();
+    attr.addFlashAttribute("message", "※手数料が作成されました※");
     return "redirect:/mst_fee/" + newId;
   }
 
@@ -100,7 +106,7 @@ public class MstFeeController {
    * to 手数料マスタ process 編集
    */
   @PostMapping(value = "/edit/{id}")
-  public String update(@Validated @ModelAttribute MstFee mstFee, BindingResult result,@PathVariable Long id) {
+  public String update(RedirectAttributes attr,@Validated @ModelAttribute MstFee mstFee, BindingResult result,@PathVariable Long id) {
     if(result.hasErrors()) return "mst_fee/edit";
     mstFee.setInsertUserId(9001);
     mstFee.setUpdateUserId(9001);
@@ -114,6 +120,7 @@ public class MstFeeController {
     mstFee.setStartDay(strTime);
     mstFee.setEndDay(endTime);
     mstFeeService.save(mstFee);
+    attr.addFlashAttribute("message", "※手数料が更新されました※");
     return "redirect:/mst_fee/" + "{id}";
   }
 
@@ -121,8 +128,9 @@ public class MstFeeController {
    * to 手数料マスタ 削除
    */
   @PostMapping("{id}")
-  public String destroy(@PathVariable Long id) {
+  public String destroy(RedirectAttributes attr,@PathVariable Long id) {
     mstFeeService.delete(id);
+    attr.addFlashAttribute("message", "※手数料が削除されました※");
     return "redirect:/mst_fee/list";
   }
 

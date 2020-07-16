@@ -1,19 +1,13 @@
 package vitalize.school.bank.controller;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.ParsePosition;
-import java.util.*;
-import java.text.SimpleDateFormat;
 
-import lombok.RequiredArgsConstructor;
+import java.text.ParseException;
+import java.util.*;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.SortDefault;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vitalize.school.bank.entity.Account;
-import vitalize.school.bank.entity.MstFee;
 import vitalize.school.bank.searchform.TransactionSearchForm;
-
-import vitalize.school.bank.entity.Task;
 import vitalize.school.bank.entity.Transaction;
 import vitalize.school.bank.service.AccountService;
 import vitalize.school.bank.service.MstFeeService;
@@ -29,9 +23,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import vitalize.school.bank.service.TaskService;
-import java.util.Date;
-import java.util.stream.Collectors;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +31,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.transaction.Transactional;
 
 
@@ -84,7 +74,8 @@ public class TransactionController {
     model.addAttribute("transactionlist", transactionlist.getContent());
     model.addAttribute("url", "list");
     model.addAttribute("searchForm", searchForm);
-
+    String message = (String) model.getAttribute("message");
+    model.addAttribute("redirectParameter", message);
     return "transaction/list";
   }
   /**
@@ -108,8 +99,9 @@ public class TransactionController {
    */
   @Transactional
   @PostMapping(value = "/add")
-  public String create(@ModelAttribute Transaction transaction) throws ParseException {
+  public String create(RedirectAttributes attr, @ModelAttribute Transaction transaction) throws ParseException {
     transactionService.AccountPay(transaction);
+    attr.addFlashAttribute("message", "※取引履歴が作成されました(反映されるまでお待ちください)※");
     return "redirect:/transaction/list";
   }
 

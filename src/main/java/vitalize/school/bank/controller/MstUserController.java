@@ -2,6 +2,7 @@ package vitalize.school.bank.controller;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vitalize.school.bank.entity.MstUser;
 import vitalize.school.bank.searchform.MstUserSearchForm;
 import vitalize.school.bank.service.MstUserService;
@@ -34,6 +35,8 @@ public class MstUserController {
     model.addAttribute("userList", mstUserList.getContent());
     model.addAttribute("url", "list");
     model.addAttribute("searchForm", searchForm);
+    String message = (String) model.getAttribute("message");
+    model.addAttribute("redirectParameter", message);
     return "mst_user/list";
   }
 
@@ -54,6 +57,8 @@ public class MstUserController {
   public String view(@PathVariable Long id, Model model) {
     MstUser mstUser = mstUserService.findOne(id);
     model.addAttribute("mstUser", mstUser);
+    String message = (String) model.getAttribute("message");
+    model.addAttribute("redirectParameter", message);
     return "mst_user/view";
   }
 
@@ -61,7 +66,7 @@ public class MstUserController {
    * to ユーザー process 登録
    */
   @PostMapping(value = "/add")
-  public String create(@Validated @ModelAttribute MstUser mstUser, BindingResult result) {
+  public String create(RedirectAttributes attr, @Validated @ModelAttribute MstUser mstUser, BindingResult result) {
     if (result.hasErrors()) {
       return "mst_user/add";
     }
@@ -70,6 +75,7 @@ public class MstUserController {
     mstUser.setStatus(1);
     mstUserService.save(mstUser);
     Long newId = mstUser.getId();
+    attr.addFlashAttribute("message", "※社員が作成されました※");
     return "redirect:/mst_user/" + newId;
   }
 
@@ -77,10 +83,10 @@ public class MstUserController {
    * to 社員　更新、編集画面表示
    */
   @GetMapping("/edit/{id}")
-  public String edit(@PathVariable Long id, Model model) {
+  public String edit(RedirectAttributes attr,@PathVariable Long id, Model model) {
     MstUser mstUser = mstUserService.findOne(id);
     model.addAttribute("mstUser", mstUser);
-    //model.addAttribute("id", id);
+    attr.addFlashAttribute("message", "※社員が更新されました※");
     return "mst_user/edit";
   }
 
@@ -101,8 +107,9 @@ public class MstUserController {
    * to 削除機能　社員一覧画面
    */
   @PostMapping("{id}")
-  public String destroy(@PathVariable Long id) {
+  public String destroy(RedirectAttributes attr,@PathVariable Long id) {
     mstUserService.delete(id);
+    attr.addFlashAttribute("message", "※社員が削除されました※");
     return "redirect:/mst_user/list";
   }
 

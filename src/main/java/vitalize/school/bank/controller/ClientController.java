@@ -3,7 +3,9 @@ package vitalize.school.bank.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vitalize.school.bank.entity.Client;
+import vitalize.school.bank.entity.Transaction;
 import vitalize.school.bank.searchform.ClientSearchForm;
 import vitalize.school.bank.service.ClientService;
 
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import vitalize.school.bank.service.AccountService;
 import vitalize.school.bank.entity.Account;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -48,6 +51,8 @@ public class ClientController {
     model.addAttribute("clientList", clientList.getContent());
     model.addAttribute("url", "list");
     model.addAttribute("searchForm", searchForm);
+    String message = (String) model.getAttribute("message");
+    model.addAttribute("redirectParameter", message);
     return "client/list";
   }
 
@@ -78,26 +83,39 @@ public class ClientController {
     Client client = clientService.findOne(id);
     Integer accountClientId = Integer.parseInt(String.valueOf(id));
     List<Account> accountList = accountService.findClientId(accountClientId);
-    if (accountList.isEmpty()) {
-      model.addAttribute("client", client);
-      return "client/view";
-    } else {
+    if (!accountList.isEmpty()) {
+      List<Task> taskList = new ArrayList<Task>();
       for (Account account : accountList) {
-        Integer accountNumber = account.getAccountNumber();
-        List<Task> task = taskService.findNumber(accountNumber);
-        model.addAttribute("account", accountList);
-        model.addAttribute("task", task);
+        List<Task> taskNumber = taskService.findNumber(account.getAccountNumber());
+        for (Task task : taskNumber) {
+          if (task.getType() == 0) {
+            task.setStringType("新規");
+          } else if(task.getType() == 1) {
+            task.setStringType("入金");
+          } else if (task.getType() == 2) {
+            task.setStringType("出金");
+          } else if (task.getType() == 3) {
+            task.setStringType("振込");
+          } else if (task.getType() == 4) {
+            task.setStringType("振込(ATM)");
+          }
+          taskList.add(task);
+          model.addAttribute("account", accountList);
+          model.addAttribute("task", taskList);
+        }
       }
-      model.addAttribute("client", client);
-      return "client/view";
     }
+    String message = (String) model.getAttribute("message");
+    model.addAttribute("redirectParameter", message);
+    model.addAttribute("client", client);
+    return "client/view";
   }
 
   /**
    * to 顧客 process 登録
    */
   @PostMapping(value = "/add")
-  public String create(@Validated @ModelAttribute Client client, BindingResult result) {
+  public String create(RedirectAttributes attr, @Validated @ModelAttribute Client client, BindingResult result) {
     if (result.hasErrors()) {
       return "client/add";
     }
@@ -105,6 +123,7 @@ public class ClientController {
     client.setUpdateUserId(9001);
     clientService.save(client);
     Long newId = client.getId();
+    attr.addFlashAttribute("message", "※顧客が作成されました※");
     return "redirect:/client/" + newId;
   }
 
@@ -112,11 +131,12 @@ public class ClientController {
    * to 顧客 process 編集
    */
   @PostMapping(value = "/edit/{id}")
-  public String update(@PathVariable Long id,@Validated @ModelAttribute Client client, BindingResult result) {
+  public String update(RedirectAttributes attr,@PathVariable Long id,@Validated @ModelAttribute Client client, BindingResult result) {
     if(result.hasErrors()) return "client/edit";
     client.setInsertUserId(9001);
     client.setUpdateUserId(9001);
     clientService.save(client);
+    attr.addFlashAttribute("message", "※顧客が更新されました※");
     return "redirect:/client/" + "{id}";
   }
 
@@ -124,8 +144,11 @@ public class ClientController {
    * to 顧客 削除
    */
   @PostMapping("{id}")
-  public String destroy(@PathVariable Long id) {
+  public String destroy(RedirectAttributes attr,@PathVariable Long id,@ModelAttribute Client client) {
     clientService.delete(id);
+    Integer clientId = Math.toIntExact(client.getId());
+    accountService.deleteClient(clientId);
+    attr.addFlashAttribute("message", "※顧客が削除されました※");
     return "redirect:/client/list";
   }
 

@@ -17,6 +17,7 @@
 </head>
 <body>
 <div class="container">
+  <span class="text-danger"><h4 th:text="${redirectParameter}"></h4></span>
   <div class="table-wrapper">
     <div class="table-title">
       <div class="row">
@@ -40,13 +41,8 @@
         <th><p th:text="#{clientId}"></p></th>
         <th><p th:text="#{clientName}"></p></th>
         <th><p th:text="#{clientNameKana}"></p></th>
-        <th><p th:text="#{tell}"></p></th>
-        <th><p th:text="#{mailAddress}"></p></th>
         <th><p th:text="#{insertUserId}"></p></th>
-        <th><p th:text="#{updateUserId}"></p></th>
-        <th><p th:text="#{password}"></p></th>
         <th><p th:text="#{insertDate}"></p></th>
-        <th><p th:text="#{updateDate}"></p></th>
         <th><p th:text="#{delete}"></p></th>
       </tr>
       </thead>
@@ -59,16 +55,11 @@
         <td th:text="*{id}"></td>
         <td th:text="*{clientName}"></td>
         <td th:text="*{clientNameKana}"></td>
-        <td th:text="*{tell}"></td>
-        <td th:text="*{mailAddress}"></td>
-        <td th:text="*{password}"></td>
         <td th:text="*{insertUserId}"></td>
-        <td th:text="*{UpdateUserId}"></td>
         <td class="center" th:text="${#dates.format(client.insertDate, 'yyyy/MM/dd')}"></td>
-        <td class="center" th:text="${#dates.format(client.updateDate, 'yyyy/MM/dd')}"></td>
         <td>
           <form th:action="@{/client/{id}(id=*{id})}" th:method="delete">
-            <input class="btn btn-danger btn-xs" type="submit" name="delete" value="削除"/>
+            <div th:replace="commons/modal :: deleteModal"></div>
           </form>
         </td>
       </tr>

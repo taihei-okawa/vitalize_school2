@@ -16,6 +16,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
 <div class="container">
+  <span class="text-danger"><h4 th:text="${redirectParameter}"></h4></span>
   <div class="table-wrapper">
     <div class="table-title">
       <div class="row">
@@ -57,7 +58,7 @@
         <td th:text="${#dates.format(mstUser.updateDate, 'yyyy/MM/dd')}"></td>
         <td>
           <form th:action="@{/mst_user/{id}(id=*{id})}" th:method="delete">
-            <input class="btn btn-danger btn-xs" type="submit" value="削除"/>
+            <div th:replace="commons/modal :: deleteModal"></div>
           </form>
         </td>
       </tr>
