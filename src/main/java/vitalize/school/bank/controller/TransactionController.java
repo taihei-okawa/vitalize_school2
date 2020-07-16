@@ -7,6 +7,7 @@ import java.util.*;
 import java.text.SimpleDateFormat;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vitalize.school.bank.entity.Account;
 import vitalize.school.bank.entity.MstFee;
 import vitalize.school.bank.searchform.TransactionSearchForm;
@@ -81,7 +82,8 @@ public class TransactionController {
     model.addAttribute("transactionlist", transactionlist.getContent());
     model.addAttribute("url", "list");
     model.addAttribute("searchForm", searchForm);
-
+    String message = (String) model.getAttribute("message");
+    model.addAttribute("redirectParameter", message);
     return "transaction/list";
   }
   /**
@@ -105,8 +107,9 @@ public class TransactionController {
    */
   @Transactional
   @PostMapping(value = "/add")
-  public String create(@ModelAttribute Transaction transaction) throws ParseException {
+  public String create(RedirectAttributes attr, @ModelAttribute Transaction transaction) throws ParseException {
     transactionService.AccountPay(transaction);
+    attr.addFlashAttribute("message", "※取引履歴が作成されました(反映されるまでお待ちください)※");
     return "redirect:/transaction/list";
   }
 

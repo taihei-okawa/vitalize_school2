@@ -51,6 +51,8 @@ public class ClientController {
     model.addAttribute("clientList", clientList.getContent());
     model.addAttribute("url", "list");
     model.addAttribute("searchForm", searchForm);
+    String message = (String) model.getAttribute("message");
+    model.addAttribute("redirectParameter", message);
     return "client/list";
   }
 
@@ -103,6 +105,8 @@ public class ClientController {
         }
       }
     }
+    String message = (String) model.getAttribute("message");
+    model.addAttribute("redirectParameter", message);
     model.addAttribute("client", client);
     return "client/view";
   }
@@ -115,11 +119,11 @@ public class ClientController {
     if (result.hasErrors()) {
       return "client/add";
     }
-    attr.addFlashAttribute("message", "保存完了しました。");
     client.setInsertUserId(9001);
     client.setUpdateUserId(9001);
     clientService.save(client);
     Long newId = client.getId();
+    attr.addFlashAttribute("message", "※顧客が作成されました※");
     return "redirect:/client/" + newId;
   }
 
@@ -127,11 +131,12 @@ public class ClientController {
    * to 顧客 process 編集
    */
   @PostMapping(value = "/edit/{id}")
-  public String update(@PathVariable Long id,@Validated @ModelAttribute Client client, BindingResult result) {
+  public String update(RedirectAttributes attr,@PathVariable Long id,@Validated @ModelAttribute Client client, BindingResult result) {
     if(result.hasErrors()) return "client/edit";
     client.setInsertUserId(9001);
     client.setUpdateUserId(9001);
     clientService.save(client);
+    attr.addFlashAttribute("message", "※顧客が更新されました※");
     return "redirect:/client/" + "{id}";
   }
 
@@ -139,8 +144,9 @@ public class ClientController {
    * to 顧客 削除
    */
   @PostMapping("{id}")
-  public String destroy(@PathVariable Long id) {
+  public String destroy(RedirectAttributes attr,@PathVariable Long id) {
     clientService.delete(id);
+    attr.addFlashAttribute("message", "※顧客が削除されました※");
     return "redirect:/client/list";
   }
 
