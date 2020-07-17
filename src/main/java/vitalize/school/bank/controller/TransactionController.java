@@ -1,18 +1,13 @@
 package vitalize.school.bank.controller;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.ParsePosition;
-import java.util.*;
-import java.text.SimpleDateFormat;
 
-import lombok.RequiredArgsConstructor;
+import java.text.ParseException;
+import java.util.*;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.SortDefault;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vitalize.school.bank.entity.Account;
-import vitalize.school.bank.entity.MstFee;
 import vitalize.school.bank.searchform.TransactionSearchForm;
-
-import vitalize.school.bank.entity.Task;
 import vitalize.school.bank.entity.Transaction;
 import vitalize.school.bank.service.AccountService;
 import vitalize.school.bank.service.MstFeeService;
@@ -28,9 +23,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import vitalize.school.bank.service.TaskService;
-import java.util.Date;
-import java.util.stream.Collectors;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +31,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.transaction.Transactional;
 
 
@@ -63,8 +54,9 @@ public class TransactionController {
   @GetMapping(value = "/list")
   /** to 取引履歴 一覧画面表示 ページネーション*/
   public String displayList(Model model, @ModelAttribute TransactionSearchForm searchForm,
-                            @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Pageable pageable) {
+                            @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) @SortDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
     Page<Transaction> transactionlist = transactionService.getAll(pageable, searchForm);
+
     for(Transaction transaction:transactionlist) {
       if (transaction.getType() == 0) {
         transaction.setStringType("新規");
