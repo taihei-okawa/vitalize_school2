@@ -29,24 +29,32 @@
       <div class="col text-center">
         <div class="row">
           <div th:object="${account}">
-            <input type="hidden" th:value="*{id}">
-            <div>
-              <label><p th:text="#{accountNumber}"></p></label>
-              <p th:text="*{accountNumber}"></p>
+            <div class="col-sm-6">
+              <input type="hidden" th:value="*{id}">
+              <div>
+                <label><p th:text="#{accountNumber}"></p></label>
+                <p th:text="*{accountNumber}"></p>
+              </div>
+              <div>
+                <label><p th:text="#{clientId}"></p></label>
+                <p th:text="*{id}"></p>
+              </div>
+              <div th:object="${task}">
+                <div>
+                  <label><p th:text="#{newBalance}"></p></label>
+                  <p th:text="*{balance}"></p>
+                </div>
+              </div>
             </div>
-            <div>
-              <label><p th:text="#{clientId}"></p></label>
-              <p th:text="*{id}"></p>
-            </div>
-            <div>
-              <label><p th:text="#{branchCode}"></p></label>
-              <p th:text="*{branchCode}"></p>
-            </div>
-          </div>
-          <div th:object="${task}">
-            <div>
-              <label><p th:text="#{newBalance}"></p></label>
-              <p th:text="*{balance}"></p>
+            <div class="col-sm-6">
+              <div>
+                <label><p th:text="#{branchCode}"></p></label>
+                <p th:text="*{branchCode}"></p>
+              </div>
+              <div>
+                <label><p th:text="#{insertDate}"></p></label>
+                <p th:text="*{insertDate}"></p>
+              </div>
             </div>
           </div>
         </div>
