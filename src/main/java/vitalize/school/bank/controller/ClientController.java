@@ -24,6 +24,8 @@ import vitalize.school.bank.service.AccountService;
 import vitalize.school.bank.entity.Account;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -85,10 +87,14 @@ public class ClientController {
     Integer accountClientId = Integer.parseInt(String.valueOf(id));
     List<Account> accountList = accountService.findClientId(accountClientId);
     if (!accountList.isEmpty()) {
+      //最新取引履歴ロジック
       List<Task> taskList = new ArrayList<Task>();
+      List<Task> taskNewList = new ArrayList<Task>();
       for (Account account : accountList) {
         List<Task> taskNumber = taskService.findNumber(account.getAccountNumber());
-        for (Task task : taskNumber) {
+        Task MaxTaskNumberList = taskNumber.stream().max(Comparator.comparing(tk -> tk.getId())).get();
+        taskNewList.add(MaxTaskNumberList);
+        for (Task task : taskNewList) {
           if (task.getType() == 0) {
             task.setStringType("新規");
           } else if(task.getType() == 1) {
@@ -101,7 +107,7 @@ public class ClientController {
             task.setStringType("振込(ATM)");
           }
           taskList.add(task);
-          List<Task> taskNewList = taskList.stream().distinct().limit(15).collect(Collectors.toList());
+          List<Task> taskatestList = taskList.stream().distinct().collect(Collectors.toList());
           model.addAttribute("account", accountList);
           model.addAttribute("task", taskNewList);
         }
