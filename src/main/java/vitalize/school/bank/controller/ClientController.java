@@ -101,7 +101,7 @@ public class ClientController {
             task.setStringType("振込(ATM)");
           }
           taskList.add(task);
-          List<Task> taskNewList = taskList.stream().distinct().collect(Collectors.toList());
+          List<Task> taskNewList = taskList.stream().distinct().limit(15).collect(Collectors.toList());
           model.addAttribute("account", accountList);
           model.addAttribute("task", taskNewList);
         }
