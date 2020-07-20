@@ -25,6 +25,7 @@ import vitalize.school.bank.entity.Account;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/client")
@@ -100,8 +101,9 @@ public class ClientController {
             task.setStringType("振込(ATM)");
           }
           taskList.add(task);
+          List<Task> taskNewList = taskList.stream().distinct().collect(Collectors.toList());
           model.addAttribute("account", accountList);
-          model.addAttribute("task", taskList);
+          model.addAttribute("task", taskNewList);
         }
       }
     }

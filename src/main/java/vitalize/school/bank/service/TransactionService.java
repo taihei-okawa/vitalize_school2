@@ -184,12 +184,8 @@ public class TransactionService {
       transaction.setPayAccountNumber(transaction.getAccountNumber());
       Integer answer;
       answer = balance - amount - feePrice;
-      if(Math.signum(answer) == -1.0) {
-        System.out.println("残高足りないので実行できません");
-      }else{
-        transaction.setBalance(answer);
-        transaction.setFeeId(feePrice);
-      }
+      transaction.setBalance(answer);
+      transaction.setFeeId(feePrice);
     }
     //振込
     if (transaction.getType() == 3 || transaction.getType() == 4) {

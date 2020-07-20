@@ -100,8 +100,8 @@ public class AccountController {
   public String create(RedirectAttributes attr, @ModelAttribute Account account) {
     Integer client = account.getClientId();
     account.setId(null);
-    List<Account> accountList = accountService.findAccount(account.getAccountNumber());
-    if(accountList.isEmpty()){
+    List<Account> accountList = accountService.findAll();
+    if(accountList.size() == 0){
       account.setAccountNumber(100000);
     }else{
       Account MaxAccountList = accountList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
