@@ -143,9 +143,9 @@ public class TransactionService {
     //曜日判断
     String strTrading = transaction.getStringTradingDate().substring(0, 10);
     mstFeeList.stream()
-      .filter(msl -> msl.getStartDay().contains(strTrading) || msl.getStartDay().contains(strTrading)|| transaction.getPoolFlag()==1)
+      .filter(msl -> msl.getStartDay().contains(strTrading)|| transaction.getPoolFlag()==1)
       .collect(Collectors.toList());
-    Integer feePrice = 0;
+    Integer feePrice = new Integer(0);
     if(mstFeeList == null && mstFeeList.size() == 0){
       feePrice = 0;
     }else{
