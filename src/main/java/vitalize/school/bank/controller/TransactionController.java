@@ -7,6 +7,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.SortDefault;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import vitalize.school.bank.entity.Account;
+import vitalize.school.bank.entity.Task;
 import vitalize.school.bank.searchform.TransactionSearchForm;
 import vitalize.school.bank.entity.Transaction;
 import vitalize.school.bank.service.AccountService;
@@ -91,6 +92,8 @@ public class TransactionController {
     }
     Collections.sort(accountList);
     model.addAttribute("accountList", accountList);
+    String message = (String) model.getAttribute("message");
+    model.addAttribute("redirectParameter", message);
     return "transaction/add";
   }
 
@@ -100,6 +103,15 @@ public class TransactionController {
   @Transactional
   @PostMapping(value = "/add")
   public String create(RedirectAttributes attr, @ModelAttribute Transaction transaction) throws ParseException {
+    //取引額バリデーション
+    if (transaction.getType() == 2 || transaction.getType() == 3) {
+      List<Task> accountNumberList = taskService.findOne(transaction.getAccountNumber());
+      Task MaxTaskPayList = accountNumberList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
+      if(transaction.getAmount() > MaxTaskPayList.getBalance()){
+        attr.addFlashAttribute("message", "※取引額が対象の出金口座の残高を上回っています※");
+        return "redirect:/transaction/add";
+      }
+    }
     transactionService.AccountPay(transaction);
     attr.addFlashAttribute("message", "※取引履歴が作成されました(反映されるまでお待ちください)※");
     return "redirect:/transaction/list";
