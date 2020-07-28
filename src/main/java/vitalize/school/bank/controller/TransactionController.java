@@ -113,7 +113,11 @@ public class TransactionController {
       }
     }
     transactionService.AccountPay(transaction);
-    attr.addFlashAttribute("message", "※取引履歴が作成されました(反映されるまでお待ちください)※");
+    if(transaction.getPoolFlag()==1){
+      attr.addFlashAttribute("message", "※取引履歴が作成されました(指定した日時まで反映されません)※");
+    }else{
+      attr.addFlashAttribute("message", "※取引履歴が作成されました(反映されるまで少々お待ちください)※");
+    }
     return "redirect:/transaction/list";
   }
 
