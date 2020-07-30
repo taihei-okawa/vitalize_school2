@@ -1,43 +1,47 @@
 package vitalize.school.bank.controller;
 
 
-import java.text.ParseException;
-import java.util.*;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.SortDefault;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import vitalize.school.bank.entity.Account;
-import vitalize.school.bank.entity.Task;
-import vitalize.school.bank.searchform.TransactionSearchForm;
-import vitalize.school.bank.entity.Transaction;
-import vitalize.school.bank.service.AccountService;
-import vitalize.school.bank.service.MstFeeService;
-import vitalize.school.bank.service.TransactionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import vitalize.school.bank.service.TaskService;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMethod;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import vitalize.school.bank.AuthException;
+import vitalize.school.bank.LoginUser;
+import vitalize.school.bank.entity.Account;
+import vitalize.school.bank.entity.Task;
+import vitalize.school.bank.entity.Transaction;
+import vitalize.school.bank.searchform.TransactionSearchForm;
+import vitalize.school.bank.service.AccountService;
+import vitalize.school.bank.service.MstFeeService;
+import vitalize.school.bank.service.TaskService;
+import vitalize.school.bank.service.TransactionService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import vitalize.school.bank.AuthException;
+import vitalize.school.bank.LoginUser;
+
 import javax.transaction.Transactional;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 
 @Controller
 @RequestMapping("/transaction")
-public class TransactionController {
+public class TransactionController extends BaseController {
   /**
    * 取引履歴機能情報 Service
    */
@@ -50,12 +54,16 @@ public class TransactionController {
   @Autowired
   private MstFeeService mstFeeService;
 
+  protected String AUTH_CODE = "TRANSACTION";
+
   private static final int DEFAULT_PAGEABLE_SIZE = 15;
 
   @GetMapping(value = "/list")
   /** to 取引履歴 一覧画面表示 ページネーション*/
   public String displayList(Model model, @ModelAttribute TransactionSearchForm searchForm,
-                            @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) @SortDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+                            @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) @SortDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable,
+                            @AuthenticationPrincipal LoginUser loginUser) throws AuthException {
+    checkAuth(loginUser, AUTH_CODE);
     Page<Transaction> transactionlist = transactionService.getAll(pageable, searchForm);
 
     for(Transaction transaction:transactionlist) {
@@ -83,7 +91,9 @@ public class TransactionController {
    * to 取引履歴 登録画面表示
    */
   @GetMapping(value = "/add")
-  public String add(Model model) {
+  public String add(Model model,
+                    @AuthenticationPrincipal LoginUser loginUser) throws AuthException {
+    checkAuth(loginUser, AUTH_CODE);
     List<Account> account = accountService.findAll();
     List<Integer> accountList = new ArrayList<Integer>();
     //昇順にソート
@@ -102,7 +112,10 @@ public class TransactionController {
    */
   @Transactional
   @PostMapping(value = "/add")
-  public String create(RedirectAttributes attr, @ModelAttribute Transaction transaction) throws ParseException {
+  public String create(RedirectAttributes attr, @ModelAttribute Transaction transaction,
+    @AuthenticationPrincipal LoginUser loginUser) throws AuthException, ParseException {
+      checkAuth(loginUser, AUTH_CODE);
+
     //取引額バリデーション
     if (transaction.getType() == 2 || transaction.getType() == 3) {
       List<Task> accountNumberList = taskService.findOne(transaction.getAccountNumber());
@@ -120,7 +133,9 @@ public class TransactionController {
   /** to CSVダウンロード*/
   @ResponseBody
   @RequestMapping(value = "/download/csv", method = RequestMethod.GET)
-  public Object downloadCsv(@ModelAttribute TransactionSearchForm searchForm) {
+  public Object downloadCsv(@ModelAttribute TransactionSearchForm searchForm,
+                            @AuthenticationPrincipal LoginUser loginUser) throws AuthException {
+    checkAuth(loginUser, AUTH_CODE);
     CsvMapper csvMapper = new CsvMapper();
     CsvSchema schema = csvMapper.schemaFor(Transaction.class).withHeader();
     // ↓DBからデータをセレクト

@@ -17,12 +17,8 @@
                 <div class="card-body">
                     <div class="form-wrap">
                         <div class="text-center"><h1>Vitalize銀行</h1></div>
-                        <div th:if="${showErrorMsg}">
-                            ユーザー名もしくはパスワードが無効です。
-                        </div>
-                        <div th:if="${showLogoutedMsg}">
-                            ログアウトしました。
-                        </div>
+                        <div th:if="${showErrorMsg}" class="alert alert-danger" role="alert" th:text="${errorMsg}"></div>
+                        <div th:if="${showLogoutedMsg}" class="alert alert-danger" role="alert">ログアウトしました。</div>
                         <form th:action="@{/login}" method="post">
                             <div>
                                 <label> ユーザーID:</label>
