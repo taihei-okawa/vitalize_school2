@@ -94,12 +94,14 @@ public class TaskController {
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String today = sdf.format(timestamp);
     List<Task> taskList = taskService.searchAll();
-    /** to 営業時間　日付チェック */
-    taskList.stream()
-      .filter(tk -> tk.getTradingDate() != null && tk.getTradingDate().toString().substring(0, 10) == today || tk.getPoolFlag() != null && tk.getPoolFlag() == 0)
-      .collect(Collectors.toList());
-    List<Transaction> transactionList = new ArrayList<Transaction>();
+    List<Task> taskFind = new ArrayList<Task>();
     for (Task task : taskList) {
+      if(task.getTradingDate() != null && task.getTradingDate().toString().substring(0, 10).contains(today)){
+        taskFind.add(task);
+      }
+    }
+    List<Transaction> transactionList = new ArrayList<Transaction>();
+    for (Task task : taskFind) {
       Transaction transaction = Transaction.builder()
         .id(task.getId())
         .accountNumber(task.getAccountNumber())
