@@ -1,9 +1,7 @@
 package vitalize.school.bank.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -17,11 +15,12 @@ import java.util.Date;
  */
 @Entity
 @Data
+@EqualsAndHashCode(callSuper=true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "mst_fee")
-public class MstFee implements Serializable {
+public class MstFee extends BaseEntity implements Serializable {
   /**
    * 手数料ID
    */

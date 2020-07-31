@@ -2,6 +2,7 @@ package vitalize.school.bank.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -14,10 +15,11 @@ import java.util.List;
  */
 @Entity
 @Data
+@EqualsAndHashCode(callSuper=true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name="mst_auth")
-public class MstAuth implements Serializable {
+public class MstAuth extends BaseEntity implements Serializable {
     /**
      * 権限ID
      */
