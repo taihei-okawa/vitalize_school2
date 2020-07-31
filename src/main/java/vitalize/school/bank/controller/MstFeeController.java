@@ -105,7 +105,7 @@ public class MstFeeController extends BaseController {
     insertEntity(mstFee, loginUser);
     mstFeeService.save(mstFee);
     Long newId = mstFee.getId();
-    attr.addFlashAttribute("message", "※手数料が作成されました※");
+    attr.addFlashAttribute("message", "手数料が作成されました");
     return "redirect:/mst_fee/" + newId;
   }
 
@@ -128,7 +128,7 @@ public class MstFeeController extends BaseController {
     mstFee.setStartDay(strTime);
     mstFee.setEndDay(endTime);
     mstFeeService.save(mstFee);
-    attr.addFlashAttribute("message", "※手数料が更新されました※");
+    attr.addFlashAttribute("message", "手数料が更新されました");
     return "redirect:/mst_fee/" + "{id}";
   }
 
@@ -140,7 +140,7 @@ public class MstFeeController extends BaseController {
                         @AuthenticationPrincipal LoginUser loginUser) throws AuthException {
     checkAuth(loginUser, AUTH_CODE);
     mstFeeService.delete(id);
-    attr.addFlashAttribute("message", "※手数料が削除されました※");
+    attr.addFlashAttribute("message", "手数料が削除されました");
     return "redirect:/mst_fee/list";
   }
 

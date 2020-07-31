@@ -19,7 +19,7 @@
 <body>
 <div class="container">
   <div id="content">
-    <span class="text-danger"><h4 th:text="${redirectParameter}"></h4></span>
+    <div th:if="${redirectParameter}" class="alert alert-danger" role="alert"><p th:text="${redirectParameter}"></p></div>
     <div class="table-wrapper">
       <div class="table-title">
         <div class="row">
