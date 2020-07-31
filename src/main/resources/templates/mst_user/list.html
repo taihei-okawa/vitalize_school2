@@ -54,7 +54,7 @@
         <td th:text="*{positionCode}"></td>
         <td>
           <form th:action="@{/mst_user/{id}(id=*{id})}" th:method="delete">
-            <div th:replace="commons/modal :: deleteModal"></div>
+            <button type="submit" class="btn btn-danger">削除</button>
           </form>
         </td>
       </tr>

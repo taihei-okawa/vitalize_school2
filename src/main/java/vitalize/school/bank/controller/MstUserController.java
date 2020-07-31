@@ -129,9 +129,10 @@ public class MstUserController extends BaseController {
   public String destroy(RedirectAttributes attr, @PathVariable Long id,
                         @AuthenticationPrincipal LoginUser loginUser) throws AuthException {
     checkAuth(loginUser, AUTH_CODE);
-    mstUserService.delete(id);
+    MstUser mstUser = mstUserService.findOne(id);
+    deleteEntity(mstUser, loginUser);
+    mstUserService.save(mstUser);
     attr.addFlashAttribute("message", "※社員が削除されました※");
     return "redirect:/mst_user/list";
   }
-
 }
