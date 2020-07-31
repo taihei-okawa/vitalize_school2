@@ -16,5 +16,5 @@ import java.util.Optional;
 @Repository
 public interface MstUserRepository extends JpaRepository<MstUser, Long>, JpaSpecificationExecutor<MstUser> {
     public Page<MstUser> findAll(Pageable pageable);
-    Optional<MstUser> findByUserName(String userName);
+    Optional<MstUser> findByUserNameAndDeleteDateIsNull(String userName);
 }

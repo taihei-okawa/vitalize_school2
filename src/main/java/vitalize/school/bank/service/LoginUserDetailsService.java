@@ -1,15 +1,11 @@
 package vitalize.school.bank.service;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import vitalize.school.bank.LoginUser;
 import vitalize.school.bank.entity.MstUser;
 import vitalize.school.bank.repository.MstUserRepository;
@@ -30,7 +26,7 @@ public class LoginUserDetailsService implements UserDetailsService {
     assert(userCode != null);
     log.debug("loadUserByUsername(userCode):[{}]", userCode);
 
-    Optional<MstUser> user = userRepository.findByUserName(userCode);
+    Optional<MstUser> user = userRepository.findByUserNameAndDeleteDateIsNull(userCode);
     return user
       .map(LoginUser::new)
       .orElseThrow(() -> new UsernameNotFoundException("User not found by userCode:[" + userCode + "]"));
