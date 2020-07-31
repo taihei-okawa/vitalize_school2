@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,9 +20,6 @@ import vitalize.school.bank.searchform.ClientSearchForm;
 import vitalize.school.bank.service.AccountService;
 import vitalize.school.bank.service.ClientService;
 import vitalize.school.bank.service.TaskService;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import vitalize.school.bank.AuthException;
-import vitalize.school.bank.LoginUser;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -137,8 +135,7 @@ public class ClientController extends BaseController {
     if (result.hasErrors()) {
       return "client/add";
     }
-    client.setInsertUserId(9001);
-    client.setUpdateUserId(9001);
+    insertEntity(client, loginUser);
     clientService.save(client);
     Long newId = client.getId();
     attr.addFlashAttribute("message", "※顧客が作成されました※");
@@ -153,8 +150,7 @@ public class ClientController extends BaseController {
                        @AuthenticationPrincipal LoginUser loginUser) throws AuthException {
     checkAuth(loginUser, AUTH_CODE);
     if(result.hasErrors()) return "client/edit";
-    client.setInsertUserId(9001);
-    client.setUpdateUserId(9001);
+    updateEntity(client, loginUser);
     clientService.save(client);
     attr.addFlashAttribute("message", "※顧客が更新されました※");
     return "redirect:/client/" + "{id}";

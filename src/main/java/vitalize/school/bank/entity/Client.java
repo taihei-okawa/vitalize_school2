@@ -2,24 +2,26 @@ package vitalize.school.bank.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * 情報 Entitygit a
  */
 @Entity
 @Data
+@EqualsAndHashCode(callSuper=true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "client")
-public class Client implements Serializable {
+public class Client extends BaseEntity implements Serializable {
   /**
    * 顧客ID
    */

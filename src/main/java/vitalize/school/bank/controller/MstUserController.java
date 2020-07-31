@@ -1,10 +1,10 @@
 package vitalize.school.bank.controller;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,14 +12,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import vitalize.school.bank.AuthException;
 import vitalize.school.bank.LoginUser;
 import vitalize.school.bank.entity.MstUser;
 import vitalize.school.bank.searchform.MstUserSearchForm;
 import vitalize.school.bank.service.MstUserService;
-
-import java.security.Principal;
 
 @Controller
 @RequestMapping("/mst_user")
@@ -89,8 +86,7 @@ public class MstUserController extends BaseController {
       return "mst_user/add";
     }
     mstUser.setPassword(passwordEncoder.encode(mstUser.getPassword()));
-    mstUser.setInsertUserId(9001);
-    mstUser.setUpdateUserId(9001);
+    insertEntity(mstUser, loginUser);
     mstUser.setStatus(1);
     mstUserService.save(mstUser);
     Long newId = mstUser.getId();
@@ -120,8 +116,7 @@ public class MstUserController extends BaseController {
     checkAuth(loginUser, AUTH_CODE);
     if(result.hasErrors()) return "mst_user/edit";
     mstUser.setPassword(passwordEncoder.encode(mstUser.getPassword()));
-    mstUser.setInsertUserId(9001);
-    mstUser.setUpdateUserId(9001);
+    updateEntity(mstUser, loginUser);
     mstUser.setStatus(1);
     mstUserService.save(mstUser);
     return "redirect:/mst_user/list";

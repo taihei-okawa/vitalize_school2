@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +17,6 @@ import vitalize.school.bank.searchform.AccountSearchForm;
 import vitalize.school.bank.service.AccountService;
 import vitalize.school.bank.service.TaskService;
 import vitalize.school.bank.service.TransactionService;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import vitalize.school.bank.AuthException;
-import vitalize.school.bank.LoginUser;
 
 import java.util.Comparator;
 import java.util.List;
@@ -126,8 +124,7 @@ public class AccountController extends BaseController {
       String MaxNumber = String.format("%06d", MaxAccountNumber + 1);
       account.setAccountNumber(Integer.parseInt(MaxNumber));
     }
-    account.setInsertUserId(9001);
-    account.setUpdateUserId(9001);
+    insertEntity(account, loginUser);
     accountService.save(account);
     attr.addFlashAttribute("message", "※口座が作成されました※");
     return "redirect:/client/" + client;
@@ -140,6 +137,7 @@ public class AccountController extends BaseController {
   public String destroy(RedirectAttributes attr,@PathVariable Long id,
                         @AuthenticationPrincipal LoginUser loginUser) throws AuthException {
     checkAuth(loginUser, AUTH_CODE);
+
     Account account = accountService.findOne(id);
     Integer accountNumber = account.getAccountNumber();
     taskService.delete(accountNumber);

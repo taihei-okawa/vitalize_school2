@@ -1,9 +1,6 @@
 package vitalize.school.bank.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -16,11 +13,12 @@ import java.util.List;
  */
 @Entity
 @Data
+@EqualsAndHashCode(callSuper=true)
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "mst_user")
-public class MstUser implements Serializable {
+public class MstUser extends BaseEntity implements Serializable {
   /**
    * 社員ID
    */

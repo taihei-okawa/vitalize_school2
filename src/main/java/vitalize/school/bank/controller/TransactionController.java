@@ -13,6 +13,7 @@ import org.springframework.data.web.SortDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +28,6 @@ import vitalize.school.bank.service.AccountService;
 import vitalize.school.bank.service.MstFeeService;
 import vitalize.school.bank.service.TaskService;
 import vitalize.school.bank.service.TransactionService;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import vitalize.school.bank.AuthException;
-import vitalize.school.bank.LoginUser;
 
 import javax.transaction.Transactional;
 import java.text.ParseException;
@@ -115,6 +113,7 @@ public class TransactionController extends BaseController {
   public String create(RedirectAttributes attr, @ModelAttribute Transaction transaction,
     @AuthenticationPrincipal LoginUser loginUser) throws AuthException, ParseException {
       checkAuth(loginUser, AUTH_CODE);
+      insertEntity(transaction, loginUser);
 
     //取引額バリデーション
     if (transaction.getType() == 2 || transaction.getType() == 3) {
