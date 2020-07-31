@@ -34,10 +34,6 @@ public class MstAuthService {
     return mstAuthRepository.findAll(spec, pageable);
   }
 
-  public MstAuth findOne(Long id) {
-    return mstAuthRepository.findById(id).orElse(null);
-  }
-
   /**
    *  ID検索
    */

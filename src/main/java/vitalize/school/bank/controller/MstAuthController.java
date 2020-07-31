@@ -45,16 +45,4 @@ public class MstAuthController extends BaseController {
     model.addAttribute("mstAuthlist", mstAuthlist.getContent());
     return "mst_auth/list";
   }
-
-  /**
-   * to 権限機能 詳細画面表示
-   */
-  @GetMapping(value = "{id}")
-  public String view(@PathVariable Long id, Model model,
-                     @AuthenticationPrincipal LoginUser loginUser) throws AuthException {
-    checkAuth(loginUser, AUTH_CODE);
-    MstAuth mstAuth = mstAuthService.findOne(id);
-    model.addAttribute("mstAuth", mstAuth);
-    return "mst_auth/view";
-  }
 }

@@ -40,6 +40,12 @@ public class MstAuth implements Serializable {
     private List<MstUser> MstUsers;
 
     /**
+     * ステータス
+     */
+    @Column(name="status")
+    private String status;
+
+    /**
      * 更新日時
      */
     @Column(name="update_date")

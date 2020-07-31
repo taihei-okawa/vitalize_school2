@@ -17,9 +17,8 @@ CREATE TABLE mst_user(
 
 CREATE TABLE mst_auth(
     id INT(11) AUTO_INCREMENT NOT NULL,
-    status INT(11) NULL DEFAULT (0),
+    status VARCHAR(64),
     status_name VARCHAR(64),
-    function_status INT(11) NULL DEFAULT (0),
     insert_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
     insert_user_id int(11) NOT NULL,
     update_date timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -118,13 +117,13 @@ CREATE TABLE `user_auth` (
   foreign key `fk_auth` (`auth_id`) references `mst_auth`(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-INSERT INTO mst_auth VALUES(1, null, null, null, NOW(), 1, NOW(), 1, null, null, 'USER', 'USER');
-INSERT INTO mst_auth VALUES(2, null, null, null, NOW(), 1, NOW(), 1, null, null, 'TRANSACTION', 'TRANSACTION');
-INSERT INTO mst_auth VALUES(3, null, null, null, NOW(), 1, NOW(), 1, null, null, 'ACCOUNT', 'ACCOUNT');
-INSERT INTO mst_auth VALUES(4, null, null, null, NOW(), 1, NOW(), 1, null, null, 'CLIENT', 'CLIENT');
-INSERT INTO mst_auth VALUES(5, null, null, null, NOW(), 1, NOW(), 1, null, null, 'AUTH', 'AUTH');
-INSERT INTO mst_auth VALUES(6, null, null, null, NOW(), 1, NOW(), 1, null, null, 'FEE', 'FEE');
-INSERT INTO mst_auth VALUES(7, null, null, null, NOW(), 1, NOW(), 1, null, null, 'ADMIN', 'ADMIN');
+INSERT INTO mst_auth VALUES(1, '社員管理者', null, NOW(), 1, NOW(), 1, null, null, 'USER', 'USER');
+INSERT INTO mst_auth VALUES(2, '取引管理者', null, NOW(), 1, NOW(), 1, null, null, 'TRANSACTION', 'TRANSACTION');
+INSERT INTO mst_auth VALUES(3, '口座管理者', null, NOW(), 1, NOW(), 1, null, null, 'ACCOUNT', 'ACCOUNT');
+INSERT INTO mst_auth VALUES(4, '顧客管理者', null, NOW(), 1, NOW(), 1, null, null, 'CLIENT', 'CLIENT');
+INSERT INTO mst_auth VALUES(5, '権限管理者', null, NOW(), 1, NOW(), 1, null, null, 'AUTH', 'AUTH');
+INSERT INTO mst_auth VALUES(6, '手数料管理者', null, NOW(), 1, NOW(), 1, null, null, 'FEE', 'FEE');
+INSERT INTO mst_auth VALUES(7, 'システム管理者', null, NOW(), 1, NOW(), 1, null, null, 'ADMIN', 'ADMIN');
 
 INSERT INTO mst_user VALUES(1, 'user', '$2a$10$hejdr6e.rtPRd7YjU3dhbudNE8sPjWEvPLTGaYXiN16Hn4iiUgS1a', 1, '', '', '', NOW(), 1, NOW(), 1, null, null);
 INSERT INTO mst_user VALUES(2, 'transaction', '$2a$10$hejdr6e.rtPRd7YjU3dhbudNE8sPjWEvPLTGaYXiN16Hn4iiUgS1a', 1, '', '', '', NOW(), 1, NOW(), 1, null, null);
