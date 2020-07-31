@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,9 +16,6 @@ import vitalize.school.bank.LoginUser;
 import vitalize.school.bank.entity.MstFee;
 import vitalize.school.bank.searchform.MstFeeSearchForm;
 import vitalize.school.bank.service.MstFeeService;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import vitalize.school.bank.AuthException;
-import vitalize.school.bank.LoginUser;
 
 @Controller
 @RequestMapping("/mst_fee")
@@ -104,8 +102,7 @@ public class MstFeeController extends BaseController {
     String endTime = endDay.concat(time);
     mstFee.setStartDay(strTime);
     mstFee.setEndDay(endTime);
-    mstFee.setInsertUserId(9001);
-    mstFee.setUpdateUserId(9001);
+    insertEntity(mstFee, loginUser);
     mstFeeService.save(mstFee);
     Long newId = mstFee.getId();
     attr.addFlashAttribute("message", "※手数料が作成されました※");
@@ -120,8 +117,7 @@ public class MstFeeController extends BaseController {
                        @AuthenticationPrincipal LoginUser loginUser) throws AuthException {
     checkAuth(loginUser, AUTH_CODE);
     if(result.hasErrors()) return "mst_fee/edit";
-    mstFee.setInsertUserId(9001);
-    mstFee.setUpdateUserId(9001);
+    updateEntity(mstFee, loginUser);
     mstFee.setStartDay(mstFee.getStartDay().replace("T", "  "));
     mstFee.setEndDay(mstFee.getEndDay().replace("T", "  "));
     String strDay = mstFee.getStartDay();
