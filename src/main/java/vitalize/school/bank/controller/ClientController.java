@@ -138,7 +138,7 @@ public class ClientController extends BaseController {
     insertEntity(client, loginUser);
     clientService.save(client);
     Long newId = client.getId();
-    attr.addFlashAttribute("message", "※顧客が作成されました※");
+    attr.addFlashAttribute("message", "顧客が作成されました");
     return "redirect:/client/" + newId;
   }
 
@@ -152,7 +152,7 @@ public class ClientController extends BaseController {
     if(result.hasErrors()) return "client/edit";
     updateEntity(client, loginUser);
     clientService.save(client);
-    attr.addFlashAttribute("message", "※顧客が更新されました※");
+    attr.addFlashAttribute("message", "顧客が更新されました");
     return "redirect:/client/" + "{id}";
   }
 
@@ -166,7 +166,7 @@ public class ClientController extends BaseController {
     clientService.delete(id);
     Integer clientId = Math.toIntExact(client.getId());
     accountService.deleteClient(clientId);
-    attr.addFlashAttribute("message", "※顧客が削除されました※");
+    attr.addFlashAttribute("message", "顧客が削除されました");
     return "redirect:/client/list";
   }
 

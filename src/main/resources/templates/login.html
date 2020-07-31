@@ -2,45 +2,63 @@
 <html lang="ja" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>Spring Security Example </title>
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Spring Security Example </title>
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="/css/list.css"/>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
-<div class="container">
-    <div class="row">
+<div class="color"></br>
+    <div class="container"></br>
+      <div class="row">
         <div class="mx-auto col-xs-12 col-md-push-3 col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <div class="form-wrap">
-                        <div class="text-center"><h1>Vitalize銀行</h1></div>
-                        <div th:if="${showErrorMsg}" class="alert alert-danger" role="alert" th:text="${errorMsg}"></div>
-                        <div th:if="${showLogoutedMsg}" class="alert alert-danger" role="alert">ログアウトしました。</div>
-                        <form th:action="@{/login}" method="post">
-                            <div>
-                                <label> ユーザーID:</label>
-                                <input type="text" id="username" name="username" placeholder="ユーザID" required autofocus/>
-                            </div>
-                            <div>
-                                <label> パスワード:</label>
-                                <input type="password" id="password" name="password" placeholder="パスワード" required/>
-                            </div>
-                            <div><input type="submit" value="ログイン"/></div>
-                        </form>
-                    </div>
+          <div class="card">
+            <div class="card-body" >
+              <div class="form-wrap">
+                <div class="title">
+                  <div class="text-center"><h1>VitalizeBank</h1></div>
                 </div>
+                <div th:if="${showErrorMsg}" class="alert alert-danger" role="alert" th:text="${errorMsg}"></div>
+                <div th:if="${showLogoutedMsg}" class="alert alert-danger" role="alert">ログアウトしました。</div>
+                <form th:action="@{/login}" method="post">
+                  <div class="mx-auto col-xs-12 col-md-push-6 col-md-5">
+                    <div>
+                      <h6> ユーザーID</h6>
+                      <input type="text" id="username" name="username" placeholder="ユーザID" required autofocus/>
+                    </div></br>
+                    <div>
+                      <h6> パスワード</h6>
+                      <input type="password" id="password" name="password" placeholder="パスワード" required/>
+                    </div>
+                  </div></br>
+                  <div class="container">
+                    <div class="mx-auto col-md-4">
+                      <input type="submit" class="btn btn-info" value="ログイン"/>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-</div>
+  </div>
 </body>
 </html>
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
 
-  </body>
+</body>
 </html>

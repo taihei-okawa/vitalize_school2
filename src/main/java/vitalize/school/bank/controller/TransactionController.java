@@ -120,15 +120,15 @@ public class TransactionController extends BaseController {
       List<Task> accountNumberList = taskService.findOne(transaction.getAccountNumber());
       Task MaxTaskPayList = accountNumberList.stream().max(Comparator.comparing(tk -> tk.getId())).get();
       if(transaction.getAmount() > MaxTaskPayList.getBalance()){
-        attr.addFlashAttribute("message", "※取引額が対象の出金口座の残高を上回っています※");
+        attr.addFlashAttribute("message", "取引額が対象の出金口座の残高を上回っています");
         return "redirect:/transaction/add";
       }
     }
     transactionService.AccountPay(transaction);
     if(transaction.getPoolFlag()==1){
-      attr.addFlashAttribute("message", "※取引履歴が作成されました(指定した日時まで反映されません)※");
+      attr.addFlashAttribute("message", "取引履歴が作成されました(指定した日時まで反映されません)");
     }else{
-      attr.addFlashAttribute("message", "※取引履歴が作成されました(反映されるまで少々お待ちください)※");
+      attr.addFlashAttribute("message", "取引履歴が作成されました(反映されるまで少々お待ちください)");
     }
     return "redirect:/transaction/list";
   }

@@ -126,7 +126,7 @@ public class AccountController extends BaseController {
     }
     insertEntity(account, loginUser);
     accountService.save(account);
-    attr.addFlashAttribute("message", "※口座が作成されました※");
+    attr.addFlashAttribute("message", "口座が作成されました");
     return "redirect:/client/" + client;
   }
 
@@ -143,7 +143,7 @@ public class AccountController extends BaseController {
     taskService.delete(accountNumber);
     transactionService.delete(accountNumber);
     accountService.delete(id);
-    attr.addFlashAttribute("message", "※口座が削除されました※");
+    attr.addFlashAttribute("message", "口座が削除されました");
     return "redirect:/account/list";
   }
 

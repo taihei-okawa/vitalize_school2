@@ -1,6 +1,15 @@
 	.container {
 	  margin-top: 15px;
 	}
+	.color{
+	  color: #566787;
+      background: #FFFFCC;
+      font-family: 'Varela Round', sans-serif;
+      font-size: 13px;
+      width: 1700px;
+      height: 950px;
+	}
+
 	.tab-group,
 	.tab-group-vertical {
 	   position: relative;
@@ -140,6 +149,13 @@
 		margin: 5px 0 0;
 		font-size: 24px;
 	}
+	.title {
+        color: #4B0082;
+        background: #CCFF00;
+        padding: 10px 15px;
+        margin: -20px -20px 10px;
+        border-radius: 3px 3px 0 0;
+    }
 	.show-entries select.form-control {
         width: 60px;
 		margin: 0 5px;
