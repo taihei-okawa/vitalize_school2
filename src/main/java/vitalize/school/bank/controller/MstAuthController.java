@@ -1,23 +1,28 @@
 package vitalize.school.bank.controller;
 
-import vitalize.school.bank.entity.MstAuth;
-import vitalize.school.bank.searchform.MstAuthSearchForm;
-import vitalize.school.bank.service.MstAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import vitalize.school.bank.AuthException;
+import vitalize.school.bank.LoginUser;
+import vitalize.school.bank.entity.MstAuth;
+import vitalize.school.bank.searchform.MstAuthSearchForm;
+import vitalize.school.bank.service.MstAuthService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import vitalize.school.bank.AuthException;
+import vitalize.school.bank.LoginUser;
 
 @Controller
 @RequestMapping("/mst_auth")
-public class MstAuthController {
+public class MstAuthController extends BaseController {
+  protected String AUTH_CODE = "AUTH";
 
   /**
    * 権限情報 Service
@@ -32,7 +37,9 @@ public class MstAuthController {
    */
   @GetMapping(value = "/list")
   public String displayList(Model model, @ModelAttribute MstAuthSearchForm searchForm,
-                            @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Pageable pageable) {
+                            @PageableDefault(size = DEFAULT_PAGEABLE_SIZE, page = 0) Pageable pageable,
+                            @AuthenticationPrincipal LoginUser loginUser) throws AuthException {
+    checkAuth(loginUser, AUTH_CODE);
     Page<MstAuth> mstAuthlist = mstAuthService.searchAll(pageable, searchForm);
     model.addAttribute("url", "list");
     model.addAttribute("mstAuthlist", mstAuthlist.getContent());
@@ -43,7 +50,9 @@ public class MstAuthController {
    * to 権限機能 詳細画面表示
    */
   @GetMapping(value = "{id}")
-  public String view(@PathVariable Long id, Model model) {
+  public String view(@PathVariable Long id, Model model,
+                     @AuthenticationPrincipal LoginUser loginUser) throws AuthException {
+    checkAuth(loginUser, AUTH_CODE);
     MstAuth mstAuth = mstAuthService.findOne(id);
     model.addAttribute("mstAuth", mstAuth);
     return "mst_auth/view";

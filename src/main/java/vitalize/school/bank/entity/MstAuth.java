@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 権限マスタ情報 Entity
@@ -24,21 +25,20 @@ public class MstAuth implements Serializable {
     @Column(name="id")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    /**
-     * 管理権限ステータス
-     */
-    @Column(name="status")
-    private Integer status;
-    /**
-     * 管理権限名
-     */
-    @Column(name="status_name")
-    private String statusName;
-    /**
-     * 機能ステータス
-     */
-    @Column(name="function_status")
-    private Integer functionStatus;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "auth_code", nullable = false, unique = true)
+    private String authCode;
+
+    @ManyToMany
+    @JoinTable(
+      name = "user_auth",
+      joinColumns = @JoinColumn(name = "user_id"),
+      inverseJoinColumns = @JoinColumn(name = "auth_id"))
+    private List<MstUser> MstUsers;
+
     /**
      * 更新日時
      */
@@ -54,34 +54,4 @@ public class MstAuth implements Serializable {
      */
     @Column(name="delete_date")
     private Date deleteDate;
-
-    public Long getAuthId() {
-        return id;
-    }
-
-    public void setAuthId(Long id) {
-        this.id = id;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public String getStatusName() {
-        return statusName;
-    }
-    public void setStatusName(String statusName) {
-        this.statusName = statusName;
-    }
-
-    public Integer getFunctionStatus() {
-        return functionStatus;
-    }
-    public void setFunctionStatus(Integer functionStatus) {
-        this.functionStatus = functionStatus;
-    }
-
 }

@@ -26,6 +26,8 @@ CREATE TABLE mst_auth(
     update_user_id int(11) NOT NULL,
     delete_date timestamp NULL DEFAULT NULL,
     delete_user_id int(11) DEFAULT NULL,
+    auth_code VARCHAR(64),
+    name VARCHAR(64),
     PRIMARY KEY (id)
     ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
@@ -107,3 +109,35 @@ CREATE TABLE mst_fee(
     update_user_id int(11) DEFAULT NULL,
     PRIMARY KEY (id)
     ) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `user_auth` (
+  `user_id` int NOT NULL,
+  `auth_id` int NOT NULL,
+  PRIMARY KEY(`user_id`, `auth_id`),
+  foreign key `fk_user` (`user_id`) references `mst_user`(`id`),
+  foreign key `fk_auth` (`auth_id`) references `mst_auth`(`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO mst_auth VALUES(1, null, null, null, NOW(), 1, NOW(), 1, null, null, 'USER', 'USER');
+INSERT INTO mst_auth VALUES(2, null, null, null, NOW(), 1, NOW(), 1, null, null, 'TRANSACTION', 'TRANSACTION');
+INSERT INTO mst_auth VALUES(3, null, null, null, NOW(), 1, NOW(), 1, null, null, 'ACCOUNT', 'ACCOUNT');
+INSERT INTO mst_auth VALUES(4, null, null, null, NOW(), 1, NOW(), 1, null, null, 'CLIENT', 'CLIENT');
+INSERT INTO mst_auth VALUES(5, null, null, null, NOW(), 1, NOW(), 1, null, null, 'AUTH', 'AUTH');
+INSERT INTO mst_auth VALUES(6, null, null, null, NOW(), 1, NOW(), 1, null, null, 'FEE', 'FEE');
+INSERT INTO mst_auth VALUES(7, null, null, null, NOW(), 1, NOW(), 1, null, null, 'ADMIN', 'ADMIN');
+
+INSERT INTO mst_user VALUES(1, 'user', '$2a$10$hejdr6e.rtPRd7YjU3dhbudNE8sPjWEvPLTGaYXiN16Hn4iiUgS1a', 1, '', '', '', NOW(), 1, NOW(), 1, null, null);
+INSERT INTO mst_user VALUES(2, 'transaction', '$2a$10$hejdr6e.rtPRd7YjU3dhbudNE8sPjWEvPLTGaYXiN16Hn4iiUgS1a', 1, '', '', '', NOW(), 1, NOW(), 1, null, null);
+INSERT INTO mst_user VALUES(3, 'account', '$2a$10$hejdr6e.rtPRd7YjU3dhbudNE8sPjWEvPLTGaYXiN16Hn4iiUgS1a', 1, '', '', '', NOW(), 1, NOW(), 1, null, null);
+INSERT INTO mst_user VALUES(4, 'client', '$2a$10$hejdr6e.rtPRd7YjU3dhbudNE8sPjWEvPLTGaYXiN16Hn4iiUgS1a', 1, '', '', '', NOW(), 1, NOW(), 1, null, null);
+INSERT INTO mst_user VALUES(5, 'auth', '$2a$10$hejdr6e.rtPRd7YjU3dhbudNE8sPjWEvPLTGaYXiN16Hn4iiUgS1a', 1, '', '', '', NOW(), 1, NOW(), 1, null, null);
+INSERT INTO mst_user VALUES(6, 'fee', '$2a$10$hejdr6e.rtPRd7YjU3dhbudNE8sPjWEvPLTGaYXiN16Hn4iiUgS1a', 1, '', '', '', NOW(), 1, NOW(), 1, null, null);
+INSERT INTO mst_user VALUES(7, 'admin', '$2a$10$hejdr6e.rtPRd7YjU3dhbudNE8sPjWEvPLTGaYXiN16Hn4iiUgS1a', 1, '', '', '', NOW(), 1, NOW(), 1, null, null);
+
+INSERT INTO user_auth VALUES(1, 1);
+INSERT INTO user_auth VALUES(2, 2);
+INSERT INTO user_auth VALUES(3, 3);
+INSERT INTO user_auth VALUES(4, 4);
+INSERT INTO user_auth VALUES(5, 5);
+INSERT INTO user_auth VALUES(6, 6);
+INSERT INTO user_auth VALUES(7, 7);

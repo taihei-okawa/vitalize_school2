@@ -1,11 +1,15 @@
 package vitalize.school.bank.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 情報 Entity
@@ -38,6 +42,9 @@ public class MstUser implements Serializable {
   @NotEmpty
   @Column(name = "password")
   private String password;
+
+  @ManyToMany(mappedBy = "MstUsers")
+  private List<MstAuth> MstAuths;
 
   /**
    * ステータス
