@@ -6,7 +6,7 @@ import vitalize.school.bank.LoginUser;
 
 public class BaseController {
   public void checkAuth(LoginUser loginuser, String auth_code) throws AuthException {
-    if (!loginuser.checkAuth(auth_code)){
+    if (!loginuser.checkAuth(auth_code) && !loginuser.checkAuth("ADMIN")){
       throw new AuthException();
     }
   }
