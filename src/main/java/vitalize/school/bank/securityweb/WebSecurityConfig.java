@@ -38,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
       .anyRequest().authenticated().and() // 全てのページはログインしているユーザーしか見れない
       .formLogin()
         .loginPage("/login").permitAll()
-        .defaultSuccessUrl("/mst_user/list").and() //ログイン成功後に開くページの指定
+        .defaultSuccessUrl("/").and() //ログイン成功後に開くページの指定
       .logout() //ログアウト時の処理
       .invalidateHttpSession(true) //セッションの無効化
       .deleteCookies("JSESSIONID") //cookieから「JSESSIONID」を削除する

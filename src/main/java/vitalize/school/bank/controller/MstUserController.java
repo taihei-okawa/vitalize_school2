@@ -90,7 +90,7 @@ public class MstUserController extends BaseController {
     mstUser.setStatus(1);
     mstUserService.save(mstUser);
     Long newId = mstUser.getId();
-    attr.addFlashAttribute("message", "※社員が作成されました※");
+    attr.addFlashAttribute("message", "社員が作成されました");
     return "redirect:/mst_user/" + newId;
   }
 
@@ -103,7 +103,7 @@ public class MstUserController extends BaseController {
     checkAuth(loginUser, AUTH_CODE);
     MstUser mstUser = mstUserService.findOne(id);
     model.addAttribute("mstUser", mstUser);
-    attr.addFlashAttribute("message", "※社員が更新されました※");
+    attr.addFlashAttribute("message", "社員が更新されました");
     return "mst_user/edit";
   }
 
