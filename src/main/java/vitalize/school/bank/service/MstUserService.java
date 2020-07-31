@@ -29,10 +29,12 @@ public class MstUserService {
 
       Specification<MstUser> spec = Specification
               .where(userIdEqual(searchForm.getId() == null ? searchForm.getId() : searchForm.getId().replaceAll("　", "").replaceAll(" ", "")))
-              .and(nameContains(userName));
+              .and(nameContains(userName))
+              .and(deleteExclude())
+        ;
       return mstUserRepository.findAll(spec, pageable);
     } catch(NumberFormatException e) {
-      Specification<MstUser> spec = Specification.where(nameContains(userName));
+      Specification<MstUser> spec = Specification.where(nameContains(userName)).and(deleteExclude());
       return mstUserRepository.findAll(spec, pageable);
     }
   }
@@ -71,6 +73,16 @@ public class MstUserService {
     // ラムダ式で記述すると、引数のデータ型の指定が省略できる
     return userName == "" || Objects.isNull(userName) ? null : (root, query, cb) -> {
       return cb.like(root.get("userName"), "%" + userName + "%");
+    };
+  }
+
+  /**
+   *  論理削除をさよなら
+   */
+  private static Specification<MstUser> deleteExclude() {
+    // ラムダ式で記述すると、引数のデータ型の指定が省略できる
+    return (root, query, cb) -> {
+      return cb.isNull(root.get("deleteDate"));
     };
   }
 }
