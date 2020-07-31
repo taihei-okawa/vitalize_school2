@@ -41,7 +41,6 @@
           <th><p th:text="#{businessFrag}"></p></th>
           <th><p th:text="#{startDay}"></p></th>
           <th><p th:text="#{endDay}"></p></th>
-          <th><p th:text="#{delete}"></p></th>
         </tr>
       </thead>
       <tbody>
@@ -56,11 +55,6 @@
         <td th:text="*{businessFrag}"></td>
         <td th:text="*{startDay}"></td>
         <td th:text="*{endDay}"></td>
-        <td>
-          <form th:action="@{/mst_fee/{id}(id=*{id})}" th:method="delete">
-            <div th:replace="commons/modal :: deleteModal"></div>
-          </form>
-        </td>
       </tr>
       </tbody>
     </table>

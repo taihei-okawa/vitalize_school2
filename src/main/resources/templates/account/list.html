@@ -37,7 +37,6 @@
         <th><p th:text="#{accountId}"></p></th>
         <th><p th:text="#{accountNumber}"></p></th>
         <th><p th:text="#{branchCode}"></p></th>
-        <th><p th:text="#{delete}"></p></th>
       </tr>
       </thead>
       <tbody>
@@ -47,11 +46,6 @@
         <td th:text="*{id}"></td>
         <td th:text="*{accountNumber}"></td>
         <td th:text="*{branchCode}"></td>
-        <td>
-          <form th:action="@{/account/{id}(id=*{id})}" th:method="delete">
-            <div th:replace="commons/modal :: deleteModal"></div>
-          </form>
-        </td>
       </tr>
       </tbody>
     </table>

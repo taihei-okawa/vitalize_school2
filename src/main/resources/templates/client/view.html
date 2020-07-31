@@ -80,6 +80,11 @@
           <a class="btn btn-info" href="/client/list">一覧画面</a>
         </div>
         <div class="btn">
+          <form th:action="@{/client/{id}(id=*{id})}" th:method="delete">
+            <div th:replace="commons/modal :: deleteModal"></div>
+          </form>
+        </div>
+        <div class="btn">
           <a th:href="@{/account/add/{id}(id=*{id})}" class="btn btn-success btn-sm"><i class="material-icons">&#xE147;</i><span>口座登録</span></a>
         </div>
       </div>

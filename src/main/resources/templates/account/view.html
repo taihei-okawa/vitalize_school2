@@ -59,8 +59,15 @@
           </div>
         </div>
       </div>
-      <div>
-        <a class="btn btn-info" href="/account/list">一覧画面へ</a>
+      <div class="row">
+        <div class="btn">
+          <a class="btn btn-info" href="/account/list">一覧画面へ</a>
+        </div>
+        <div class="btn">
+          <form th:action="@{/account/{id}(id=*{id})}" th:method="delete">
+            <div th:replace="commons/modal :: deleteModal"></div>
+          </form>
+        </div>
       </div>
     </div>
   </div>

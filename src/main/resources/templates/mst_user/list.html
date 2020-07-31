@@ -39,7 +39,6 @@
         <th><p th:text="#{userName}"></p></th>
         <th><p th:text="#{positionCode}"></p></th>
         <th><p th:text="#{businessCode}"></p></th>
-        <th><p th:text="#{delete}"></p></th>
       </tr>
       </thead>
       <tbody>
@@ -52,11 +51,6 @@
         <td th:text="*{userName}"></td>
         <td th:text="*{branchCode}"></td>
         <td th:text="*{positionCode}"></td>
-        <td>
-          <form th:action="@{/mst_user/{id}(id=*{id})}" th:method="delete">
-            <div th:replace="commons/modal :: deleteModal"></div>
-          </form>
-        </td>
       </tr>
       </tbody>
     </table>

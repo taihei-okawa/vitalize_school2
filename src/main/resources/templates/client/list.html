@@ -43,7 +43,6 @@
         <th><p th:text="#{clientNameKana}"></p></th>
         <th><p th:text="#{insertUserId}"></p></th>
         <th><p th:text="#{insertDate}"></p></th>
-        <th><p th:text="#{delete}"></p></th>
       </tr>
       </thead>
       <tbody>
@@ -57,11 +56,6 @@
         <td th:text="*{clientNameKana}"></td>
         <td th:text="*{insertUserId}"></td>
         <td class="center" th:text="${#dates.format(client.insertDate, 'yyyy/MM/dd')}"></td>
-        <td>
-          <form th:action="@{/client/{id}(id=*{id})}" th:method="delete">
-            <div th:replace="commons/modal :: deleteModal"></div>
-          </form>
-        </td>
       </tr>
       </tbody>
     </table>

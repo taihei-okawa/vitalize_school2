@@ -74,6 +74,11 @@
         <div class="btn">
           <a class="btn btn-info" href="/mst_user/list">一覧画面</a>
         </div>
+        <div class="btn">
+          <form th:action="@{/mst_user/{id}(id=*{id})}" th:method="delete">
+            <div th:replace="commons/modal :: deleteModal"></div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
